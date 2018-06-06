@@ -1,0 +1,8 @@
+---
+# postgresql-client tasks
+- name: install packages
+  apt: pkg={{ item }} state=latest
+  become: true
+  with_items:
+    - postgresql-client
+    - libpq-dev

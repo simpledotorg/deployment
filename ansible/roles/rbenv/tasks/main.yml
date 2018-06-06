@@ -1,0 +1,61 @@
+# rbenv tasks
+---
+- name: clone rbenv git repo
+  git: >
+    repo=git://github.com/sstephenson/rbenv.git
+    dest=~/.rbenv
+    accept_hostkey=yes
+
+- name: include rbenv in $PATH
+  lineinfile: >
+    dest=~/.bashrc
+    line='export PATH="$HOME/.rbenv/bin:$PATH"'
+    state=present
+    insertafter=EOF
+
+- name: load rbenv in .bashrc
+  lineinfile: >
+    dest=~/.bashrc
+    line='eval "$(rbenv init -)"'
+    state=present
+    insertafter=EOF
+
+- name: clone ruby-build git repo
+  git: >
+    repo=git://github.com/sstephenson/ruby-build.git
+    dest=~/.rbenv/plugins/ruby-build
+    accept_hostkey=yes
+
+- name: include ruby-build in $PATH
+  lineinfile: >
+    dest=~/.bashrc
+    line='export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'
+    state=present
+    insertafter=EOF
+
+- name: clone rbenv-gem-rehash git repo
+  git: >
+    repo=git://github.com/sstephenson/rbenv-gem-rehash.git
+    dest=~/.rbenv/plugins/rbenv-gem-rehash
+    accept_hostkey=yes
+
+- name: install ruby 2.3.4
+  shell: rbenv install -s 2.3.4
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.rbenv/bin:{{ ansible_env.HOME }}/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
+
+- name: make ruby 2.3.4 global
+  shell: rbenv global 2.3.4
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.rbenv/bin:{{ ansible_env.HOME }}/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
+
+- name: set up .gemrc
+  lineinfile: >
+    dest=~/.gemrc
+    line='gem: --no-ri --no-rdoc'
+    state=present
+    create=yes
+    insertafter=EOF
+
+- name: install bundler
+  shell: ~/.rbenv/shims/gem install bundler

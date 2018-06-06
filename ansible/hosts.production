@@ -1,0 +1,7 @@
+[redapp]
+
+[rails:children]
+redapp
+
+[production:children]
+redapp

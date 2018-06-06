@@ -1,0 +1,8 @@
+---
+- hosts: rails
+  roles:
+    - { role: common, tags: ['common'] }
+    - { role: monit, tags: ['monit'] }
+    - { role: rbenv, tags: ['rbenv'] }
+    - { role: passenger, tags: ['passenger'] }
+    - { role: postgresql-client, tags: ['postgresql-client'] }

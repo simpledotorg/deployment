@@ -1,0 +1,84 @@
+---
+- name: update apt cache
+  apt: update_cache=yes
+  become: true
+
+- name: install aptitude
+  apt: name=aptitude state=present
+  become: true
+
+- name: upgrade the distro
+  apt: upgrade=safe
+  become: true
+
+- name: install common packages
+  apt: pkg={{ item }} state=latest
+  become: true
+  with_items:
+    - awscli
+    - build-essential
+    - cron
+    - fail2ban
+    - git-core
+    - htop
+    - less
+    - libcurl4-openssl-dev
+    - libffi-dev
+    - libmagickwand-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - libssl-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - libyaml-dev
+    - logrotate
+    - python-pexpect
+    - python-software-properties
+    - sqlite3
+    - unattended-upgrades
+    - vim
+    - wget
+    - xvfb
+    - zlib1g-dev
+    - zsh
+
+- name: Reboot system if required
+  shell: sleep 2 && shutdown -r now 'Rebooting to complete system upgrade'
+  async: 1
+  poll: 0
+  args:
+    removes: /var/run/reboot-required
+  become: true
+  register: restart_system
+
+- name: Wait for server to restart
+  local_action: wait_for host={{ inventory_hostname }} port=22 delay=1 timeout=300
+  when: restart_system.changed
+
+
+- name: add ssh keys for the deploy user
+  become: true
+  authorized_key: key="{{ lookup('file', item) }}" user=ubuntu
+  with_fileglob:
+    - ssh_keys/*
+
+- name: ensure fail2ban is running
+  become: true
+  action: service name=fail2ban state=restarted enabled=yes
+
+- name: configure sshd
+  copy: src=etc/ssh/sshd_config dest=/etc/ssh/sshd_config
+  become: true
+  notify: restart ssh
+
+  # Note: This MUST be last, otherwise if something fails we can't SSH back in as root
+- name: disable root SSH access
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  become: true
+  notify: restart ssh
+
+- name: set up logrotate
+  copy: src={{ item }} dest=/etc/logrotate.d/ owner=root
+  with_fileglob:
+    - etc/logrotate.d/*
+  become: true

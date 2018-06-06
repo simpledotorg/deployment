@@ -1,0 +1,36 @@
+# Pre-start passenger so the first request isn't slow
+passenger_pre_start http://staging.redapp-server.com/;
+
+server {
+  listen 80 default_server;
+  server_name staging.redapp-server.com;
+
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+
+  root /home/ubuntu/apps/redapp-server/current/public;
+  passenger_enabled on;
+  rails_env production;
+  passenger_min_instances 1;
+  passenger_start_timeout 300;
+
+  # redirect server error pages to the static page /50x.html
+  error_page   500 502 503 504  /50x.html;
+  location = /50x.html {
+    root   html;
+  }
+
+  location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {
+    gzip_static on;
+    expires     max;
+    add_header  Cache-Control public;
+    add_header  Last-Modified "";
+    add_header  ETag "";
+    break;
+  }
+
+  location = /favicon.ico {
+    expires    max;
+    add_header Cache-Control public;
+  }
+}
