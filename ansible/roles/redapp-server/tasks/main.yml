@@ -1,0 +1,4 @@
+---
+- name: copy .env file
+  copy: src=.env.{{ deploy_env }} dest=/home/ubuntu/apps/shared/.env.production
+  become: true
