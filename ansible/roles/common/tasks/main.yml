@@ -57,7 +57,7 @@
   when: restart_system.changed
 
 
-- name: add ssh keys for the deploy user
+- name: add ssh keys for ubuntu
   become: true
   authorized_key: key="{{ lookup('file', item) }}" user=ubuntu
   with_fileglob:
@@ -83,3 +83,22 @@
   with_fileglob:
     - etc/logrotate.d/*
   become: true
+
+- name: Ensure group "deploy" exists
+  group:
+    name: deploy
+    state: present
+  become: true
+
+- name: create deploy user
+  user:
+    name: deploy
+    group: deploy
+    shell: /bin/bash
+  become: true
+
+- name: add ssh keys for the deploy user
+  become: true
+  authorized_key: key="{{ lookup('file', item) }}" user=deploy
+  with_fileglob:
+    - ssh_keys/*

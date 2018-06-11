@@ -16,7 +16,8 @@ server {
   client_max_body_size 4G;
   keepalive_timeout 10;
 
-  root /home/ubuntu/apps/redapp-server/current/public;
+  root /home/deploy/apps/redapp-server/current/public;
+  passenger_app_root /home/deploy/apps/redapp-server/current;
   passenger_enabled on;
   rails_env production;
   passenger_min_instances 1;

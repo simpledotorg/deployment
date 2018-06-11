@@ -1,4 +1,4 @@
-/home/ubuntu/apps/*/current/log/*.log {
+/home/deploy/apps/*/current/log/*.log {
   su ubuntu ubuntu
   daily
   rotate 14
