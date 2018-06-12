@@ -91,22 +91,22 @@
   become: true
   notify: restart monit
 
-- name: load SSL cert files
-  include_vars: "ssl-vault.yml"
-  no_log: true
+# - name: load SSL cert files
+#   include_vars: "ssl-vault.yml"
+#   no_log: true
 
-- name: copy SSL cert files
-  copy:
-    dest: "{{ item.key }}"
-    content: "{{ item.value.content }}"
-    owner: "{{ item.value.owner }}"
-    group: "{{ item.value.group }}"
-    mode: "{{ item.value.mode }}"
-  with_dict: "{{ ssl_cert_files }}"
-  no_log: true
-  become: true
-  notify: restart nginx
-#
+# - name: copy SSL cert files
+#   copy:
+#     dest: "{{ item.key }}"
+#     content: "{{ item.value.content }}"
+#     owner: "{{ item.value.owner }}"
+#     group: "{{ item.value.group }}"
+#     mode: "{{ item.value.mode }}"
+#   with_dict: "{{ ssl_cert_files }}"
+#   no_log: true
+#   become: true
+#   notify: restart nginx
+
 #- name: create /mnt/tmpruby
 #  file: >
 #    path=/mnt/tmpruby

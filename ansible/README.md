@@ -28,11 +28,16 @@ ssh-add ~/.ssh/webservers.pem
 ### Staging
 
 ```
-ansible-playbook deploy.yml -i hosts.staging
+ansible-playbook -v  --vault-id /path/to/staging_password_file deploy.yml -i hosts.staging
 ```
 
 ### Production
 
 ```
-ansible-playbook deploy.yml -i hosts.production
+ansible-playbook --vault-id /path/to/production_password_file deploy.yml deploy.yml -i hosts.production
+```
+
+### Changing secrets
+```
+ansible-vault edit --vault-id /path/to/password_file  roles/redapp-server/files/.env.staging
 ```
