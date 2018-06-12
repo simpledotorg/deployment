@@ -51,15 +51,15 @@
   become: true
   become_user: deploy
 
-- name: install ruby 2.3.4
-  shell: rbenv install -s 2.3.4
+- name: install ruby 2.5.1
+  shell: rbenv install -s 2.5.1
   environment:
     PATH: "/home/deploy/.rbenv/bin:/home/deploy/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
   become: true
   become_user: deploy
 
-- name: make ruby 2.3.4 global
-  shell: rbenv global 2.3.4
+- name: make ruby 2.5.1 global
+  shell: rbenv global 2.5.1
   environment:
     PATH: "/home/deploy/.rbenv/bin:/home/deploy/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
   become: true
