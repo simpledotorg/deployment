@@ -28,13 +28,13 @@ ssh-add ~/.ssh/webservers.pem
 ### Staging
 
 ```
-ansible-playbook -v --vault-id @prompt deploy.yml -i hosts.staging
+ansible-playbook -v  --vault-id /path/to/staging_password_file deploy.yml -i hosts.staging
 ```
 
 ### Production
 
 ```
-ansible-playbook deploy.yml -i hosts.production
+ansible-playbook --vault-id /path/to/production_password_file deploy.yml deploy.yml -i hosts.production
 ```
 
 ### Changing secrets
