@@ -149,7 +149,7 @@
 set httpd port 2812 and
      allow localhost        # allow localhost to connect to the server and
      allow admin:monit      # require user 'admin' with password 'monit'
-     allow 0.0.0.0/0.0.0.0#
+     allow 0.0.0.0/0.0.0.0
 #
 ###############################################################################
 ## Services
