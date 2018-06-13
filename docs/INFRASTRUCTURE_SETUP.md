@@ -72,6 +72,11 @@ From the EC2 dashboard, use the following instructions:
     - Add your application instance's security group to the text field
     - Tip: The text feild should autocomplete
 
+#### Assign elastic ip to EC2 instance
+- From EC2 dashboard, click on Elastic IPs
+- Assign a new elastic IP
+- Associate IP with the new instance that was provisioned
+
 #### Next steps 
 The instance can now be setup for deploy. 
 Follow instructions in [ansible/README.md](ansible/README.md) to setup the instance.
