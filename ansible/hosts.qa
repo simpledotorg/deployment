@@ -1,0 +1,8 @@
+[redapp]
+13.126.129.241
+
+[rails:children]
+redapp
+
+[qa:children]
+redapp
