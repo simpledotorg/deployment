@@ -1,8 +1,8 @@
-[redapp]
-13.126.149.25
+[simple]
+api-qa.simple.org
 
 [rails:children]
-redapp
+simple
 
 [qa:children]
-redapp
+simple
