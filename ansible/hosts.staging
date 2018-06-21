@@ -1,8 +1,8 @@
-[redapp]
-13.126.149.25
+[simple]
+api-staging.simple.org
 
 [rails:children]
-redapp
+simple
 
 [staging:children]
-redapp
+simple

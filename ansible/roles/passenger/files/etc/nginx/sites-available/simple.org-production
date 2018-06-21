@@ -1,17 +1,21 @@
 # Pre-start passenger so the first request isn't slow
-passenger_pre_start http://redapp-server.com/;
-
-server {
-  listen 80;
-  server_name redapp-server.com;
-
-  # Send all traffic to www.
-  return 301 http://www.redapp-server.com$request_uri;
-}
+passenger_pre_start http://api.simple.org/;
 
 server {
   listen 80 default_server;
-  server_name www.redapp-server.com;
+  server_name api.simple.org;
+
+  # Send all traffic to HTTPS
+  return 301 https://api.simple.org$request_uri;
+}
+
+server {
+  listen 443;
+  server_name api.simple.org;
+
+  ssl on;
+  ssl_certificate /etc/ssl/simple.org.crt;
+  ssl_certificate_key /etc/ssl/simple.org.key;
 
   client_max_body_size 4G;
   keepalive_timeout 10;
@@ -19,7 +23,6 @@ server {
   root /home/deploy/apps/redapp-server/current/public;
   passenger_app_root /home/deploy/apps/redapp-server/current;
   passenger_enabled on;
-  passenger_ruby /home/deploy/.rbenv/shims/ruby;
   rails_env production;
   passenger_min_instances 1;
   passenger_start_timeout 300;

@@ -91,34 +91,25 @@
   become: true
   notify: restart monit
 
-# - name: load SSL cert files
-#   include_vars: "ssl-vault.yml"
-#   no_log: true
+- name: generate Diffie-Hellman params for nginx SSL
+  command: openssl dhparam -out /etc/ssl/dhparam.pem 2048
+  args:
+    creates: /etc/ssl/dhparam.pem
+  become: true
+  notify: restart nginx
 
-# - name: copy SSL cert files
-#   copy:
-#     dest: "{{ item.key }}"
-#     content: "{{ item.value.content }}"
-#     owner: "{{ item.value.owner }}"
-#     group: "{{ item.value.group }}"
-#     mode: "{{ item.value.mode }}"
-#   with_dict: "{{ ssl_cert_files }}"
-#   no_log: true
-#   become: true
-#   notify: restart nginx
+- name: load SSL cert files
+  include_vars: "ssl-vault.yml"
+  no_log: true
 
-#- name: create /mnt/tmpruby
-#  file: >
-#    path=/mnt/tmpruby
-#    state=directory
-#    mode=0755
-#    owner=ubuntu
-#  become: true
-#
-#- name: create /mnt/tmpruby/watermarked_images
-#  file: >
-#    path=/mnt/watermarked_images
-#    state=directory
-#    mode=0755
-#    owner=ubuntu
-#  become: true
+- name: copy SSL cert files
+  copy:
+    dest: "{{ item.key }}"
+    content: "{{ item.value.content }}"
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+  with_dict: "{{ ssl_cert_files }}"
+  no_log: true
+  become: true
+  notify: restart nginx

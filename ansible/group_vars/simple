@@ -1,0 +1,3 @@
+---
+nginx_sites:
+  - "simple.org-{{ deploy_env }}"

@@ -1,3 +1,0 @@
----
-nginx_sites:
-  - "redapp-{{ deploy_env }}"
