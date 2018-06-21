@@ -10,7 +10,7 @@ server {
 }
 
 server {
-  listen 443 default_server;
+  listen 443;
   server_name api-qa.simple.org;
 
   ssl on;
