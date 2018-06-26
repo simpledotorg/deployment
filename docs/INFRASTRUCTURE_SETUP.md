@@ -81,3 +81,26 @@ From the EC2 dashboard, use the following instructions:
 The instance can now be setup for deploy. 
 Follow instructions in [ansible/README.md](ansible/README.md) to setup the instance.
 After this, the application can be deployed on this instance.
+
+
+#### Upgrading the server instance
+The server instance can be upgraded on AWS by followning these steps.
+These steps however involve a downtime. No downtime deploys can be done by
+temporarily changing the hosts files to point the the IP of the new instance,
+deploying the playbook and application, and then reassigning the Elastic IP.
+
+1. Create an instance of the desired configuration
+2. Re-assign the Elastic-IP
+3. Deploy the ansible playbook
+4. Deploy application with capistrano
+
+#### Upgrading the DB instance
+The DB instance can be upgraded on RDS by following these steps
+
+1. Create an instance of the desired configuration
+2. Update .env.production with the new DB configuration
+3. Deploy the ansible playbook
+4. Restart passenger using capistrano
+```bash
+bundle exec cap <env> passenger:restart
+```
