@@ -39,10 +39,10 @@ ansible-playbook --vault-id /path/to/production_password_file deploy.yml deploy.
 
 ### Changing secrets
 ```
-ansible-vault edit --vault-id /path/to/password_file  roles/redapp-server/files/.env.staging
+ansible-vault edit --vault-id /path/to/password_file  roles/simple-server/files/.env.staging
 ```
 
 ### Changing secrets
 ```
-ansible-vault edit --vault-id /path/to/password_file  roles/redapp-server/files/.env.staging
+ansible-vault edit --vault-id /path/to/password_file  roles/simple-server/files/.env.staging
 ```

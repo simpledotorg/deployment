@@ -6,4 +6,4 @@
     - { role: rbenv, tags: ['rbenv'] }
     - { role: passenger, tags: ['passenger'] }
     - { role: postgresql-client, tags: ['postgresql-client'] }
-    - { role: redapp-server, tags: ['redapp-server'] }
+    - { role: simple-server, tags: ['simple-server'] }

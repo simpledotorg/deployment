@@ -1,0 +1,12 @@
+# simple server tasks
+---
+
+- name: create apps directory
+  file: path=/home/deploy/apps/simple-server/shared state=directory
+  become: true
+  become_user: deploy
+
+- name: copy .env file
+  copy: src=.env.{{ deploy_env }} dest=/home/deploy/apps/simple-server/shared/.env.production
+  become: true
+  become_user: deploy
