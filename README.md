@@ -1,6 +1,6 @@
-# Redapp deployment
+# Simple Server deployment
 
-This project contains the deployments scripts and instructions for redapp-server.
+This project contains the deployments scripts and instructions for simple-server.
 
 ## Getting started
 

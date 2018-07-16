@@ -1,7 +1,7 @@
-# Infrastructure for redapp-server
+# Infrastructure for simple-server
 
-Redapp-server requires one instance for the application, and one instance for a postgres database.
-These instructions assume using EC2 for the application, and RDS for postgres. 
+Simple-server requires one instance for the application, and one instance for a postgres database.
+These instructions assume using EC2 for the application, and RDS for postgres.
 
 ## Description
 
@@ -13,7 +13,7 @@ These instructions assume using EC2 for the application, and RDS for postgres.
 - RDS - t2.micro
 - PostgreSQL 10.3-R1
 
-### Provisioning instructions 
+### Provisioning instructions
 Before beginning, create an ansible vault for the new environment.
 
 #### RDS
@@ -31,7 +31,7 @@ Before beginning, create an ansible vault for the new environment.
 - Add a dbname
 - Launch instance
 
-It will take some time for aws to allocate a host to the database. 
+It will take some time for aws to allocate a host to the database.
 The ansible-vault for the environment should be update now with the database details.
 
 ```
@@ -39,9 +39,9 @@ Tip: You can choose to only show options available for the free tier
 ```
 
 #### AWS
-From the EC2 dashboard, use the following instructions: 
+From the EC2 dashboard, use the following instructions:
 
-- Click launch instance 
+- Click launch instance
 - Select Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
 - Select t2.micro
 - Click Next: Configure instance details
@@ -65,7 +65,7 @@ From the EC2 dashboard, use the following instructions:
   - Click on the security-group, this will open the security group dashboard with the DB's security group selected.
 - Click on Inbound from the security group's details
 - Click Edit
-- Add Rule: 
+- Add Rule:
   - type: PostgreSQL
   - source:
     - choose custom
@@ -77,8 +77,8 @@ From the EC2 dashboard, use the following instructions:
 - Assign a new elastic IP
 - Associate IP with the new instance that was provisioned
 
-#### Next steps 
-The instance can now be setup for deploy. 
+#### Next steps
+The instance can now be setup for deploy.
 Follow instructions in [ansible/README.md](ansible/README.md) to setup the instance.
 After this, the application can be deployed on this instance.
 
