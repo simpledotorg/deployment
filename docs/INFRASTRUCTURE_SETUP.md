@@ -1,6 +1,6 @@
 # Infrastructure for simple-server
 
-Redapp-server requires one instance for the application, and one instance for a postgres database.
+Simple-server requires one instance for the application, and one instance for a postgres database.
 These instructions assume using EC2 for the application, and RDS for postgres.
 
 ## Description

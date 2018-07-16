@@ -1,4 +1,4 @@
-# RedApp Sever Operations
+# Simple Sever Operations
 
 We use [Ansible](http://docs.ansible.com/) to manage our deployment.
 
