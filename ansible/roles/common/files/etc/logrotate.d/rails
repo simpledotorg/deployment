@@ -1,5 +1,5 @@
 /home/deploy/apps/*/current/log/*.log {
-  su ubuntu ubuntu
+  su deploy deploy
   daily
   rotate 14
   missingok
@@ -7,4 +7,5 @@
   compress
   delaycompress
   copytruncate
+  dateext
 }
