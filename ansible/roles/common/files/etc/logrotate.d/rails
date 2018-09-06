@@ -8,4 +8,8 @@
   delaycompress
   copytruncate
   dateext
+  lastaction
+    HOSTNAME=`hostname`
+    /usr/bin/s3cmd sync /home/deploy/apps/*/current/log/*.gz "s3://test-simple-server-archived-logs-01/$HOSTNAME/rails/"
+  endscript
 }
