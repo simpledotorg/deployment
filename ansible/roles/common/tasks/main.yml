@@ -35,6 +35,7 @@
     - nodejs
     - python-pexpect
     - python-software-properties
+    - s3cmd
     - sqlite3
     - unattended-upgrades
     - vim
