@@ -99,7 +99,7 @@
   become: true
 
 - name: set up s3cmd
-  copy: src=.s3cfg dest=/home/ubuntu/.s3cfg
+  copy: src=.s3cfg dest=/root/.s3cfg
   become: true
 
 - name: Ensure group "deploy" exists
