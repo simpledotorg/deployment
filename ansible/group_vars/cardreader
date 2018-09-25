@@ -1,0 +1,5 @@
+---
+nginx_sites:
+  - "simple.org-cardreader"
+app_name: cardreader
+deploy_env: cardreader

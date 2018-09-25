@@ -1,3 +1,5 @@
 ---
 nginx_sites:
   - "simple.org-{{ deploy_env }}"
+app_name:
+  - "simple-server"

@@ -2,11 +2,11 @@
 ---
 
 - name: create apps directory
-  file: path=/home/deploy/apps/simple-server/shared state=directory
+  file: path=/home/deploy/apps/{{app_name}}/shared state=directory
   become: true
   become_user: deploy
 
 - name: copy .env file
-  copy: src=.env.{{ deploy_env }} dest=/home/deploy/apps/simple-server/shared/.env.production
+  copy: src=.env.{{ deploy_env }} dest=/home/deploy/apps/{{app_name}}/shared/.env.production
   become: true
   become_user: deploy
