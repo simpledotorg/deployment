@@ -1,0 +1,8 @@
+[cardreader]
+cardreader.simple.org
+
+[rails:children]
+cardreader
+
+[qa:children]
+cardreader
