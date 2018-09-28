@@ -48,5 +48,5 @@ server {
   }
 
   auth_basic           "Please login to access Cardreader";
-  auth_basic_user_file /etc/apache2/.htpasswd; 
+  auth_basic_user_file /etc/nginx/.htpasswd;
 }
