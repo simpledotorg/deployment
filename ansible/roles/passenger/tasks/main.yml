@@ -56,7 +56,7 @@
   notify: restart nginx
 
 - name: copy htpasswd file for cardreader
-  copy: src=etc/apache2/.htpasswd dest=/etc/apache2/.htpasswd
+  copy: src=etc/nginx/.htpasswd dest=/etc/nginx/.htpasswd
   when: app_name == "cardreader"
   become: true
 
