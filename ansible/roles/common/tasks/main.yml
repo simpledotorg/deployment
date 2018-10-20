@@ -33,7 +33,6 @@
     - libxslt1-dev
     - libyaml-dev
     - logrotate
-    - nodejs
     - python-pexpect
     - python-software-properties
     - s3cmd

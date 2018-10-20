@@ -4,6 +4,7 @@
     - { role: common, tags: ['common'] }
     - { role: monit, tags: ['monit'] }
     - { role: rbenv, tags: ['rbenv'] }
+    - { role: nodejs, tags: ['nodejs'] }
     - { role: passenger, tags: ['passenger'] }
     - { role: postgresql-client, tags: ['postgresql-client'] }
     - { role: simple-server, tags: ['simple-server'] }
