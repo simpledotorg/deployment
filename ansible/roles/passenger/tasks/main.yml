@@ -55,11 +55,6 @@
   become: true
   notify: restart nginx
 
-- name: copy htpasswd file for cardreader
-  copy: src=etc/nginx/.htpasswd dest=/etc/nginx/.htpasswd
-  when: app_name == "cardreader"
-  become: true
-
 - name: get enabled site configs
   shell: ls -1 /etc/nginx/sites-enabled
   register: sites_enabled_contents
