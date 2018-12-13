@@ -1,4 +1,11 @@
 ---
+# Add key for postgresql-client
+- name: Add the apt key for postgresql-client
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 7FCC7D46ACCC4CF8
+
+
 # postgresql-client tasks
 - name: install packages
   apt: pkg={{ item }} state=latest
