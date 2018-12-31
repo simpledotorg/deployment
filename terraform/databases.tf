@@ -56,6 +56,15 @@ resource "aws_db_instance" "production_simple_db" {
   }
 }
 
+resource "aws_db_instance" "replica_production_simple_db" {
+  identifier                 = "redapp-db-production-01-read-replica"
+  replicate_source_db        = "${aws_db_instance.production_simple_db.identifier}"
+  instance_class             = "db.t2.medium"
+  storage_encrypted          = true
+  auto_minor_version_upgrade = false
+  publicly_accessible        = false
+}
+
 # Card Reader
 resource "aws_db_instance" "production_cardreader_db" {
   allocated_storage          = 20
