@@ -22,17 +22,20 @@ resource "aws_instance" "qa_simple_server" {
     Name = "simple-server-vpc2-qa"
   }
 }
-
+ 
 #
 # Assign Elastic IPs
 #
-resource "aws_eip" "redapp-staging" {
-  instance    = "${aws_instance.redapp-staging.id}"
+resource "aws_eip" "qa_simple_server" {
+  instance    = "${aws_instance.qa_simple_server.id}"
+  tags {
+    Name = "qa-server-ipaddress"
+  }
 }
 
 #
 # Output provisioned IPs
 #
-output "redapp-staging-ip" {
-  value = "${aws_eip.redapp-staging.public_ip}"
+output "qa-simple-server-ip" {
+  value = "${aws_eip.qa_simple_server.public_ip}"
 }
