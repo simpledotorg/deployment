@@ -1,9 +1,18 @@
 #
+# Set remote backend to save state
+#
+terraform {
+  backend "s3" {
+    encrypt = true
+  }
+}
+
+#
 # Set up the AWS SSH key pair
 #
-resource "aws_key_pair" "redapp-staging" {
+resource "aws_key_pair" "simple_aws_key" {
   key_name   = "redapp-server-staging"
-  public_key = "${file("~/.ssh/redapp-server-staging.pub")}"
+  public_key = "${file("~/.ssh/simple_aws_key.pub")}"
 }
 
 #
@@ -12,7 +21,7 @@ resource "aws_key_pair" "redapp-staging" {
 resource "aws_instance" "qa_simple_server" {
   ami = "${var.qa_ami}"
   instance_type = "t2.micro"
-  key_name = "${aws_key_pair.redapp-staging.key_name}"
+  key_name = "${aws_key_pair.simple_aws_key.key_name}"
 
   root_block_device {
     volume_size = "8"
