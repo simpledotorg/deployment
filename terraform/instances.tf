@@ -28,3 +28,17 @@ resource "aws_instance" "staging_simple_server" {
     Name = "simple-server-vpc2-staging"
   }
 }
+
+resource "aws_instance" "production_simple_server" {
+  ami = "${var.production_ami}"
+  instance_type = "t2.medium"
+  key_name = "${aws_key_pair.simple_aws_key.key_name}"
+
+  root_block_device {
+    volume_size = "30"
+  }
+
+  tags {
+    Name = "simple-server-vpc2-production"
+  }
+}

@@ -9,3 +9,7 @@ variable "qa_ami" {
 variable "staging_ami" {
   default = "ami-0c54ef6b68b4c24c6"
 }
+
+variable "production_ami" {
+  default = "ami-071e000aa05cd7666"
+}

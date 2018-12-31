@@ -16,3 +16,9 @@ resource "aws_eip" "staging_simple_server" {
   }
 }
 
+resource "aws_eip" "production_simple_server" {
+  instance    = "${aws_instance.production_simple_server.id}"
+  tags {
+    Name = "production-server-ipaddress"
+  }
+}
