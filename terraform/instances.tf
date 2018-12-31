@@ -1,6 +1,8 @@
 #
 # Provision the EC2 instances
 #
+
+# Simple Server
 resource "aws_instance" "qa_simple_server" {
   ami = "${var.qa_ami}"
   instance_type = "t2.micro"
@@ -40,5 +42,20 @@ resource "aws_instance" "production_simple_server" {
 
   tags {
     Name = "simple-server-vpc2-production"
+  }
+}
+
+# Cardreader
+resource "aws_instance" "production_cardreader" {
+  ami = "${var.cardreader_ami}"
+  instance_type = "t2.micro"
+  key_name = "${aws_key_pair.simple_aws_key.key_name}"
+
+  root_block_device {
+    volume_size = "8"
+  }
+
+  tags {
+    Name = "cardreader-vpc2-production"
   }
 }

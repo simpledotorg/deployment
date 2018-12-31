@@ -13,3 +13,7 @@ variable "staging_ami" {
 variable "production_ami" {
   default = "ami-071e000aa05cd7666"
 }
+
+variable "cardreader_ami" {
+  default = "ami-04ea996e7a3e7ad6b"
+}
