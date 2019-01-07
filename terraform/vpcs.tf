@@ -27,16 +27,16 @@ resource "aws_subnet" "simple_databases_01" {
   map_public_ip_on_launch = true
   cidr_block              = "172.31.16.0/20"
   vpc_id                  = "${aws_vpc.simple_databases.id}"
-  # tags {
-  #   Name = "simple-databases-subnet-01"
-  # }
+  tags {
+    Name = "simple-databases-subnet-01"
+  }
 }
 
 resource "aws_subnet" "simple_databases_02" {
   map_public_ip_on_launch = true
   cidr_block              = "172.31.0.0/20"
   vpc_id                  = "${aws_vpc.simple_databases.id}"
-  # tags {
-  #   Name = "simple-databases-subnet-02"
-  # }
+  tags {
+    Name = "simple-databases-subnet-02"
+  }
 }
