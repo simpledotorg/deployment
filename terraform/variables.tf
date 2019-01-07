@@ -17,3 +17,5 @@ variable "production_ami" {
 variable "cardreader_ami" {
   default = "ami-04ea996e7a3e7ad6b"
 }
+
+variable "sandbox_db_password" {}
