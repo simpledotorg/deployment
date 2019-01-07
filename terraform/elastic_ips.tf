@@ -1,8 +1,9 @@
-#
-# Assign Elastic IPs
-#
+###
+### Assign Elastic IPs
+###
 
-# Simple Server
+### Simple Server
+# QA
 resource "aws_eip" "qa_simple_server" {
   instance    = "${aws_instance.qa_simple_server.id}"
   tags {
@@ -10,6 +11,7 @@ resource "aws_eip" "qa_simple_server" {
   }
 }
 
+# Staging
 resource "aws_eip" "staging_simple_server" {
   instance    = "${aws_instance.staging_simple_server.id}"
   tags {
@@ -17,6 +19,15 @@ resource "aws_eip" "staging_simple_server" {
   }
 }
 
+# # Sandbox
+# resource "aws_eip" "sandbox_simple_server" {
+#   instance    = "${aws_instance.sandbox_simple_server.id}"
+#   tags {
+#     Name = "sandbox-server-ipaddress"
+#   }
+# }
+
+# Production
 resource "aws_eip" "production_simple_server" {
   instance    = "${aws_instance.production_simple_server.id}"
   tags {

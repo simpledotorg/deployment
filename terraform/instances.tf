@@ -1,8 +1,9 @@
-#
-# Provision the EC2 instances
-#
+###
+### Provision the EC2 instances
+###
 
-# Simple Server
+### Simple Server
+# QA
 resource "aws_instance" "qa_simple_server" {
   ami = "${var.qa_ami}"
   instance_type = "t2.micro"
@@ -19,6 +20,7 @@ resource "aws_instance" "qa_simple_server" {
   }
 }
  
+# Staging
 resource "aws_instance" "staging_simple_server" {
   ami = "${var.staging_ami}"
   instance_type = "t2.micro"
@@ -35,6 +37,34 @@ resource "aws_instance" "staging_simple_server" {
   }
 }
 
+# Sandbox
+resource "aws_instance" "sandbox_simple_server" {
+  ami = "${data.aws_ami.ubuntu.id}"
+  instance_type = "t2.medium"
+  key_name = "${aws_key_pair.simple_aws_key.key_name}"
+
+  root_block_device {
+    volume_size = "30"
+  }
+
+  subnet_id = "${aws_subnet.simple_servers_01.id}"
+
+  vpc_security_group_ids = [
+    "${aws_security_group.allow_ssh.id}",
+    "${aws_security_group.allow_http_https.id}",
+    "${aws_security_group.allow_outbound.id}",
+    "${aws_security_group.allow_monit.id}",
+    "${aws_security_group.sandbox_simple_server.id}"
+  ]
+
+  associate_public_ip_address = true
+
+  tags {
+    Name = "simple-server-vpc2-sandbox"
+  }
+}
+
+# Production
 resource "aws_instance" "production_simple_server" {
   ami = "${var.production_ami}"
   instance_type = "t2.medium"
