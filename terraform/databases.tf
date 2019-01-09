@@ -57,6 +57,7 @@ resource "aws_db_instance" "sandbox_simple_db" {
     workload-type = "production"
   }
   password = "${var.sandbox_db_password}"
+  vpc_security_group_ids = ["${aws_security_group.sandbox_simple_database.id}"]
 }
 
 # resource "aws_db_instance" "replica_sandbox_simple_db" {

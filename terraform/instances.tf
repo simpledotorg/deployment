@@ -39,7 +39,7 @@ resource "aws_instance" "staging_simple_server" {
 
 # Sandbox
 resource "aws_instance" "sandbox_simple_server" {
-  ami = "${data.aws_ami.ubuntu.id}"
+  ami = "${var.production_ami}"
   instance_type = "t2.medium"
   key_name = "${aws_key_pair.simple_aws_key.key_name}"
 

@@ -91,9 +91,24 @@ resource "aws_security_group_rule" "allow_monit" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-# Sandbox security group
+# Sandbox security groups
 resource "aws_security_group" "sandbox_simple_server" {
   name        = "simple-server-sandbox-sg"
-  description = "Security group for andbox simple servers"
+  description = "Security group for sandbox simple servers"
   vpc_id = "${aws_vpc.simple_servers.id}"
+}
+
+resource "aws_security_group" "sandbox_simple_database" {
+  name        = "simple-db-sandbox-sg"
+  description = "Security group for sandbox database"
+  vpc_id = "${aws_vpc.simple_databases.id}"
+}
+
+resource "aws_security_group_rule" "sandbox_simple_database" {
+  security_group_id        = "${aws_security_group.sandbox_simple_database.id}"
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = 5432
+  to_port                  = 5432
+  source_security_group_id = "${aws_security_group.sandbox_simple_server.id}"
 }
