@@ -47,13 +47,12 @@ resource "aws_instance" "sandbox_simple_server" {
     volume_size = "30"
   }
 
-  subnet_id = "${aws_subnet.simple_servers_01.id}"
+  subnet_id = "${aws_subnet.simple_servers_01_01.id}"
 
   vpc_security_group_ids = [
-    "${aws_security_group.allow_ssh.id}",
-    "${aws_security_group.allow_http_https.id}",
-    "${aws_security_group.allow_outbound.id}",
-    "${aws_security_group.allow_monit.id}",
+    "${aws_security_group.allow_ssh_01.id}",
+    "${aws_security_group.allow_http_https_01.id}",
+    "${aws_security_group.allow_outbound_01.id}",
     "${aws_security_group.sandbox_simple_server.id}"
   ]
 

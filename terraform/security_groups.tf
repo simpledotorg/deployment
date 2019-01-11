@@ -18,6 +18,21 @@ resource "aws_security_group_rule" "allow_ssh" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
+resource "aws_security_group" "allow_ssh_01" {
+  vpc_id = "${aws_vpc.simple_servers_01.id}"
+  name        = "allow-ssh-01"
+  description = "Allow SSH inbound traffic"
+}
+
+resource "aws_security_group_rule" "allow_ssh_01" {
+  security_group_id = "${aws_security_group.allow_ssh_01.id}"
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 22
+  to_port           = 22
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
 resource "aws_security_group" "allow_http_https" {
   name        = "allow-https"
   description = "Allow HTTP/HTTPS inbound traffic"
@@ -36,6 +51,32 @@ resource "aws_security_group_rule" "allow_http_https" {
 
 resource "aws_security_group_rule" "allow_http_https-1" {
   security_group_id = "${aws_security_group.allow_http_https.id}"
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 443
+  to_port           = 443
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+### 
+resource "aws_security_group" "allow_http_https_01" {
+  name        = "allow-https-01"
+  description = "Allow HTTP/HTTPS inbound traffic"
+  vpc_id = "${aws_vpc.simple_servers_01.id}"
+}
+
+# Allow HTTP and HTTPS
+resource "aws_security_group_rule" "allow_http_https_01" {
+  security_group_id = "${aws_security_group.allow_http_https_01.id}"
+  type              = "ingress"
+  protocol          = "tcp"
+  from_port         = 80
+  to_port           = 80
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "allow_http_https_01-1" {
+  security_group_id = "${aws_security_group.allow_http_https_01.id}"
   type              = "ingress"
   protocol          = "tcp"
   from_port         = 443
@@ -75,6 +116,21 @@ resource "aws_security_group_rule" "allow_outbound" {
 
 }
 
+resource "aws_security_group" "allow_outbound_01" {
+  name        = "allow-all-outbound"
+  description = "Allow all outbound traffic"
+  vpc_id = "${aws_vpc.simple_servers_01.id}"
+}
+
+resource "aws_security_group_rule" "allow_outbound_01" {
+  security_group_id = "${aws_security_group.allow_outbound_01.id}"
+  type="egress"
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
 # Allow Monit
 resource "aws_security_group" "allow_monit" {
   name        = "allow-monit"
@@ -95,7 +151,7 @@ resource "aws_security_group_rule" "allow_monit" {
 resource "aws_security_group" "sandbox_simple_server" {
   name        = "simple-server-sandbox-sg"
   description = "Security group for sandbox simple servers"
-  vpc_id = "${aws_vpc.simple_servers.id}"
+  vpc_id = "${aws_vpc.simple_servers_01.id}"
 }
 
 resource "aws_security_group" "sandbox_simple_database" {
