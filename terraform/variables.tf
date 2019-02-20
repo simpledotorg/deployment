@@ -2,6 +2,14 @@ variable "aws_region" {
   default = "ap-south-1"
 }
 
+variable "aws_availability_zone_a" {
+  default = "ap-south-1a"
+}
+
+variable "aws_availability_zone_b" {
+  default = "ap-south-1b"
+}
+
 variable "qa_ami" {
   default = "ami-0279be4ad6b012061"
 }
@@ -17,3 +25,5 @@ variable "production_ami" {
 variable "cardreader_ami" {
   default = "ami-04ea996e7a3e7ad6b"
 }
+
+variable "sandbox_db_password" {}

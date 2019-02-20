@@ -4,5 +4,5 @@ cardreader.simple.org
 [rails:children]
 cardreader
 
-[qa:children]
+[cardreader:children]
 cardreader
