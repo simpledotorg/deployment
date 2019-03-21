@@ -19,7 +19,7 @@ resource "aws_instance" "qa_simple_server" {
     Name = "simple-server-vpc2-qa"
   }
 }
- 
+
 # Staging
 resource "aws_instance" "staging_simple_server" {
   ami = "${var.staging_ami}"
@@ -83,7 +83,7 @@ resource "aws_instance" "production_simple_server" {
 # Cardreader
 resource "aws_instance" "production_cardreader" {
   ami = "${var.cardreader_ami}"
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   key_name = "${aws_key_pair.simple_aws_key.key_name}"
 
   root_block_device {
