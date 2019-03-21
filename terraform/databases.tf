@@ -2,7 +2,7 @@
 ### Provision the RDS instances
 ###
 
-### Simple Server 
+### Simple Server
 # QA
 resource "aws_db_instance" "qa_simple_db" {
   allocated_storage          = 20
@@ -68,7 +68,7 @@ resource "aws_db_instance" "sandbox_simple_db" {
 #   auto_minor_version_upgrade = false
 #   publicly_accessible        = false
 # }
- 
+
 # Production
 resource "aws_db_instance" "production_simple_db" {
   storage_encrypted          = true
@@ -102,7 +102,7 @@ resource "aws_db_instance" "replica_production_simple_db" {
 resource "aws_db_instance" "production_cardreader_db" {
   allocated_storage          = 20
   engine                     = "postgres"
-  engine_version             = "10.4"
+  engine_version             = "10.6"
   identifier                 = "cardreader-db-production"
   instance_class             = "db.t2.micro"
   name                       = "cardreader_production"
