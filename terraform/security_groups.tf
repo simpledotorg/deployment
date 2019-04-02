@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "allow_ssh_01" {
 resource "aws_security_group" "allow_http_https" {
   name        = "allow-https"
   description = "Allow HTTP/HTTPS inbound traffic"
-  vpc_id = "${aws_vpc.simple_servers.id}"
+  vpc_id      = "${aws_vpc.simple_servers.id}"
 }
 
 # Allow HTTP and HTTPS
@@ -62,7 +62,7 @@ resource "aws_security_group_rule" "allow_http_https-1" {
 resource "aws_security_group" "allow_http_https_01" {
   name        = "allow-https-01"
   description = "Allow HTTP/HTTPS inbound traffic"
-  vpc_id = "${aws_vpc.simple_servers_01.id}"
+  vpc_id      = "${aws_vpc.simple_servers_01.id}"
 }
 
 # Allow HTTP and HTTPS
@@ -103,7 +103,7 @@ resource "aws_security_group_rule" "allow_postgresql" {
 resource "aws_security_group" "allow_outbound" {
   name        = "allow-all-outbound"
   description = "Allow all outbound traffic"
-  vpc_id = "${aws_vpc.simple_servers.id}"
+  vpc_id      = "${aws_vpc.simple_servers.id}"
 }
 
 resource "aws_security_group_rule" "allow_outbound" {
@@ -119,7 +119,7 @@ resource "aws_security_group_rule" "allow_outbound" {
 resource "aws_security_group" "allow_outbound_01" {
   name        = "allow-all-outbound"
   description = "Allow all outbound traffic"
-  vpc_id = "${aws_vpc.simple_servers_01.id}"
+  vpc_id      = "${aws_vpc.simple_servers_01.id}"
 }
 
 resource "aws_security_group_rule" "allow_outbound_01" {
@@ -135,7 +135,7 @@ resource "aws_security_group_rule" "allow_outbound_01" {
 resource "aws_security_group" "allow_monit" {
   name        = "allow-monit"
   description = "Allow monit inbound traffic"
-  vpc_id = "${aws_vpc.simple_servers.id}"
+  vpc_id      = "${aws_vpc.simple_servers.id}"
 }
 
 resource "aws_security_group_rule" "allow_monit" {
@@ -151,7 +151,7 @@ resource "aws_security_group_rule" "allow_monit" {
 resource "aws_security_group" "sandbox_simple_server" {
   name        = "simple-server-sandbox-sg"
   description = "Security group for sandbox simple servers"
-  vpc_id = "${aws_vpc.simple_servers_01.id}"
+  vpc_id      = "${aws_vpc.simple_servers_01.id}"
 }
 
 resource "aws_security_group" "sandbox_simple_database" {
@@ -217,7 +217,7 @@ resource "aws_security_group_rule" "staging_simple_database" {
 resource "aws_security_group" "sandbox_simple_elasticache" {
   name        = "simple-sandbox-elasticache-sg"
   description = "Security group for all sandbox elasticache instances"
-  vpc_id = "${aws_vpc.simple_servers_01.id}"
+  vpc_id      = "${aws_vpc.simple_servers_01.id}"
 }
 
 resource "aws_security_group_rule" "sandbox_simple_elasticache" {
@@ -233,7 +233,7 @@ resource "aws_security_group_rule" "sandbox_simple_elasticache" {
 resource "aws_security_group" "qa_simple_elasticache" {
   name        = "simple-qa-elasticache-sg"
   description = "Security group for all qa elasticache instances"
-  vpc_id = "${aws_vpc.simple_servers.id}"
+  vpc_id      = "${aws_vpc.simple_servers.id}"
 }
 
 resource "aws_security_group_rule" "qa_simple_elasticache" {
@@ -249,7 +249,7 @@ resource "aws_security_group_rule" "qa_simple_elasticache" {
 resource "aws_security_group" "staging_simple_elasticache" {
   name        = "simple-staging-elasticache-sg"
   description = "Security group for all staging elasticache instances"
-  vpc_id = "${aws_vpc.simple_servers.id}"
+  vpc_id      = "${aws_vpc.simple_servers.id}"
 }
 
 resource "aws_security_group_rule" "staging_simple_elasticache" {
