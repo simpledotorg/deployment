@@ -35,6 +35,7 @@
     - logrotate
     - python-pexpect
     - python-software-properties
+    - redis-tools
     - s3cmd
     - sqlite3
     - unattended-upgrades
