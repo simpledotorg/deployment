@@ -14,14 +14,14 @@ brew install ansible
 
 ## Hosts
 
-These are the following environments:
+These are the environments
 
 - sandbox
 - qa
 - staging
 - production
 
-Each environment has it's own `hosts.<env_name>` (root directory) file and `.env.<env_name` (roles/simple-server/files)
+Each environment has it's own `hosts.<env_name>` ([root](/) directory) file and `.env.<env_name>` ([roles/simple-server/files](roles/simple-server/files))
 
 ## Changing secrets
 
@@ -33,7 +33,7 @@ ansible-vault edit --vault-id /path/to/password_file  roles/simple-server/files/
 ## Updating configs
 
 ```
-ansible-playbook -v  --vault-id /path/to/password_file conf-update.yml -i hosts.<env_name>
+ansible-playbook -v --vault-id /path/to/password_file conf-update.yml -i hosts.<env_name>
 ```
 
 ## Deploying
@@ -48,5 +48,5 @@ ssh-add ~/.ssh/webservers.pem
 ```
 
 ```
-ansible-playbook -v  --vault-id /path/to/password_file deploy.yml -i hosts.<env_name>
+ansible-playbook -v --vault-id /path/to/password_file deploy.yml -i hosts.<env_name>
 ```
