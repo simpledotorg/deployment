@@ -1,0 +1,4 @@
+---
+- hosts: rails
+  roles:
+    - { role: simple-server, tags: ['simple-server'] }

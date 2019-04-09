@@ -12,11 +12,33 @@ You just need a few things installed locally.
 brew install ansible
 ```
 
+## Hosts
+
+These are the following environments:
+
+- sandbox
+- qa
+- staging
+- production
+
+Each environment has it's own `hosts.<env_name>` (root directory) file and `.env.<env_name` (roles/simple-server/files)
+
+## Changing secrets
+
+```
+ansible-vault edit --vault-id /path/to/password_file  roles/simple-server/files/.env.<env_name>
+```
+
+
+## Updating configs
+
+```
+ansible-playbook -v  --vault-id /path/to/password_file conf-update.yml -i hosts.<env_name>
+```
+
 ## Deploying
 
 It's super easy to deploy. You just tell Ansible which playbook to use (there's only one), and which hosts to deploy to.
-
-Hosts are split into `hosts.staging` and `hosts.production` files.
 
 In order to deploy, you will need SSH keys for the machine. If it's a new EC2 instance, you'll need to use the keys provided by Amazon when you set up the instance.
 
@@ -25,24 +47,6 @@ In order to deploy, you will need SSH keys for the machine. If it's a new EC2 in
 ssh-add ~/.ssh/webservers.pem
 ```
 
-### Staging
-
 ```
-ansible-playbook -v  --vault-id /path/to/staging_password_file deploy.yml -i hosts.staging
-```
-
-### Production
-
-```
-ansible-playbook --vault-id /path/to/production_password_file deploy.yml deploy.yml -i hosts.production
-```
-
-### Changing secrets
-```
-ansible-vault edit --vault-id /path/to/password_file  roles/simple-server/files/.env.staging
-```
-
-### Changing secrets
-```
-ansible-vault edit --vault-id /path/to/password_file  roles/simple-server/files/.env.staging
+ansible-playbook -v  --vault-id /path/to/password_file deploy.yml -i hosts.<env_name>
 ```
