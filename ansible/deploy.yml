@@ -1,3 +1,4 @@
 ---
-- include: setup.yml
-- include: rails.yml
+- include: python-setup.yml
+- include: provision.yml
+- include: conf-update.yml
