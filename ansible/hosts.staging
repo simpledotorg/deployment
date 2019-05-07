@@ -1,5 +1,5 @@
 [simple]
-api-staging.simple.org
+ec2-52-66-242-210.ap-south-1.compute.amazonaws.com
 
 [rails:children]
 simple
