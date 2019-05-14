@@ -121,3 +121,7 @@
   authorized_key: key="{{ lookup('file', item) }}" user=deploy
   with_fileglob:
     - ssh_keys/*
+
+- name: enable systemctl services for deploy user
+  become: true
+  action: loginctl enable-linger deploy
