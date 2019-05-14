@@ -125,3 +125,4 @@
 - name: enable systemctl services for deploy user
   become: true
   action: loginctl enable-linger deploy
+  become: true
