@@ -1,8 +1,0 @@
-[cardreader]
-cardreader.simple.org
-
-[rails:children]
-cardreader
-
-[cardreader:children]
-cardreader
