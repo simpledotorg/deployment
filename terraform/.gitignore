@@ -8,3 +8,5 @@
 
 # Variable files
 *.tfvars
+.idea
+.DS_STORE
