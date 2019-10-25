@@ -1,17 +1,17 @@
 # Pre-start passenger so the first request isn't slow
-passenger_pre_start http://ec2-13-235-24-177.ap-south-1.compute.amazonaws.com/;
+passenger_pre_start http://api-demo-bd.simple.org/;
 
 server {
   listen 80 default_server;
-  server_name ec2-13-235-24-177.ap-south-1.compute.amazonaws.com;
-
+  server_name api-demo-bd.simple.org;
+``
   # Send all traffic to HTTPS
-  return 301 https://ec2-13-235-24-177.ap-south-1.compute.amazonaws.com$request_uri;
+  return 301 https://api-demo-bd.simple.org$request_uri;
 }
 
 server {
   listen 443;
-  server_name ec2-13-235-24-177.ap-south-1.compute.amazonaws.com;
+  server_name api-demo-bd.simple.org;
 
   ssl on;
   ssl_certificate /etc/ssl/simple.org.crt;
