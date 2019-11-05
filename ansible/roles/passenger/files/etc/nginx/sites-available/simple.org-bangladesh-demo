@@ -1,17 +1,17 @@
 # Pre-start passenger so the first request isn't slow
-passenger_pre_start http://api-demo-bd.simple.org/;
+passenger_pre_start http://api-demo.bd.simple.org/;
 
 server {
   listen 80 default_server;
-  server_name api-demo-bd.simple.org;
+  server_name api-demo.bd.simple.org;
 ``
   # Send all traffic to HTTPS
-  return 301 https://api-demo-bd.simple.org$request_uri;
+  return 301 https://api-demo.bd.simple.org$request_uri;
 }
 
 server {
   listen 443;
-  server_name api-demo-bd.simple.org;
+  server_name api-demo.bd.simple.org;
 
   ssl on;
   ssl_certificate /etc/ssl/simple.org.crt;
