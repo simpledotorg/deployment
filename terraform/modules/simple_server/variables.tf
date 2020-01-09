@@ -71,3 +71,8 @@ variable "redis_subnet_group_name" {
   default = ""
 }
 
+variable "create_database_replica" {
+  description = "Create an additional redis instance"
+  type = bool
+  default = false
+}

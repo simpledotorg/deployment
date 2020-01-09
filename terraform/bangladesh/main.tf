@@ -55,4 +55,5 @@ module "simple_server_bangladesh_production" {
   host_urls = ["bd.simple.org"]
   create_redis_instance = true
   redis_subnet_group_name = module.simple_networking.redis_subnet_group_name
+  create_database_replica = true
 }

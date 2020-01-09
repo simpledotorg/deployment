@@ -13,6 +13,8 @@ resource "aws_db_instance" "simple-database" {
   publicly_accessible        = false
   skip_final_snapshot        = true
   db_subnet_group_name       = var.database_subnet_group_name
+  backup_retention_period    = 35
+  apply_immediately = true
   tags = {
     workload-type = var.deployment_name
   }
@@ -34,4 +36,12 @@ resource "aws_security_group" "sg_simple_database" {
     protocol = "tcp"
     security_groups = [aws_security_group.sg_simple_server.id]
   }
+}
+
+resource "aws_db_instance" "replica_simple_database" {
+  count               = var.create_database_replica ? (length(aws_db_instance.simple-database)) : 0
+  identifier          = format("replica-simple-db-%s-%03d", replace(var.deployment_name, "_", "-"), count.index + 1)
+  replicate_source_db = aws_db_instance.simple-database[count.index].identifier
+  instance_class      = "db.t2.medium"
+  storage_encrypted   = true
 }
