@@ -63,6 +63,7 @@ module "simple_server_sandbox" {
   server_vpc_id              = module.simple_networking.server_vpc_id
   http_listener_arn          = module.simple_networking.http_listener_arn
   host_urls                  = ["api-sandbox.simple.org"]
+  create_redis_instance      = true
 }
 
 module "simple_server_qa" {

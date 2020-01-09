@@ -83,6 +83,6 @@
   become_user: deploy
 
 - name: install bundler
-  shell: ~/.rbenv/shims/gem install bundler
+  shell: ~/.rbenv/shims/gem install bundler -v 1.17.3
   become: true
   become_user: deploy
