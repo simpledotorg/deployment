@@ -76,3 +76,9 @@ variable "create_database_replica" {
   type        = bool
   default     = false
 }
+
+variable "redis_param_group_name" {
+  description = "Name of the redis param group"
+  type        = string
+  default     = ""
+}

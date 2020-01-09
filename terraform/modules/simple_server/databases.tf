@@ -9,9 +9,9 @@ resource "aws_db_instance" "simple-database" {
   instance_class             = "db.t2.medium"
   name                       = format("simple_db_%s_%03d", replace(var.deployment_name, "-", "_"), count.index + 1)
   username                   = var.database_username
+  final_snapshot_identifier  = format("simple-db-%s-%03d-%s", replace(var.deployment_name, "_", "-"), count.index + 1, formatdate("DD-MM-YYYY-hh-mm-ss", timestamp()))
   copy_tags_to_snapshot      = true
   publicly_accessible        = false
-  skip_final_snapshot        = true
   db_subnet_group_name       = var.database_subnet_group_name
   backup_retention_period    = 35
   password                   = var.database_password
@@ -41,4 +41,5 @@ resource "aws_db_instance" "replica_simple_database" {
   replicate_source_db = aws_db_instance.simple-database[count.index].identifier
   instance_class      = "db.t2.medium"
   storage_encrypted   = true
+  final_snapshot_identifier = format("replica-simple-db-%s-%03d-%s", replace(var.deployment_name, "_", "-"), count.index + 1, formatdate("DD-MM-YYYY-hh-mm-ss", timestamp()))
 }
