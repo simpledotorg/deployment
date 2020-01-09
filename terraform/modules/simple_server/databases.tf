@@ -14,26 +14,23 @@ resource "aws_db_instance" "simple-database" {
   skip_final_snapshot        = true
   db_subnet_group_name       = var.database_subnet_group_name
   backup_retention_period    = 35
-  apply_immediately = true
+  password                   = var.database_password
+  vpc_security_group_ids     = [aws_security_group.sg_simple_database.id]
+
   tags = {
     workload-type = var.deployment_name
   }
-  password = var.database_password
-  vpc_security_group_ids = [
-    aws_security_group.sg_simple_database.id,
-  ]
 }
 
 resource "aws_security_group" "sg_simple_database" {
-  name = "sg_simple_database_${var.deployment_name}"
+  name        = "sg_simple_database_${var.deployment_name}"
   description = "Security group for ${var.deployment_name} database"
-  
-  vpc_id = var.database_vpc_id
+  vpc_id      = var.database_vpc_id
 
   ingress {
-    from_port = 5432
-    to_port = 5432
-    protocol = "tcp"
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
     security_groups = [aws_security_group.sg_simple_server.id]
   }
 }

@@ -11,11 +11,12 @@ resource "aws_vpc" "database_vpc" {
 }
 
 resource "aws_subnet" "database_vpc_subnet" {
-  count = length(data.aws_availability_zones.available.names)
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  count                   = length(data.aws_availability_zones.available.names)
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
   cidr_block              = cidrsubnet(aws_vpc.database_vpc.cidr_block, 4, count.index)
   vpc_id                  = aws_vpc.database_vpc.id
+
   tags = {
     Name = "${format("simple-database-vpc-%s-subnet-%03d", var.deployment_name, count.index + 1)}"
   }
@@ -25,16 +26,17 @@ resource "aws_vpc_peering_connection" "peering_from_servers_to_database" {
   vpc_id      = aws_default_vpc.default.id
   peer_vpc_id = aws_vpc.database_vpc.id
   auto_accept = true
+
   tags = {
     Name = "${format("peering-simple-servers-vpc-to-database-vpc-%s", var.deployment_name)}"
   }
 }
 
 resource "aws_route_table" "route_table_from_servers_to_database" {
-  vpc_id      = aws_default_vpc.default.id
+  vpc_id = aws_default_vpc.default.id
 
   route {
-    cidr_block = aws_vpc.database_vpc.cidr_block
+    cidr_block                = aws_vpc.database_vpc.cidr_block
     vpc_peering_connection_id = aws_vpc_peering_connection.peering_from_servers_to_database.id
   }
 
@@ -52,7 +54,7 @@ resource "aws_route_table" "route_table_database_to_servers" {
   vpc_id = aws_vpc.database_vpc.id
 
   route {
-    cidr_block = aws_default_vpc.default.cidr_block
+    cidr_block                = aws_default_vpc.default.cidr_block
     vpc_peering_connection_id = aws_vpc_peering_connection.peering_from_servers_to_database.id
   }
 
@@ -62,13 +64,13 @@ resource "aws_route_table" "route_table_database_to_servers" {
 }
 
 resource "aws_route_table_association" "route_table_database_subnet_association" {
-  count = length(aws_subnet.database_vpc_subnet)
+  count          = length(aws_subnet.database_vpc_subnet)
   subnet_id      = aws_subnet.database_vpc_subnet[count.index].id
   route_table_id = aws_route_table.route_table_database_to_servers.id
 }
 
 resource "aws_route_table_association" "route_table_default_subnet_association" {
-  count = length(aws_default_subnet.default)
+  count          = length(aws_default_subnet.default)
   subnet_id      = aws_default_subnet.default[count.index].id
   route_table_id = aws_route_table.route_table_from_servers_to_database.id
 }
@@ -76,6 +78,7 @@ resource "aws_route_table_association" "route_table_default_subnet_association" 
 resource "aws_db_subnet_group" "default" {
   name       = "main"
   subnet_ids = aws_subnet.database_vpc_subnet.*.id
+
   tags = {
     Name = "simple-database-subnet-group"
   }
@@ -93,8 +96,9 @@ resource "aws_default_vpc" "default" {
 }
 
 resource "aws_default_subnet" "default" {
-  count = length(data.aws_availability_zones.available.names)
+  count             = length(data.aws_availability_zones.available.names)
   availability_zone = data.aws_availability_zones.available.names[count.index]
+
   tags = {
     Name = format("Default VPC subnet %03d", count.index + 1)
   }
@@ -108,22 +112,22 @@ data "aws_internet_gateway" "default" {
 }
 
 output "database_vpc_id" {
-  value = aws_vpc.database_vpc.id
+  value       = aws_vpc.database_vpc.id
   description = "ID for the Database VPC"
 }
 
 output "server_vpc_id" {
-  value = aws_default_vpc.default.id
+  value       = aws_default_vpc.default.id
   description = "ID for the server VPC"
 }
 
 output "database_subnet_group_name" {
-  value = aws_db_subnet_group.default.name
+  value       = aws_db_subnet_group.default.name
   description = "Name for database subnet group"
 }
 
 output "redis_subnet_group_name" {
-  value = aws_elasticache_subnet_group.default.name
+  value       = aws_elasticache_subnet_group.default.name
   description = "Name for redis subnet group"
 }
 

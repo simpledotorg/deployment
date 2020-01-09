@@ -1,5 +1,5 @@
 resource "aws_elasticache_cluster" "sandbox_simple_elasticache" {
-  count = var.create_redis_instance ? 1 : 0
+  count                = var.create_redis_instance ? 1 : 0
   cluster_id           = "${var.deployment_name}-elasticache"
   engine               = "redis"
   node_type            = "cache.t2.small"
@@ -9,28 +9,28 @@ resource "aws_elasticache_cluster" "sandbox_simple_elasticache" {
   port                 = 6379
   security_group_ids   = aws_security_group.sg_simple_redis.*.id
   subnet_group_name    = var.redis_subnet_group_name
+
   tags = {
     Name = "simple-elasticache-sandbox"
   }
 }
 
 resource "aws_elasticache_parameter_group" "redis_paramgrp" {
-  count = var.create_redis_instance ? 1 : 0
+  count  = var.create_redis_instance ? 1 : 0
   name   = "sandbox-redis5"
   family = "redis5.0"
 }
 
 resource "aws_security_group" "sg_simple_redis" {
-  count = var.create_redis_instance ? 1 : 0
-  name = "sg_simple_redis_${var.deployment_name}"
+  count       = var.create_redis_instance ? 1 : 0
+  name        = "sg_simple_redis_${var.deployment_name}"
   description = "Security group for ${var.deployment_name} redis"
-
-  vpc_id = var.server_vpc_id
+  vpc_id      = var.server_vpc_id
 
   ingress {
-    from_port = 6379
-    to_port = 6379
-    protocol = "tcp"
+    from_port       = 6379
+    to_port         = 6379
+    protocol        = "tcp"
     security_groups = [aws_security_group.sg_simple_server.id]
   }
 }

@@ -1,5 +1,5 @@
 resource "aws_security_group" "allow_all_outbound" {
-  name = "allow_all_outbound"
+  name        = "allow_all_outbound"
   description = "Allow all outbound traffic"
 
   egress {
@@ -11,37 +11,37 @@ resource "aws_security_group" "allow_all_outbound" {
 }
 
 resource "aws_security_group" "allow_ssh" {
-  name = "allow_ssh"
+  name        = "allow_ssh"
   description = "Allow SSH access to instance"
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 resource "aws_security_group" "allow_http" {
-  name = "allow_http"
+  name        = "allow_http"
   description = "Allow SSH access to instance"
 
   ingress {
-    from_port = 80
-    to_port = 80
-    protocol = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 resource "aws_security_group" "allow_https" {
-  name = "allow_https"
+  name        = "allow_https"
   description = "Allow SSH access to instance"
 
   ingress {
-    from_port = 443
-    to_port = 443
-    protocol = "tcp"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

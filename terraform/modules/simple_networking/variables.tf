@@ -10,6 +10,6 @@ variable "database_vpc_cidr" {
 
 variable "create_redis_subnet" {
 	description = "Create a subnet redis instance"
-	type = bool
-	default = false
+	type        = bool
+	default     = false
 }

@@ -36,12 +36,12 @@ variable "database_subnet_group_name" {
 
 variable "instance_security_groups" {
   description = "Security groups assigned to instance"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "aws_key_name" { 
   description = "Name of the default aws key"
-  type = string
+  type        = string
 }
 
 variable  "server_vpc_id" {
@@ -50,29 +50,29 @@ variable  "server_vpc_id" {
 }
 
 variable "http_listener_arn" {
-  description = "HTTP listener arn" 
-  type = string
+  description = "HTTP listener arn"
+  type        = string
 }
 
 variable "host_urls" {
-  description = "List of host URL" 
-  type = list(string)
+  description = "List of host URL"
+  type        = list(string)
 }
 
 variable "create_redis_instance" {
   description = "Create an additional redis instance"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "redis_subnet_group_name" {
   description = "Name of the redis subnet"
   type        = string
-  default = ""
+  default     = ""
 }
 
 variable "create_database_replica" {
   description = "Create an additional redis instance"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
