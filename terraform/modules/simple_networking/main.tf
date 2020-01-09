@@ -81,6 +81,11 @@ resource "aws_db_subnet_group" "default" {
   }
 }
 
+resource "aws_elasticache_subnet_group" "default" {
+  name       = "redis-subnet-group"
+  subnet_ids = aws_default_subnet.default.*.id
+}
+
 resource "aws_default_vpc" "default" {
   tags = {
     Name = "Default VPC"
@@ -114,7 +119,12 @@ output "server_vpc_id" {
 
 output "database_subnet_group_name" {
   value = aws_db_subnet_group.default.name
-  description = "ID for the Database VPC"
+  description = "Name for database subnet group"
+}
+
+output "redis_subnet_group_name" {
+  value = aws_elasticache_subnet_group.default.name
+  description = "Name for redis subnet group"
 }
 
 output "instance_security_groups" {

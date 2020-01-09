@@ -58,3 +58,16 @@ variable "host_urls" {
   description = "List of host URL" 
   type = list(string)
 }
+
+variable "create_redis_instance" {
+  description = "Create an additional redis instance"
+  type = bool
+  default = false
+}
+
+variable "redis_subnet_group_name" {
+  description = "Name of the redis subnet"
+  type        = string
+  default = ""
+}
+

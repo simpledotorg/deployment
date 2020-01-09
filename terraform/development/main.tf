@@ -4,7 +4,7 @@ variable "aws_region" {
 
 provider "aws" {
   region = var.aws_region
-  shared_credentials_file = "$HOME/.aws/credentials"
+  profile = "development"
 
   version = "~> 2.7"
 }
@@ -16,6 +16,7 @@ terraform {
     encrypt = true
     region = "ap-south-1"
     dynamodb_table = "terraform-lock"
+    profile = "development"
   }
 }
 
@@ -47,8 +48,6 @@ module "simple_networking" {
   source = "../modules/simple_networking"
   deployment_name = "development"
   database_vpc_cidr = "172.32.0.0/16"
-  database_vpc_subnet_1_cidr = "172.32.0.0/20"
-  database_vpc_subnet_2_cidr = "172.32.16.0/20"
 }
 
 module "simple_server_sandbox" {

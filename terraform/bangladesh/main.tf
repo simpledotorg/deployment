@@ -38,8 +38,6 @@ module "simple_networking" {
   source = "../modules/simple_networking"
   deployment_name = "bangladesh"
   database_vpc_cidr = "172.32.0.0/16"
-  database_vpc_subnet_1_cidr = "172.32.0.0/20"
-  database_vpc_subnet_2_cidr = "172.32.16.0/20"
 }
 
 module "simple_server_bangladesh_production" {
@@ -55,4 +53,6 @@ module "simple_server_bangladesh_production" {
   server_vpc_id = module.simple_networking.server_vpc_id
   http_listener_arn = module.simple_networking.http_listener_arn
   host_urls = ["bd.simple.org"]
+  create_redis_instance = true
+  redis_subnet_group_name = module.simple_networking.redis_subnet_group_name
 }

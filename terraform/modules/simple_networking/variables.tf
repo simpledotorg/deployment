@@ -8,12 +8,8 @@ variable "database_vpc_cidr" {
 	type        = string
 }
 
-variable "database_vpc_subnet_1_cidr" {
-	description = "The CIDR block for VPC with databases"
-	type        = string
-}
-
-variable "database_vpc_subnet_2_cidr" {
-	description = "The CIDR block for VPC with databases"
-	type        = string
+variable "create_redis_subnet" {
+	description = "Create a subnet redis instance"
+	type = bool
+	default = false
 }
