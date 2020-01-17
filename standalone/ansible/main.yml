@@ -1,0 +1,5 @@
+---
+- hosts: postgres-primary
+  roles:
+    - { role: common, tags: ['common'] }
+    - { role: ssh, tags: ['ssh'] }

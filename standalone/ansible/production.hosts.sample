@@ -1,0 +1,7 @@
+[postgres-primary]
+www-atl-1.example.com
+www-atl-2.example.com
+
+[postgres-standby]
+www-atl-1.example.com
+www-atl-2.example.com

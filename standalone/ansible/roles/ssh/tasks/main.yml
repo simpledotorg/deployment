@@ -1,0 +1,17 @@
+- name: add ssh keys for root
+  become: true
+  authorized_key: key="{{ lookup('file', item) }}" user="{{ remote_user }}"
+  with_fileglob:
+    - ssh_keys/{{ deploy_env }}/*
+
+- name: add ssh keys for the deploy user
+  become: true
+  authorized_key: key="{{ lookup('file', item) }}" user="{{ deploy_user }}"
+  with_fileglob:
+    - ssh_keys/{{ deploy_env }}/*
+
+# Note: This MUST be last, otherwise if something fails we can't SSH back in as root
+- name: disable root SSH access
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  become: true
+  notify: restart ssh

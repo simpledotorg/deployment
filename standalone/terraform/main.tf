@@ -1,6 +1,8 @@
 # Set the variable value in *.tfvars file
 # or using -var="do_token=..." CLI option
 variable "do_token" {}
+variable "fingerprint_1" {}
+variable "fingerprint_2" {}
 
 # Configure the DigitalOcean Provider
 provider "digitalocean" {
@@ -15,4 +17,5 @@ resource "digitalocean_droplet" "icmr-box" {
   name   = "p-icmr-box-${count.index + 1}"
   region = "blr1"
   size   = "c-2"
+  ssh_keys = [var.fingerprint_1, var.fingerprint_2]
 }
