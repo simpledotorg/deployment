@@ -1,10 +1,12 @@
 ---
-__postgresql_version: "10"
+postgresql_locale: "en_US.UTF-8"
+
+postgresql_pg_hba:
+  - {contype: local, databases: all, users: postgres, method: peer}
+  - {contype: local, databases: all, users: all, method: peer}
+  - {contype: host, databases: all, users: all, source: '127.0.0.1/32', method: md5}
+  - {contype: host, databases: all, users: all, source: '::1/128', method: md5}
+
 __postgresql_data_dir: "/var/lib/postgresql/{{ __postgresql_version }}/main"
 __postgresql_bin_path: "/usr/lib/postgresql/{{ __postgresql_version }}/bin"
 __postgresql_config_path: "/etc/postgresql/{{ __postgresql_version }}/main"
-__postgresql_daemon: "postgresql@{{ postgresql_version }}-main"
-__postgresql_packages:
-  - postgresql-{{ postgresql_version }}
-  - postgresql-contrib
-  - libpq-dev

@@ -16,7 +16,6 @@
   become: true
   with_items:
     - apache2-utils
-    - awscli
     - build-essential
     - cron
     - fail2ban
@@ -36,7 +35,6 @@
     - python-pexpect
     - python-software-properties
     - redis-tools
-    - s3cmd
     - sqlite3
     - unattended-upgrades
     - vim
