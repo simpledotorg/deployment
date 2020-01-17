@@ -19,3 +19,7 @@ resource "digitalocean_droplet" "icmr-box" {
   size   = "c-2"
   ssh_keys = [var.fingerprint_1, var.fingerprint_2]
 }
+
+output "instance_ips" {
+  value = digitalocean_droplet.icmr-box.*.ipv4_address
+}

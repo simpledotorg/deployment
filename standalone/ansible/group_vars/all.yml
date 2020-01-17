@@ -1,0 +1,4 @@
+---
+ansible_port: 22
+root_user: "root"
+deploy_user: "deploy"

@@ -1,6 +1,6 @@
 - name: add ssh keys for root
   become: true
-  authorized_key: key="{{ lookup('file', item) }}" user="{{ remote_user }}"
+  authorized_key: key="{{ lookup('file', item) }}" user="{{ root_user }}"
   with_fileglob:
     - ssh_keys/{{ deploy_env }}/*
 
