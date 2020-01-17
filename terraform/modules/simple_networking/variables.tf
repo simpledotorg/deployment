@@ -13,3 +13,19 @@ variable "create_redis_subnet" {
 	type        = bool
 	default     = false
 }
+
+variable "certificate_body" {
+	description = "certificate for domain name"
+	type        = string
+}
+
+variable "certificate_chain" {
+	description = "certificate chain for domain name"
+	type        = string
+}
+
+variable "private_key" {
+	description = "private key for certificate"
+	type        = string
+}
+

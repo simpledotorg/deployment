@@ -8,3 +8,6 @@
 
 # Variable files
 *.tfvars
+
+# pem files
+*.pem

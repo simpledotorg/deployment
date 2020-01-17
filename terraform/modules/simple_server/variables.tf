@@ -49,8 +49,8 @@ variable  "server_vpc_id" {
   type        = string
 }
 
-variable "http_listener_arn" {
-  description = "HTTP listener arn"
+variable "https_listener_arn" {
+  description = "HTTPS listener arn"
   type        = string
 }
 

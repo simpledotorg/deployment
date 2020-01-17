@@ -23,10 +23,12 @@ resource "aws_security_group" "sg_simple_server" {
 resource "aws_lb_target_group" "simple_server_target_group" {
   name     = "${var.deployment_name}-servers"
   vpc_id   = var.server_vpc_id
-  port     = 80
-  protocol = "HTTP"
+  port     = 443
+  protocol = "HTTPS"
 
   health_check {
+    port     = 443
+    protocol = "HTTPS"
     path    = "/api/v3/ping"
     matcher = "200"
   }
@@ -39,7 +41,7 @@ resource "aws_lb_target_group_attachment" "simple_server_target" {
 }
 
 resource "aws_lb_listener_rule" "simple_server_listener_rule" {
-  listener_arn = var.http_listener_arn
+  listener_arn = var.https_listener_arn
   
   action {
     type             = "forward"
