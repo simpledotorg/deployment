@@ -4,6 +4,19 @@ variable "do_token" {}
 variable "fingerprint_1" {}
 variable "fingerprint_2" {}
 
+#
+# Set remote backend to save state
+#
+terraform {
+  backend "s3" {
+    bucket = "simple-development-terraform-state"
+    encrypt = true
+    key = "dummy.tfstate"
+    region = "ap-south-1"
+    profile = "development"
+  }
+}
+
 # Configure the DigitalOcean Provider
 provider "digitalocean" {
   token = var.do_token
