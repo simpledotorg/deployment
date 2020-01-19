@@ -1,0 +1,52 @@
+# Pre-start passenger so the first request isn't slow
+passenger_pre_start http://api-qa.simple.org/;
+
+server {
+  listen 80 default_server;
+  server_name api-qa.simple.org;
+
+  # Send all traffic to HTTPS
+  return 301 https://api-qa.simple.org$request_uri;
+}
+
+server {
+  listen 443;
+  server_name api-qa.simple.org;
+
+  ssl on;
+  ssl_certificate /etc/ssl/simple.org.crt;
+  ssl_certificate_key /etc/ssl/simple.org.key;
+
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+
+  root /home/deploy/apps/simple-server/current/public;
+  passenger_app_root /home/deploy/apps/simple-server/current;
+  passenger_enabled on;
+  rails_env production;
+  passenger_min_instances 1;
+  passenger_start_timeout 300;
+
+  gzip on;
+  gzip_types text/html text/plain application/json;
+
+  # redirect server error pages to the static page /50x.html
+  error_page   500 502 503 504  /50x.html;
+  location = /50x.html {
+    root   html;
+  }
+
+  location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {
+    gzip_static on;
+    expires     max;
+    add_header  Cache-Control public;
+    add_header  Last-Modified "";
+    add_header  ETag "";
+    break;
+  }
+
+  location = /favicon.ico {
+    expires    max;
+    add_header Cache-Control public;
+  }
+}

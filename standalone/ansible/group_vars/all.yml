@@ -2,3 +2,5 @@
 ansible_port: 22
 root_user: "root"
 deploy_user: "deploy"
+ruby_version: "2.5.1"
+bundler_version: "1.17.3"

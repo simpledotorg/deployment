@@ -1,0 +1,10 @@
+# Ansistrano after symlink tasks
+---
+- name: Install required gems
+  bundler:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+    executable: "/home/{{ deploy_user }}/.rbenv/shims/bundle"
+    deployment_mode: yes
+    exclude_groups:
+      - development
+      - test

@@ -3,3 +3,12 @@
   roles:
     - { role: common, tags: ['common'] }
     - { role: ssh, tags: ['ssh'] }
+    - { role: rbenv, tags: ['rbenv'] }
+    - { role: nodejs, tags: ['nodejs'] }
+- hosts: webservers
+  roles:
+    - { role: passenger, tags: ['passenger'] }
+    - { role: postgresql-client, tags: ['postgresql-client'] }
+- hosts: postgres-primary
+  roles:
+    - { role: postgres, tags: ['postgres'] }

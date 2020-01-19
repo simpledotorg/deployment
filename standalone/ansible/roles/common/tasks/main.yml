@@ -12,36 +12,37 @@
   become: true
 
 - name: install common packages
-  apt: pkg={{ item }} state=latest
+  apt: 
+    pkg:
+      - apache2-utils
+      - build-essential
+      - cron
+      - fail2ban
+      - git-core
+      - htop
+      - less
+      - libcurl4-openssl-dev
+      - libffi-dev
+      - libmagickwand-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - libyaml-dev
+      - logrotate
+      - python-pexpect
+      - python-software-properties
+      - redis-tools
+      - sqlite3
+      - unattended-upgrades
+      - vim
+      - wget
+      - xvfb
+      - zlib1g-dev
+      - zsh
+    state: latest
   become: true
-  with_items:
-    - apache2-utils
-    - build-essential
-    - cron
-    - fail2ban
-    - git-core
-    - htop
-    - less
-    - libcurl4-openssl-dev
-    - libffi-dev
-    - libmagickwand-dev
-    - libreadline-dev
-    - libsqlite3-dev
-    - libssl-dev
-    - libxml2-dev
-    - libxslt1-dev
-    - libyaml-dev
-    - logrotate
-    - python-pexpect
-    - python-software-properties
-    - redis-tools
-    - sqlite3
-    - unattended-upgrades
-    - vim
-    - wget
-    - xvfb
-    - zlib1g-dev
-    - zsh
 
 - name: update hostname
   hostname:

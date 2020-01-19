@@ -1,0 +1,21 @@
+---
+- name: update apt cache
+  apt: update_cache=yes
+  become: true
+
+- name: install monit
+  apt: pkg=monit state=latest
+  become: true
+  notify: restart monit
+
+- name: configure monit
+  copy:
+    src: etc/monit/monitrc
+    dest: /etc/monit/monitrc
+    mode: 0600
+  become: true
+  notify: restart monit
+
+- name: ensure monit is running
+  action: service name=monit state=restarted enabled=yes
+  become: true
