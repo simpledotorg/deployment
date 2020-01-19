@@ -5,7 +5,6 @@
     - { role: ansistrano.deploy, tags: ['ansistrano.deploy'] }
   remote_user: "{{ deploy_user }}"
   vars:
-    app_name: "simple-server"
     ansistrano_deploy_to: "/home/deploy/apps/{{ app_name }}"
     ansistrano_shared_paths:
       - .bundle

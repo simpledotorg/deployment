@@ -9,6 +9,3 @@
   roles:
     - { role: passenger, tags: ['passenger'] }
     - { role: postgresql-client, tags: ['postgresql-client'] }
-- hosts: postgres-primary
-  roles:
-    - { role: postgres, tags: ['postgres'] }

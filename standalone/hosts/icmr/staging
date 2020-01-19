@@ -7,7 +7,7 @@ postgres-primary
 postgres-secondary
 
 [postgres-primary]
-134.209.146.78
+139.59.62.51
 
 [postgres-secondary]
 134.209.146.75

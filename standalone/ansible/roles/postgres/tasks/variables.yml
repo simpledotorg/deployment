@@ -1,9 +1,0 @@
-- name: Define postgresql version
-  set_fact:
-    postgresql_version: "10"
-  when: postgresql_version is not defined
-
-- name: Define postgresql_daemon.
-  set_fact:
-    postgresql_daemon: "postgresql@{{ postgresql_version }}-main"
-  when: postgresql_daemon is not defined
