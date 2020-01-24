@@ -3,8 +3,25 @@
 - name: Install required gems
   bundler:
     chdir: "{{ ansistrano_release_path.stdout }}"
-    executable: "/home/{{ deploy_user }}/.rbenv/shims/bundle"
+    executable: "{{ bundle_path }}"
     deployment_mode: yes
     exclude_groups:
       - development
       - test
+
+- name: precompile assets
+  command: "{{ bundle_path }} exec rake assets:precompile"
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+
+- name: migrate the db
+  command: "{{ bundle_path }} exec rake db:migrate"
+  run_once: true
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"
+
+- name: update the crontab
+  command: "{{ bundle_path }} exec whenever --update-crontab simple-server --set environment=production"
+  run_once: true
+  args:
+    chdir: "{{ ansistrano_release_path.stdout }}"

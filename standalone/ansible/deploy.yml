@@ -4,6 +4,8 @@
     - { role: deploy, tags: ['deploy'] }
     - { role: ansistrano.deploy, tags: ['ansistrano.deploy'] }
   remote_user: "{{ deploy_user }}"
+  environment:
+    RAILS_ENV: production
   vars:
     ansistrano_deploy_to: "/home/deploy/apps/{{ app_name }}"
     ansistrano_shared_paths:
@@ -13,6 +15,7 @@
       - tmp/cache
       - tmp/sockets
       - public/system
+      - vendor/bundle
     ansistrano_shared_files:
       - .env.production
     ansistrano_deploy_via: "git"

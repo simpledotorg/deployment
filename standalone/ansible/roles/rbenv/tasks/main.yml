@@ -54,7 +54,7 @@
 - name: install ruby
   shell: rbenv install -s {{ ruby_version }}
   environment:
-    PATH: "/home/{{ deploy_user }}/.rbenv/bin:/home/{{ deploy_user }}/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
+    PATH: "{{ rbenv_root }}/bin:{{ rbenv_root }}/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
   become: true
   become_user: "{{ deploy_user }}"
 
