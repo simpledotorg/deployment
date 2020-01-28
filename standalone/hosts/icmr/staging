@@ -20,4 +20,12 @@ postgres-secondary
 206.189.129.128
 
 [haproxy]
+
+[redis:children]
+redis-primary
+redis-secondary
+
+[redis-primary]
 134.209.154.92
+
+[redis-secondary]

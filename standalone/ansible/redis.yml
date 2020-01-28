@@ -1,0 +1,5 @@
+---
+- name: configure the primary redis server
+  hosts: redis
+  roles:
+    - davidwittman.redis

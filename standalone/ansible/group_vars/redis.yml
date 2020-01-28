@@ -1,0 +1,4 @@
+---
+redis_version: 5.0.7
+redis_verify_checksum: true
+redis_checksum: md5:612ec43075a888bc8b8a7dd8ccb2e0f7
