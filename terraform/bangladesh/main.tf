@@ -9,9 +9,9 @@ provider "aws" {
   version = "~> 2.7"
 }
 
-terraform { 
+terraform {
   backend "s3" {
-    bucket         = "simple-bangladesh-terraform-state-2"
+    bucket         = "simple-server-bangladesh-terraform-state"
     key            = "terraform.tfstate"
     encrypt        = true
     region         = "ap-south-1"
@@ -26,6 +26,16 @@ variable "bangladesh_database_username" {
 }
 
 variable "bangladesh_database_password" {
+  description = "Database Password"
+  type        = string
+}
+
+variable "bangladesh_staging_database_username" {
+  description = "Database Username"
+  type        = string
+}
+
+variable "bangladesh_staging_database_password" {
   description = "Database Password"
   type        = string
 }
@@ -68,7 +78,7 @@ module "simple_server_bangladesh_production" {
   deployment_name            = "bangladesh-production"
   database_vpc_id            = module.simple_networking.database_vpc_id
   database_subnet_group_name = module.simple_networking.database_subnet_group_name
-  ec2_instance_type          = "t2.micro"
+  ec2_instance_type          = "t2.medium"
   database_username          = var.bangladesh_database_username
   database_password          = var.bangladesh_database_password
   instance_security_groups   = module.simple_networking.instance_security_groups
@@ -78,5 +88,25 @@ module "simple_server_bangladesh_production" {
   host_urls                  = ["bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
+  server_count               = 3
+  redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+}
+
+module "simple_server_bangladesh_staging" {
+  source                     = "../modules/simple_server"
+  deployment_name            = "bangladesh-staging"
+  database_vpc_id            = module.simple_networking.database_vpc_id
+  database_subnet_group_name = module.simple_networking.database_subnet_group_name
+  ec2_instance_type          = "t2.medium"
+  database_username          = var.bangladesh_staging_database_username
+  database_password          = var.bangladesh_staging_database_password
+  instance_security_groups   = module.simple_networking.instance_security_groups
+  aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
+  server_vpc_id              = module.simple_networking.server_vpc_id
+  http_listener_arn          = module.simple_networking.http_listener_arn
+  host_urls                  = ["api-demo.bd.simple.org"]
+  create_redis_instance      = true
+  create_database_replica    = true
+  server_count               = 2
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
 }
