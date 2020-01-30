@@ -82,3 +82,9 @@ variable "redis_param_group_name" {
   type        = string
   default     = ""
 }
+
+variable "sidekiq_server_count" {
+  description = "Number of instances to create for sidekiq"
+  type        = number
+  default     = 0
+}
