@@ -42,14 +42,15 @@ resource "aws_lb_target_group_attachment" "simple_server_target" {
 
 resource "aws_lb_listener_rule" "simple_server_listener_rule" {
   listener_arn = var.https_listener_arn
-  
+
   action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.simple_server_target_group.arn
   }
 
   condition {
-    field  = "host-header"
-    values = var.host_urls
+    host_header {
+      values = var.host_urls
+    }
   }
 }
