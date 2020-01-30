@@ -14,8 +14,8 @@ server {
   server_name api-demo.bd.simple.org;
 
   ssl on;
-  ssl_certificate /etc/ssl/simple.org.crt;
-  ssl_certificate_key /etc/ssl/simple.org.key;
+  ssl_certificate /etc/ssl/bd.simple.org.crt;
+  ssl_certificate_key /etc/ssl/bd.simple.org.key;
 
   client_max_body_size 4G;
   keepalive_timeout 10;
