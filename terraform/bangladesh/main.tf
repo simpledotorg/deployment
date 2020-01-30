@@ -88,7 +88,8 @@ module "simple_server_bangladesh_production" {
   host_urls                  = ["bd.simple.org", "api.bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
-  server_count               = 3
+  server_count               = 2
+  sidekiq_server_count       = 1
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
 }
 
@@ -107,6 +108,7 @@ module "simple_server_bangladesh_staging" {
   host_urls                  = ["api-demo.bd.simple.org", "api-staging.bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
-  server_count               = 2
+  server_count               = 1
+  sidekiq_server_count       = 1
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
 }

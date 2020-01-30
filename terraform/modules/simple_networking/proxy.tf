@@ -8,6 +8,10 @@ resource "aws_alb" "simple_env_proxy" {
   name     = "simple-env-proxy"
   internal = false
   subnets  = aws_default_subnet.default.*.id
+  security_groups = [
+    aws_security_group.allow_all_inbound.id,
+    aws_security_group.allow_all_outbound.id
+  ]
 
   tags = {
     Name = "Simple Env Proxy"
