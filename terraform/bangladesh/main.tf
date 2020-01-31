@@ -20,6 +20,9 @@ terraform {
   }
 }
 
+#
+# database u/p vars
+#
 variable "bangladesh_database_username" {
   description = "Database Username"
   type        = string
@@ -40,6 +43,11 @@ variable "bangladesh_staging_database_password" {
   type        = string
 }
 
+
+#
+# certficate stuff
+#
+
 variable "certificate_body_file" {
   description = "certificate for domain name"
   type        = string
@@ -55,9 +63,16 @@ variable "certificate_private_key_file" {
   type        = string
 }
 
+#
+# aws key pair
+#
 module "simple_aws_key_pair" {
   source = "../modules/simple_aws_key_pair"
 }
+
+#
+# networking
+#
 
 module "simple_networking" {
   source            = "../modules/simple_networking"
@@ -69,10 +84,16 @@ module "simple_networking" {
   private_key       = file(var.certificate_private_key_file)
 }
 
+#
+# redis
+#
 module "simple_redis_param_group" {
   source = "../modules/simple_redis_param_group"
 }
 
+#
+# server configs
+#
 module "simple_server_bangladesh_production" {
   source                     = "../modules/simple_server"
   deployment_name            = "bangladesh-production"

@@ -20,6 +20,9 @@ terraform {
   }
 }
 
+#
+# database u/p vars
+#
 variable "sandbox_database_username" {
   description = "Database Username"
   type        = string
@@ -40,14 +43,6 @@ variable "qa_database_password" {
   type        = string
 }
 
-variable "certificate_body_file" {
-  description = "certificate for domain name"
-}
-
-variable "certificate_chain_file" {
-  description = "certificate chain for domain name"
-}
-
 variable "security_database_username" {
   description = "Database Username"
   type        = string
@@ -58,19 +53,52 @@ variable "security_database_password" {
   type        = string
 }
 
+#
+# certficate stuff
+#
+variable "certificate_body_file" {
+  description = "certificate for domain name"
+}
+
+variable "certificate_chain_file" {
+  description = "certificate chain for domain name"
+}
+
 variable "certificate_private_key_file" {
   description = "Key to private key in ssl vault"
   type        = string
 }
 
+#
+# aws key pair
+#
 module "simple_aws_key_pair" {
   source = "../modules/simple_aws_key_pair"
 }
 
+#
+# redis
+#
 module "simple_redis_param_group" {
   source            = "../modules/simple_redis_param_group"
 }
 
+#
+# networking
+#
+module "simple_networking" {
+  source            = "../modules/simple_networking"
+
+  deployment_name   = "development"
+  database_vpc_cidr = "172.32.0.0/16"
+  certificate_body  = file(var.certificate_body_file)
+  certificate_chain = file(var.certificate_chain_file)
+  private_key       = file(var.certificate_private_key_file)
+}
+
+#
+# server configs
+#
 module "simple_server_sandbox" {
   source                     = "../modules/simple_server"
   deployment_name            = "development-sandbox"
