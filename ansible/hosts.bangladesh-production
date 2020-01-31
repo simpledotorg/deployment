@@ -1,7 +1,7 @@
 [simple]
 ec2-3-6-38-148.ap-south-1.compute.amazonaws.com
 ec2-13-235-13-52.ap-south-1.compute.amazonaws.com
-ec2-13-233-186-206.ap-south-1.compute.amazonaws.com
+ec2-13-232-141-5.ap-south-1.compute.amazonaws.com
 
 [rails:children]
 simple
