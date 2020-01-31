@@ -114,6 +114,7 @@ module "simple_server_sandbox" {
   host_urls                  = ["api-sandbox.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  sidekiq_server_count       = 1
 }
 
 module "simple_server_qa" {
@@ -131,6 +132,7 @@ module "simple_server_qa" {
   host_urls                  = ["api-qa.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  sidekiq_server_count       = 1
 }
 
 module "simple_server_security" {
@@ -148,6 +150,7 @@ module "simple_server_security" {
   host_urls                  = ["api-security.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
-  server_count               = 3
+  server_count               = 2
+  sidekiq_server_count       = 1
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
 }
