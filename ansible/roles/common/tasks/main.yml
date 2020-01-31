@@ -34,7 +34,7 @@
     - libyaml-dev
     - logrotate
     - python-pexpect
-    - python-software-properties
+    - software-properties-common
     - redis-tools
     - s3cmd
     - sqlite3

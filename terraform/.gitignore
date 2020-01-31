@@ -11,3 +11,6 @@
 
 # pem files
 *.pem
+
+.idea
+.DS_STORE
