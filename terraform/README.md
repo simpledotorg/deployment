@@ -11,3 +11,13 @@
   - all dynamo db access
 - Create a user with api only access under the provisioners group
 - Add users access id and secret key to AWS credentials file under an appropriate profile
+
+## TODO Documentation
+
+* Initial manual setup required on AWS
+* Managing vars
+  * Vars files
+  * Add SSL certificates
+  * Encrypt them and commit them into repo
+* How add a new module for a new environment setup (like sandbox, qa etc.)
+* Basic terraform commands
