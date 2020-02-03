@@ -2,7 +2,6 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-
 data "aws_internet_gateway" "default" {
   filter {
     name   = "attachment.vpc-id"
