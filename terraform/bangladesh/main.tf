@@ -21,7 +21,7 @@ terraform {
 }
 
 #
-# database u/p vars
+# Database username and passwords
 #
 variable "bangladesh_database_username" {
   description = "Database Username"
@@ -45,7 +45,7 @@ variable "bangladesh_staging_database_password" {
 
 
 #
-# certficate stuff
+# SSL Certificate files for domain
 #
 
 variable "certificate_body_file" {
@@ -64,14 +64,14 @@ variable "certificate_private_key_file" {
 }
 
 #
-# aws key pair
+# AWS key pair
 #
 module "simple_aws_key_pair" {
   source = "../modules/simple_aws_key_pair"
 }
 
 #
-# networking
+# Networking
 #
 
 module "simple_networking" {
