@@ -106,7 +106,7 @@ module "simple_server_bangladesh_production" {
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
-  host_urls                  = ["bd.simple.org", "api.bd.simple.org"]
+  host_urls                  = ["bd.simple.org", "api.bd.simple.org", "dashboard.bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
   server_count               = 2
@@ -126,7 +126,7 @@ module "simple_server_bangladesh_staging" {
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
-  host_urls                  = ["api-demo.bd.simple.org", "api-staging.bd.simple.org"]
+  host_urls                  = ["api-demo.bd.simple.org", "api-staging.bd.simple.org", "dashboard-demo.bd.simple.org", "dashboard-staging.bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
   server_count               = 1
