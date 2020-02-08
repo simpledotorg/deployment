@@ -7,17 +7,21 @@ postgres-primary
 postgres-secondary
 
 [postgres-primary]
-139.59.62.51
+142.93.220.218
 
 [postgres-secondary]
-134.209.146.75
+142.93.220.138
+
+[servers:children]
+webservers
+sidekiq
 
 [webservers]
-206.189.131.100
-134.209.146.84
+142.93.210.73
+159.65.145.21
 
 [sidekiq]
-206.189.129.128
+142.93.210.65
 
 [haproxy]
 
@@ -26,6 +30,6 @@ redis-primary
 redis-secondary
 
 [redis-primary]
-134.209.154.92
+142.93.220.234
 
 [redis-secondary]
