@@ -1,0 +1,15 @@
+ansistrano_deploy_to: "/home/deploy/apps/{{ app_name }}"
+ansistrano_shared_paths:
+  - .bundle
+  - log
+  - tmp/pids
+  - tmp/cache
+  - tmp/sockets
+  - public/system
+  - vendor/bundle
+ansistrano_shared_files:
+  - .env.production
+ansistrano_deploy_via: "git"
+ansistrano_allow_anonymous_stats: no
+ansistrano_git_repo: "https://github.com/simpledotorg/simple-server.git"
+ansistrano_after_symlink_shared_tasks_file: "roles/deploy/hooks/after_symlink.yml"

@@ -1,24 +1,8 @@
 ---
-- hosts: webservers,sidekiq
+- hosts: servers
   roles:
     - { role: deploy, tags: ['deploy'] }
     - { role: ansistrano.deploy, tags: ['ansistrano.deploy'] }
-  remote_user: "{{ deploy_user }}"
   environment:
     RAILS_ENV: production
-  vars:
-    ansistrano_deploy_to: "/home/deploy/apps/{{ app_name }}"
-    ansistrano_shared_paths:
-      - .bundle
-      - log
-      - tmp/pids
-      - tmp/cache
-      - tmp/sockets
-      - public/system
-      - vendor/bundle
-    ansistrano_shared_files:
-      - .env.production
-    ansistrano_deploy_via: "git"
-    ansistrano_allow_anonymous_stats: no
-    ansistrano_git_repo: "https://github.com/simpledotorg/simple-server.git"
-    ansistrano_after_symlink_shared_tasks_file: "roles/deploy/hooks/after_symlink.yml"
+  remote_user: "{{ deploy_user }}"
