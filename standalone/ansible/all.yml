@@ -1,0 +1,6 @@
+
+---
+- include: setup.yml
+- include: postgres.yml
+- include: redis.yml
+- include: deploy.yml
