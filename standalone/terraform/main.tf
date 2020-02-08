@@ -9,7 +9,7 @@ variable "fingerprint_2" {}
 #
 terraform {
   backend "s3" {
-    bucket = "simple-development-terraform-state"
+    bucket = "simple-server-development-terraform-state"
     encrypt = true
     key = "dummy.tfstate"
     region = "ap-south-1"
