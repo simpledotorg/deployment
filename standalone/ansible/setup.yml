@@ -5,7 +5,8 @@
     - { role: ssh, tags: ['ssh'] }
     - { role: rbenv, tags: ['rbenv'] }
     - { role: nodejs, tags: ['nodejs'] }
+- hosts: servers
+    - { role: postgresql-client, tags: ['postgresql-client'] }
 - hosts: webservers
   roles:
     - { role: passenger, tags: ['passenger'] }
-    - { role: postgresql-client, tags: ['postgresql-client'] }

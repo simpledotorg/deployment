@@ -3,13 +3,13 @@ deploy_env=staging
 domain_name=simple.nilenso.com
 
 [postgres:children]
-postgres-primary
-postgres-secondary
+postgres_primary
+postgres_secondary
 
-[postgres-primary]
+[postgres_primary]
 142.93.220.218
 
-[postgres-secondary]
+[postgres_secondary]
 142.93.220.138
 
 [servers:children]
@@ -26,10 +26,10 @@ sidekiq
 [haproxy]
 
 [redis:children]
-redis-primary
-redis-secondary
+redis_primary
+redis_secondary
 
-[redis-primary]
+[redis_primary]
 142.93.220.234
 
-[redis-secondary]
+[redis_secondary]
