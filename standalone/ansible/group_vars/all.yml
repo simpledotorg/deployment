@@ -8,3 +8,4 @@ app_name: "simple-server"
 rbenv_root: "/home/{{ deploy_user }}/.rbenv"
 bundle_path: "{{ rbenv_root }}/shims/bundle"
 aws_deploy: false
+secrets_file: "{{ inventory_file }}.secrets.yml"

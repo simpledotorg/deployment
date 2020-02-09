@@ -1,23 +1,11 @@
 ---
-postgresql_locale: "en_US.UTF-8"
-
-postgresql_user:
-  name: "simple-server"
-  password: !vault |
-            $ANSIBLE_VAULT;1.1;AES256
-            37646265623035323865663335313234613533646565386534396437343463303434633333343135
-            3531643134663930613238353631653531333862343234620a636439643861313131393439396535
-            36353063653339366636386137353237646135666565313933633861363334663035376566653933
-            3931353766303737330a383034653631333665316436643935663963646434376337336564373065
-            66353233373762383032666533393361323663306332333037336332323234303538633131656637
-            3365643331303033393133356663626137646433376637336234
-
-postgresql_database_name: "{{ deploy_env }}-{{ app_name }}-db"
-
-postgresql_pg_hba:
-  - {contype: local, databases: all, users: postgres, method: peer}
-  - {contype: host,  databases: all, users: all, source: all, method: md5}
-  - {contype: local, databases: all, users: all, source: all, method: md5}
+postgres:
+  locale: "en_US.UTF-8"
+  database_name: "{{ deploy_env }}-{{ app_name }}-db"
+  pg_hba:
+    - {contype: local, databases: all, users: postgres, method: peer}
+    - {contype: host,  databases: all, users: all, source: all, method: md5}
+    - {contype: local, databases: all, users: all, source: all, method: md5}
 
 __postgresql_data_dir: "/var/lib/postgresql/{{ __postgresql_version }}/main"
 __postgresql_bin_path: "/usr/lib/postgresql/{{ __postgresql_version }}/bin"

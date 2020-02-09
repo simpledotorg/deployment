@@ -6,6 +6,7 @@
     - { role: rbenv, tags: ['rbenv'] }
     - { role: nodejs, tags: ['nodejs'] }
 - hosts: servers
+  roles:
     - { role: postgresql-client, tags: ['postgresql-client'] }
 - hosts: webservers
   roles:

@@ -1,11 +1,17 @@
 # simple server tasks
 ---
+- name: Deploy | Include secrets
+  include_vars:
+    file: "{{ secrets_file }}"
+    name: secrets
 
-- name: create apps directory
+- name: Deploy | Create apps directory
   file:
     path: /home/deploy/apps/{{app_name}}/shared
     state: directory
     owner: "{{ deploy_user }}"
 
-- name: copy .env file
-  copy: src=.env.{{ deploy_env }} dest=/home/deploy/apps/{{app_name}}/shared/.env.production
+- name: Deploy | Copy .env template file
+  template:
+    src: .env.j2 
+    dest: /home/deploy/apps/{{app_name}}/shared/.env.production
