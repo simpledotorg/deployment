@@ -1,4 +1,4 @@
 ---
-- hosts: postgres_primary
+- hosts: postgres
   roles:
     - { role: postgres, tags: ['postgres'] }

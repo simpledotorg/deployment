@@ -4,5 +4,5 @@ init :
 		ansistrano.rollback \
 		cloudalchemy.prometheus \
 		cloudalchemy.grafana \
-		cloudalchemy.node_exporter \
+		cloudalchemy.node-exporter \
 		davidwittman.redis

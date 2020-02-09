@@ -33,3 +33,6 @@ redis_secondary
 142.93.220.234
 
 [redis_secondary]
+
+[monitoring]
+139.59.4.187

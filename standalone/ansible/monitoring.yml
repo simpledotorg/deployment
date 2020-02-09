@@ -1,0 +1,15 @@
+---
+- name: Setup Prometheus
+  hosts: monitoring
+  roles:
+    - cloudalchemy.prometheus
+    
+- name: Setup Grafana
+  hosts: monitoring
+  roles:
+    - cloudalchemy.grafana
+    
+- name: Setup node exporter for all nodes
+  hosts: all
+  roles:
+    - cloudalchemy.node-exporter

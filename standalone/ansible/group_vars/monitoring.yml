@@ -1,0 +1,22 @@
+prometheus_web_listen_address: "0.0.0.0:9090"
+prometheus_targets: 
+  node:
+    targets:
+      - "{{ groups.webservers.0 }}:9100"
+      - "{{ groups.webservers.0 }}:9100"
+      - "{{ groups.sidekiq.0 }}:9100"
+      - "{{ groups.postgres_primary.0 }}:9100"
+      - "{{ groups.redis.0 }}:9100"
+
+grafana_security:
+  admin_user: admin
+  admin_password: admin
+grafana_datasources:
+  - name: prometheus
+    type: prometheus
+    access: proxy
+    url: "{{ groups.monitoring.0 }}:9090"
+grafana_dashboards:
+  - dashboard_id: 11074
+    revision_id: 2
+    datasource: "{{ grafana_datasources.0.name }}"

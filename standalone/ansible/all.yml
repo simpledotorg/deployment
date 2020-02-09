@@ -1,6 +1,6 @@
 
 ---
-- include: setup.yml
-- include: postgres.yml
-- include: redis.yml
-- include: deploy.yml
+- import_playbook: setup.yml
+- import_playbook: postgres.yml
+- import_playbook: redis.yml
+- import_playbook: deploy.yml
