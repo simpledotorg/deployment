@@ -104,7 +104,8 @@ module "simple_server_sandbox" {
   deployment_name            = "development-sandbox"
   database_vpc_id            = module.simple_networking.database_vpc_id
   database_subnet_group_name = module.simple_networking.database_subnet_group_name
-  ec2_instance_type          = "t2.medium"
+  ec2_instance_type          = "t2.2xlarge"
+  server_count               = 2
   database_username          = var.sandbox_database_username
   database_password          = var.sandbox_database_password
   instance_security_groups   = module.simple_networking.instance_security_groups
