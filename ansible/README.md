@@ -25,15 +25,29 @@ Each environment has it's own `hosts.<env_name>` ([root](/) directory) file and 
 
 ## Changing secrets
 
+Use the following command to change secrets.
+
 ```
 ansible-vault edit --vault-id /path/to/password_file  roles/simple-server/files/.env.<env_name>
 ```
 
+This will decrypt and open the appropriate config file in a temporary buffer for editing. Make any necessary edits, and
+save and close the file. The ansible encrypted config file will now be updated. You can then commit these changes.
+
 
 ## Updating configs
 
+To update the appropriate environments with any new config changes merged to `master`, run the following command.
+
 ```
 ansible-playbook -v --vault-id /path/to/password_file conf-update.yml -i hosts.<env_name>
+```
+
+Be sure to restart your web and worker processes to ensure the config changes are picked up by them.
+
+```
+bundle exec cap bangladesh:demo deploy:restart
+bundle exec cap bangladesh:demo sidekiq:restart
 ```
 
 ## Deploying
