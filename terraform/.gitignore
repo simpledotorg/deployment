@@ -8,3 +8,9 @@
 
 # Variable files
 *.tfvars
+
+# pem files
+*.pem
+
+.idea
+.DS_STORE
