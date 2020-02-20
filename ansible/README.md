@@ -46,8 +46,8 @@ ansible-playbook -v --vault-id /path/to/password_file conf-update.yml -i hosts.<
 Be sure to restart your web and worker processes to ensure the config changes are picked up by them.
 
 ```
-bundle exec cap bangladesh:demo deploy:restart
-bundle exec cap bangladesh:demo sidekiq:restart
+bundle exec cap <country:environment> deploy:restart
+bundle exec cap <country:environment> sidekiq:restart
 ```
 
 ## Deploying
