@@ -33,7 +33,6 @@ server {
   passenger_enabled on;
   rails_env production;
   passenger_max_request_queue_size 200;
-  passenger_min_instances 1;
   passenger_start_timeout 300;
 
   gzip on;
