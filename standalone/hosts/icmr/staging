@@ -34,5 +34,12 @@ redis_secondary
 
 [redis_secondary]
 
-[monitoring]
+[monitoring:children]
+prometheus
+grafana
+
+[prometheus]
+139.59.4.187
+
+[grafana]
 139.59.4.187

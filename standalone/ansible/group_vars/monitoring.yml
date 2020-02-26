@@ -1,12 +1,12 @@
 prometheus_web_listen_address: "0.0.0.0:9090"
 prometheus_targets: 
   node:
-    targets:
-      - "{{ groups.webservers.0 }}:9100"
-      - "{{ groups.webservers.0 }}:9100"
-      - "{{ groups.sidekiq.0 }}:9100"
-      - "{{ groups.postgres_primary.0 }}:9100"
-      - "{{ groups.redis.0 }}:9100"
+    - targets: "{{ groups.all | map('regex_replace', '^(.*)$', '\\1:9100') | list }}"
+
+prometheus_scrape_config:
+  - job_name: scrape_node_exporter
+    files:
+      - "{{ prometheus_config_dir }}/file_sd/node.yml"
 
 grafana_security:
   admin_user: admin
@@ -15,7 +15,7 @@ grafana_datasources:
   - name: prometheus
     type: prometheus
     access: proxy
-    url: "{{ groups.monitoring.0 }}:9090"
+    url: "http://{{ groups.monitoring.0 }}:9090"
 grafana_dashboards:
   - dashboard_id: 11074
     revision_id: 2
