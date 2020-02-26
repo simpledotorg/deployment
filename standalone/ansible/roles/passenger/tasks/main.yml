@@ -48,23 +48,9 @@
   shell: ls -1 /etc/nginx/sites-available
   register: sites_available_contents
 
-# - name: delete unmanaged site configs from sites-available
-#   file: path=/etc/nginx/sites-available/{{ item }} state=absent
-#   with_items: sites_available_contents.stdout_lines
-#   when: item not in "{{ nginx_sites }}"
-#   become: true
-#   notify: restart nginx
-
 - name: get enabled site configs
   shell: ls -1 /etc/nginx/sites-enabled
   register: sites_enabled_contents
-
-# - name: delete unmanaged site configs from sites-enabled
-#   file: path=/etc/nginx/sites-enabled/{{ item }} state=absent
-#   with_items: sites_enabled_contents.stdout_lines
-#   when: item not in "{{ nginx_sites }}"
-#   become: true
-#   notify: restart nginx
 
 - name: add site configs
   template:
