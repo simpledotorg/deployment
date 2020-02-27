@@ -43,3 +43,6 @@ grafana
 
 [grafana]
 139.59.4.187
+
+[load_balancer]
+142.93.219.65
