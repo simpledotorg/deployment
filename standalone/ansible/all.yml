@@ -4,3 +4,4 @@
 - import_playbook: postgres.yml
 - import_playbook: redis.yml
 - import_playbook: deploy.yml
+- import_playbook: load_balancing.yml
