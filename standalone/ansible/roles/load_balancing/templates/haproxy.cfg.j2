@@ -39,7 +39,10 @@ defaults
 {% endif %}
 
 frontend {{ haproxy_frontend_name }}
-    bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_port }}
+    bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_http_port }}
+    redirect scheme https code 301 if !{ ssl_fc }
+
+    bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_https_port }} ssl crt {{ haproxy_cert_location }}
     mode {{ haproxy_frontend_mode }}
     default_backend {{ haproxy_backend_name }}
 

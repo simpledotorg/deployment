@@ -8,8 +8,10 @@ haproxy_group: haproxy
 # Frontend settings.
 haproxy_frontend_name: 'hafrontend'
 haproxy_frontend_bind_address: '*'
-haproxy_frontend_port: 80
+haproxy_frontend_http_port: 80
+haproxy_frontend_https_port: 443
 haproxy_frontend_mode: 'http'
+haproxy_cert_location: /etc/ssl/simple.org.crt
 
 # Backend settings.
 haproxy_backend_name: 'habackend'
@@ -18,7 +20,11 @@ haproxy_backend_balance_method: 'roundrobin'
 haproxy_backend_httpchk: 'HEAD / HTTP/1.1\r\nHost:localhost'
 
 # List of backend servers.
-haproxy_backend_servers: []
+haproxy_backend_servers:
+  - name: simple-server
+    address: 134.209.152.169:80
+  - name: simple-server
+    address: 68.183.93.227:80
 # - name: app1
 #   address: 192.168.0.1:80
 # - name: app2
