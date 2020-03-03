@@ -33,4 +33,8 @@
   with_dict: "{{ ssl_cert_files }}"
   no_log: true
   become: true
+
+- name: concatenate pem files
+  shell: cat /etc/ssl/{{ item }}.crt /etc/ssl/{{ item }}.key > /etc/ssl/{{ item }}.pem
+  with_items: "{{ haproxy_certs }}"
   notify: restart haproxy

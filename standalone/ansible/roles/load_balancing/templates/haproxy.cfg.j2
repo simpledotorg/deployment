@@ -40,9 +40,9 @@ defaults
 
 frontend {{ haproxy_frontend_name }}
     bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_http_port }}
-    redirect scheme https code 301 if !{ ssl_fc }
+    bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_https_port }} ssl {% for cert in haproxy_certs %}crt /etc/ssl/{{ cert }}.pem {% endfor %}
 
-    bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_https_port }} ssl crt {{ haproxy_cert_location }}
+    redirect scheme https code 301 if !{ ssl_fc }
     mode {{ haproxy_frontend_mode }}
     default_backend {{ haproxy_backend_name }}
 
@@ -57,6 +57,8 @@ backend {{ haproxy_backend_name }}
 {% for backend in haproxy_backend_servers %}
     server {{ backend.name }} {{ backend.address }} cookie {{ backend.name }} check
 {% endfor %}
+    http-request set-header X-Forwarded-Port %[dst_port]
+    http-request add-header X-Forwarded-Proto https if { ssl_fc }
 
 {% if haproxy_stats_enable %}
 listen stats
