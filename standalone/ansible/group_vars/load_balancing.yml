@@ -11,10 +11,11 @@ haproxy_frontend_bind_address: '*'
 haproxy_frontend_http_port: 80
 haproxy_frontend_https_port: 443
 haproxy_frontend_mode: 'http'
-haproxy_certs:
-  - simple.org
-  - in.simple.org
-  - bd.simple.org
+haproxy_cert_names:
+  - /etc/ssl/simple.org
+  - /etc/ssl/in.simple.org
+  - /etc/ssl/bd.simple.org
+haproxy_crt_list: '/etc/ssl/crt-list.txt'
 
 # Backend settings.
 haproxy_backend_name: 'habackend'
