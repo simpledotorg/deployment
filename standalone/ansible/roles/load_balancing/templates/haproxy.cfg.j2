@@ -62,7 +62,7 @@ backend {{ haproxy_backend_name }}
 
 {% if haproxy_stats_enable %}
 listen stats
-    bind *:{{ haproxy_stats_port }}
+    bind *:{{ haproxy_stats_port }} ssl crt-list {{ haproxy_crt_list }}
     mode http
 
     stats enable
