@@ -35,11 +35,6 @@ For testing purposes, `provision-playground/` contains a terraform script to spi
     cat terraform.tfvars | ansible-vault encrypt --vault-id ../../password_file --output terraform.tfvars.vault
     ```
 ### Recreating terraform boxes:
--  Taint the boxes
-   ```bash
-   for i in {0..7}
-     do terraform taint digitalocean_droplet.icmr-box\[$i\]
-   done
-   ```
+- `terraform destroy`
 - `terraform plan`
 - `terraform apply`
