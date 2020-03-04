@@ -15,7 +15,7 @@ For testing purposes, `provision-playground/` contains a terraform script to spi
 - `terraform apply`
 - Add IPs of created boxes to `ansible/hosts/icmr/playground`.
 
-# Running ansible
+# Setting up simple-server
 - Add hosts to `ansible/hosts/icmr/playground`.
 - (To setup a domain): Add load balancer IP to DNS.
 - TODO: Certificates
@@ -36,7 +36,7 @@ For testing purposes, `provision-playground/` contains a terraform script to spi
     ```
 ### Recreating terraform boxes:
 -  Taint the boxes
-   ```
+   ```bash
    for i in {0..7}
      do terraform taint digitalocean_droplet.icmr-box\[$i\]
    done
