@@ -1,8 +1,8 @@
 # Set the variable value in *.tfvars file
 # or using -var="do_token=..." CLI option
 variable "do_token" {}
-variable "fingerprint_1" {}
-variable "fingerprint_2" {}
+variable "kitallis_fingerprint" {}
+variable "prabhanshu_fingerprint" {}
 
 #
 # Set remote backend to save state
@@ -30,7 +30,7 @@ resource "digitalocean_droplet" "icmr-box" {
   name   = "p-icmr-box-${count.index + 1}"
   region = "blr1"
   size   = "c-2"
-  ssh_keys = [var.fingerprint_1, var.fingerprint_2]
+  ssh_keys = [var.kitallis_fingerprint, var.prabhanshu_fingerprint]
 }
 
 output "instance_ips" {
