@@ -23,13 +23,6 @@ haproxy_backend_mode: 'http'
 haproxy_backend_balance_method: 'roundrobin'
 haproxy_backend_httpchk: 'HEAD / HTTP/1.1\r\nHost:localhost'
 
-# List of backend servers.
-haproxy_backend_servers:
-  - name: simple-server1
-    address: 134.209.152.169:80
-  - name: simple-server2
-    address: 68.183.93.227:80
-
 # Extra global vars (see README for example usage).
 haproxy_global_vars: []
 

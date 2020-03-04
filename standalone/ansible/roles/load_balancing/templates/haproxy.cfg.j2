@@ -54,8 +54,8 @@ backend {{ haproxy_backend_name }}
     option httpchk {{ haproxy_backend_httpchk }}
 {% endif %}
     cookie SERVERID insert indirect
-{% for backend in haproxy_backend_servers %}
-    server {{ backend.name }} {{ backend.address }} cookie {{ backend.name }} check
+{% for server in groups.webservers %}
+    server simple-server{{ loop.index }} {{ server }}:80 cookie simple-server{{ loop.index }} check
 {% endfor %}
     http-request set-header X-Forwarded-Port %[dst_port]
     http-request add-header X-Forwarded-Proto https if { ssl_fc }
