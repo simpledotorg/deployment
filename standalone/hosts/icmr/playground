@@ -1,5 +1,5 @@
 [all:vars]
-deploy_env=playground
+deploy_env=staging
 domain_name=simple.nilenso.com
 
 [postgres:children]
