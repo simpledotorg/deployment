@@ -39,11 +39,11 @@
 - name: Postgres | Ensure PostgreSQL 10 packages are installed.
   apt:
     pkg:
+      - python3-psycopg2
       - postgresql-10
       - postgresql-contrib
       - libpq-dev
       - python-ipaddress
-      - python-psycopg2
     state: present
 
 - name: Postgres | Ensure all configured locales are present.
