@@ -1,8 +1,13 @@
 # simple server tasks
 ---
+- name: Deploy | Include feature flag settings
+  include_vars:
+    file: "{{ deploy_env }}/feature_flags.yml"
+    name: feature_flags
+
 - name: Deploy | Include secrets
   include_vars:
-    file: "{{ secrets_file }}"
+    file: "{{ deploy_env }}/secrets.yml"
     name: secrets
 
 - name: Deploy | Create apps directory
