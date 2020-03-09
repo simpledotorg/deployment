@@ -1,20 +1,16 @@
 - name: add ssh keys for root
   become: true
   authorized_key:
-    key: "{{ lookup('file', item) }}"
+    key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
     user: "{{ root_user }}"
     exclusive: yes
-  with_fileglob:
-    - ssh_keys/{{ deploy_env }}/*
 
 - name: add ssh keys for the deploy user
   become: true
   authorized_key:
-    key: "{{ lookup('file', item) }}"
+    key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
     user: "{{ deploy_user }}"
     exclusive: yes
-  with_fileglob:
-    - ssh_keys/{{ deploy_env }}/*
 
 # TODO: Disable ssh password based login
 
