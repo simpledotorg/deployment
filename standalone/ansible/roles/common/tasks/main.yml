@@ -92,7 +92,6 @@
     shell: /bin/bash
   become: true
 
-
 - name: enable systemctl services for deploy user
   become: true
   shell: loginctl enable-linger deploy
