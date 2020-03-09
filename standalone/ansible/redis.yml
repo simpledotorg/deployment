@@ -2,4 +2,8 @@
 - name: configure the primary redis server
   hosts: redis
   roles:
-    - davidwittman.redis
+    - role: davidwittman.redis
+      redis_bind: 0.0.0.0
+      redis_port: 6379
+      redis_password: false
+    - { role: redis, tags: ['redis'] }
