@@ -10,3 +10,5 @@ postgres:
 __postgresql_data_dir: "/var/lib/postgresql/{{ __postgresql_version }}/main"
 __postgresql_bin_path: "/usr/lib/postgresql/{{ __postgresql_version }}/bin"
 __postgresql_config_path: "/etc/postgresql/{{ __postgresql_version }}/main"
+
+ansible_python_interpreter: /usr/bin/python3
