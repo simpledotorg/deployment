@@ -10,16 +10,16 @@
 
 - name: include rbenv in $PATH
   lineinfile: >
-    dest=~/.bashrc
+    dest=~/.profile
     line='export PATH="$HOME/.rbenv/bin:$PATH"'
     state=present
     insertafter=EOF
   become: true
   become_user: "{{ deploy_user }}"
 
-- name: load rbenv in .bashrc
+- name: load rbenv in .profile
   lineinfile: >
-    dest=~/.bashrc
+    dest=~/.profile
     line='eval "$(rbenv init -)"'
     state=present
     insertafter=EOF
@@ -36,7 +36,7 @@
 
 - name: include ruby-build in $PATH
   lineinfile: >
-    dest=~/.bashrc
+    dest=~/.profile
     line='export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'
     state=present
     insertafter=EOF
