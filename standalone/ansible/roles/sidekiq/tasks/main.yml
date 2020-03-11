@@ -14,8 +14,5 @@
   become: true
   notify: restart monit
 
-- name: Sidekiq | start sidekiq
-  monit:
-    name: "{{ sidekiq_service_name }}"
-    state: restarted
-  become: true
+- name: Sidekiq | reload monit
+  shell: monit reload
