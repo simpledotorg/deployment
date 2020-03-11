@@ -1,0 +1,88 @@
+# rbenv tasks
+---
+- name: clone rbenv git repo
+  git: >
+    repo=git://github.com/sstephenson/rbenv.git
+    dest=~/.rbenv
+    accept_hostkey=yes
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: include rbenv in $PATH
+  lineinfile: >
+    dest=~/.profile
+    line='export PATH="$HOME/.rbenv/bin:$PATH"'
+    state=present
+    insertafter=EOF
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: load rbenv in .profile
+  lineinfile: >
+    dest=~/.profile
+    line='eval "$(rbenv init -)"'
+    state=present
+    insertafter=EOF
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: clone ruby-build git repo
+  git: >
+    repo=git://github.com/sstephenson/ruby-build.git
+    dest=~/.rbenv/plugins/ruby-build
+    accept_hostkey=yes
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: include ruby-build in $PATH
+  lineinfile: >
+    dest=~/.profile
+    line='export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'
+    state=present
+    insertafter=EOF
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: clone rbenv-gem-rehash git repo
+  git: >
+    repo=git://github.com/sstephenson/rbenv-gem-rehash.git
+    dest=~/.rbenv/plugins/rbenv-gem-rehash
+    accept_hostkey=yes
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: install ruby
+  shell: rbenv install -s {{ ruby_version }}
+  environment:
+    PATH: "{{ rbenv_root }}/bin:{{ rbenv_root }}/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: Set global ruby version
+  shell: rbenv global {{ ruby_version }}
+  environment:
+    PATH: "/home/{{ deploy_user }}/.rbenv/bin:/home/{{ deploy_user }}/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: rbenv rehash
+  shell: rbenv rehash
+  environment:
+    PATH: "/home/{{ deploy_user }}/.rbenv/bin:/home/{{ deploy_user }}/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: set up .gemrc
+  lineinfile: >
+    dest=~/.gemrc
+    line='gem: --no-ri --no-rdoc'
+    state=present
+    create=yes
+    insertafter=EOF
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: install bundler
+  shell: ~/.rbenv/shims/gem install bundler -v {{ bundler_version }}
+  become: true
+  become_user: "{{ deploy_user }}"

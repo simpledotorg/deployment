@@ -1,0 +1,18 @@
+---
+- name: Sidekiq | Copy sidekiq monit file
+  template:
+    src: etc/monit/conf-available/sidekiq.monitrc
+    dest: /etc/monit/conf-available/sidekiq.monitrc
+  become: true
+  notify: restart monit
+
+- name: Sidekiq | enable monit for sidekiq
+  file: >
+    state=link
+    src=/etc/monit/conf-available/sidekiq.monitrc
+    dest=/etc/monit/conf-enabled/sidekiq.monitrc
+  become: true
+  notify: restart monit
+
+- name: Sidekiq | reload monit
+  shell: monit reload

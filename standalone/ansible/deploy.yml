@@ -1,0 +1,11 @@
+---
+- hosts: servers
+  roles:
+    - { role: deploy, tags: ['deploy'] }
+    - { role: ansistrano.deploy, tags: ['ansistrano.deploy'] }
+  environment:
+    RAILS_ENV: production
+  remote_user: "{{ deploy_user }}"
+- hosts: sidekiq
+  roles:
+    - { role: sidekiq, tags: ['sidekiq'] }

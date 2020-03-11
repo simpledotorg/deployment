@@ -1,0 +1,6 @@
+
+---
+- import_playbook: setup.yml
+- import_playbook: postgres.yml
+- import_playbook: redis.yml
+- import_playbook: deploy.yml

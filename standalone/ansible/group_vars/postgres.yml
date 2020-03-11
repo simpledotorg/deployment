@@ -1,0 +1,14 @@
+---
+postgres:
+  locale: "en_US.UTF-8"
+  database_name: "{{ deploy_env }}-{{ app_name }}-db"
+  pg_hba:
+    - {contype: local, databases: all, users: postgres, method: peer}
+    - {contype: host,  databases: all, users: all, source: all, method: md5}
+    - {contype: local, databases: all, users: all, source: all, method: md5}
+
+__postgresql_data_dir: "/var/lib/postgresql/{{ __postgresql_version }}/main"
+__postgresql_bin_path: "/usr/lib/postgresql/{{ __postgresql_version }}/bin"
+__postgresql_config_path: "/etc/postgresql/{{ __postgresql_version }}/main"
+
+ansible_python_interpreter: /usr/bin/python3

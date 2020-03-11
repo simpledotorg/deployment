@@ -1,0 +1,10 @@
+---
+ansible_port: 22
+root_user: "root"
+deploy_user: "deploy"
+ruby_version: "2.5.1"
+bundler_version: "1.17.3"
+app_name: "simple-server"
+rbenv_root: "/home/{{ deploy_user }}/.rbenv"
+bundle_path: "{{ rbenv_root }}/shims/bundle"
+aws_deploy: false

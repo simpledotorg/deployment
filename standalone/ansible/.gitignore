@@ -1,0 +1,3 @@
+*.hosts
+ssh_keys/*
+tmp
