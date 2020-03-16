@@ -23,8 +23,6 @@ sidekiq
 [sidekiq]
 134.209.152.107
 
-[haproxy]
-
 [redis:children]
 redis_primary
 redis_secondary
