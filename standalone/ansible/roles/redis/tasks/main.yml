@@ -1,15 +1,15 @@
 ---
-- name: Change default incoming policy changed to 'deny'
+- name: Redis | Change default incoming policy changed to 'deny'
   ufw:
     direction: incoming
     default: deny
 
-- name: Allow SSH
+- name: Redis | Allow SSH
   ufw:
     rule: allow
     name: OpenSSH
 
-- name: Allow access to redis to servers (webservers + sidekiq) only
+- name: Redis | Allow access to redis to servers (webservers + sidekiq) only
   ufw:
     rule: allow
     proto: tcp
@@ -17,6 +17,6 @@
     to_port: "{{ redis_port }}"
   with_items: "{{ groups.servers }}"
 
-- name: Enable ufw
+- name: Redis | Enable ufw
   ufw:
     state: enabled
