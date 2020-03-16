@@ -9,6 +9,7 @@
     - { role: rbenv, tags: ['rbenv'] }
     - { role: nodejs, tags: ['nodejs'] }
     - { role: monit, tags: ['monit'] }
+    - { role: logging, tags: ['logging'] }
 - hosts: webservers
   roles:
     - { role: passenger, tags: ['passenger'] }

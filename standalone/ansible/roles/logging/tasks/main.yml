@@ -1,0 +1,24 @@
+---
+- name: Logging | Generate ssh keys
+  openssh_keypair:
+    path: ~/.ssh/id_rsa
+
+- name: Logging | Fetch generated ssh keys
+  fetch:
+    src: "~/.ssh/id_rsa.pub"
+    dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
+    flat: yes
+
+- name: Logging | Add servers' keys to storage server
+  authorized_key:
+    key: "{% for key in query('fileglob', '/tmp/keys/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
+    user: "{{ deploy_user }}"
+    exclusive: yes
+  delegate_to: "{{ groups.storage[0] }}"
+
+- name: Logging | Set up logrotate
+  template:
+    src: "etc/logrotate.d/rails.j2"
+    dest: "/etc/logrotate.d/rails"
+    owner: root
+  become: true
