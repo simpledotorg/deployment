@@ -39,7 +39,13 @@ prometheus
 grafana
 
 [prometheus]
-139.59.4.187
+139.59.87.89
 
 [grafana]
-139.59.4.187
+139.59.87.89
+
+[load_balancing]
+139.59.76.237
+
+[storage]
+165.22.218.14
