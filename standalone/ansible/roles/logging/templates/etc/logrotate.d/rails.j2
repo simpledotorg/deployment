@@ -11,7 +11,7 @@
   lastaction
     HOSTNAME=`hostname`
 {% for server in groups.storage %}
-    rsync -a /home/deploy/apps/{{ app_name }}/current/log/*.gz {{ deploy_user }}@{{ server }}:~/logs/rails/
+    rsync -a /home/deploy/apps/{{ app_name }}/current/log/*.gz {{ deploy_user }}@{{ server }}:~/logs/$HOSTNAME/
 {% endfor %}
   endscript
 }
