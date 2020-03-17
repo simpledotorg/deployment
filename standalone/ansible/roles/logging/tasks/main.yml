@@ -1,5 +1,5 @@
 ---
-- name: Logging | Generate ssh keys
+- name: Logging | Generate ssh keys on servers
   openssh_keypair:
     path: ~/.ssh/id_rsa
 
@@ -9,11 +9,19 @@
     dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
     flat: yes
 
-- name: Logging | Add servers' keys to storage server
+- name: Logging | Add servers' keys to the storage server
   authorized_key:
     key: "{% for key in query('fileglob', '/tmp/keys/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
     user: "{{ deploy_user }}"
     exclusive: yes
+  delegate_to: "{{ groups.storage[0] }}"
+
+- name: Logging | Create logs directory
+  file:
+    path: ~/logs
+    state: directory
+  become: true
+  become_user: "{{ deploy_user }}"
   delegate_to: "{{ groups.storage[0] }}"
 
 - name: Logging | Set up logrotate
