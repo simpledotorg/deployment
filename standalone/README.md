@@ -31,6 +31,8 @@ These components are arranged in the following topography.
 
 ![topography](https://docs.google.com/drawings/d/e/2PACX-1vTr2ryR_vqxAtdNCzKxn1pIdz3b57be8j3iHAVBEDBGstA6jGqOX6deyoXeWBXEk_yzeybFsmrzm5Ww/pub?w=960&amp;h=720)
 
+If this image is out-of-date, you can edit it [here](https://docs.google.com/drawings/d/1jHZeW141ivRUAWhHEduwlyasFxNzZ1Nk2V_AQ12w4p8/edit).
+
 ## Setting Up `simple-server`
 
 Below are instructions to setting up simple-server on a set of servers. These instructions assume that you have already
