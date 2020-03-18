@@ -1,0 +1,19 @@
+# Sets up SSH keys on the storage server so that other servers can rsync.
+- name: generate ssh keys for root user
+  openssh_keypair:
+    path: ~/.ssh/id_rsa
+
+- name: fetch ssh keys to be added to storage server
+  fetch:
+    src: "~/.ssh/id_rsa.pub"
+    dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
+    flat: yes
+
+- name: add keys to the storage server
+  authorized_key:
+    key: "{% for key in query('fileglob', '/tmp/keys/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
+    user: "{{ deploy_user }}"
+    # This is to avoid conflict with authorized_keys, which is cleared with keys in the ssh role.
+    # AuthorizedKeysFile looks at authorized_keys2 by default.
+    path: "/home/{{ deploy_user }}/.ssh/authorized_keys2"
+  delegate_to: "{{ groups.storage[0] }}"
