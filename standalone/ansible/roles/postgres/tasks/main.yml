@@ -1,42 +1,42 @@
 ---
-- name: Postgres | Include secrets
+- name: Include secrets
   include_vars:
     file: "../deploy/vars/{{ deploy_env }}/secrets.yml"
     name: secrets
 
-- name: Postgres | Define postgresql version
+- name: Define postgresql version
   set_fact:
     postgresql_version: "10"
   when: postgresql_version is not defined
 
-- name: Postgres | Define postgresql_daemon.
+- name: Define postgresql_daemon.
   set_fact:
     postgresql_daemon: "postgresql@{{ postgresql_version }}-main"
   when: postgresql_daemon is not defined
 
-- name: Postgres | ensure apt-transport-https is installed
+- name: ensure apt-transport-https is installed
   apt: name=apt-transport-https state=present
   become: true
 
-- name: Postgres | add postgresql apt key
+- name: add postgresql apt key
   apt_key:
     url:  https://www.postgresql.org/media/keys/ACCC4CF8.asc
     state: present
   become: true
 
-- name: Postgres | add postgresql repositories
+- name: add postgresql repositories
   apt_repository:
     repo: "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
     state: present
   register: postgres_repo
   become: true
 
-- name: Postgres | update apt cache if repo was added
+- name: update apt cache if repo was added
   apt: update_cache=yes
   when: postgres_repo.changed
   become: true
 
-- name: Postgres | Ensure PostgreSQL 10 dependencies are installed.
+- name: Ensure PostgreSQL 10 dependencies are installed.
   apt:
     pkg:
       - python3-psycopg2
@@ -44,20 +44,20 @@
       - python-ipaddress
     state: present
 
-- name: Postgres | Ensure PostgreSQL 10 packages are installed.
+- name: Ensure PostgreSQL 10 packages are installed.
   apt:
     pkg:
       - postgresql-10
       - postgresql-contrib
     state: present
 
-- name: Postgres | Ensure all configured locales are present.
+- name: Ensure all configured locales are present.
   locale_gen:
     name: "{{ postgres.locale }}"
     state: present
   register: locale_gen_result
 
-- name: Postgres | Grant the default permisions for pg_hba conf.
+- name: Grant the default permisions for pg_hba conf.
   with_items: "{{ postgres.pg_hba }}"
   postgresql_pg_hba:
     dest: "/etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf"
@@ -70,19 +70,19 @@
     backup: true
   register: postgres_hba_conf
 
-- name: Postgres | Force-restart PostgreSQL after new locales are generated.
+- name: Force-restart PostgreSQL after new locales are generated.
   service:
     name: "{{ postgresql_daemon }}"
     state: restarted
   when: locale_gen_result.changed
 
-- name: Postgres | Create Postgresql database
+- name: Create Postgresql database
   postgresql_db:
     name: "{{ postgres.database_name }}"
   become: yes
   become_user: postgres
 
-- name: Postgres | Create Postgresql user
+- name: Create Postgresql user
   postgresql_user:
     name: "{{ secrets.postgres.username }}"
     password: "{{ secrets.postgres.password }}"
@@ -93,7 +93,7 @@
   become: true
   become_user: postgres
 
-- name: Postgres | Allow postgres to accept all connections
+- name: Allow postgres to accept all connections
   postgresql_set:
     name: listen_addresses
     value: "*"
@@ -101,13 +101,13 @@
   become: true
   become_user: postgres
 
-- name: Postgres | Restart postgresql
+- name: Restart postgresql
   service:
     name: "{{ postgresql_daemon }}"
     state: restarted
   when: postgres_listen_addresses.changed
 
-- name: Postgres | Reload postgresql
+- name: Reload postgresql
   service:
     name: "{{ postgresql_daemon }}"
     state: reloaded
