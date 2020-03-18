@@ -1,4 +1,4 @@
-/home/deploy/apps/*/current/log/*.log {
+/home/{{ deploy_user }}/apps/*/current/log/*.log {
   su deploy deploy
   daily
   rotate 14
@@ -11,7 +11,8 @@
   lastaction
     HOSTNAME=`hostname`
 {% for server in groups.storage %}
-    rsync -a /home/deploy/apps/{{ app_name }}/current/log/*.gz {{ deploy_user }}@{{ server }}:~/logs/$HOSTNAME/
+    rsync -a /home/{{ deploy_user }}/apps/{{ app_name }}/current/log/*.gz {{ deploy_user }}@{{ server }}:~/logs/$HOSTNAME/ --log-file=/home/{{ deploy_user }}/apps/simple-server/current/log/rsync.log
+    chown {{ deploy_user }} /home/{{ deploy_user }}/apps/simple-server/current/log/rsync.log
 {% endfor %}
   endscript
 }
