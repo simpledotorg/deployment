@@ -1,23 +1,39 @@
-- name: add ssh keys for root
+- name: ssh | add ssh keys for root
   become: true
   authorized_key:
     key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
     user: "{{ root_user }}"
     exclusive: yes
 
-- name: add ssh keys for the deploy user
+- name: ssh | add ssh keys for the deploy user
   become: true
   authorized_key:
     key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
     user: "{{ deploy_user }}"
     exclusive: yes
 
+# Sets up SSH keys on the storage server so that other servers can rsync.
+- name: rsync | generate ssh keys for root user
+  openssh_keypair:
+    path: ~/.ssh/id_rsa
+
+- name: rsync | fetch ssh keys to be added to storage server
+  fetch:
+    src: "~/.ssh/id_rsa.pub"
+    dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
+    flat: yes
+
+- name: rsync | add keys to the storage server
+  authorized_key:
+    key: "{% for key in query('fileglob', '/tmp/keys/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
+    user: "{{ deploy_user }}"
+  delegate_to: "{{ groups.storage[0] }}"
+
+
 # TODO: Disable ssh password based login
 
+# Note: This MUST be last, otherwise if something fails we can't SSH back in as root
 # TODO:  Come back to this
-#
-#
-# # Note: This MUST be last, otherwise if something fails we can't SSH back in as root
 # - name: disable root SSH access
 #   action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
 #   become: true

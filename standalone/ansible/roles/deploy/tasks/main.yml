@@ -20,3 +20,18 @@
   template:
     src: .env.j2 
     dest: /home/deploy/apps/{{app_name}}/shared/.env.production
+
+- name: Deploy | Create logs directory on storage
+  file:
+    path: ~/logs/rails
+    state: directory
+  become: true
+  become_user: "{{ deploy_user }}"
+  delegate_to: "{{ groups.storage[0] }}"
+
+- name: Deploy | Set up logrotate
+  template:
+    src: "etc/logrotate.d/rails.j2"
+    dest: "/etc/logrotate.d/rails"
+    owner: root
+  become: true
