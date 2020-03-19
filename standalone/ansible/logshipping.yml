@@ -1,0 +1,4 @@
+---
+- hosts: servers:postgres
+  roles:
+    - { role: logshipping, tags: ['logshipping'] }
