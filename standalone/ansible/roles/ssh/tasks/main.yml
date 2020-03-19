@@ -15,8 +15,8 @@
 # TODO: Disable ssh password based login
 
 # TODO:  Come back to this
-#-
-#-
+#
+#
 # # Note: This MUST be last, otherwise if something fails we can't SSH back in as root
 # - name: disable root SSH access
 #   action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
