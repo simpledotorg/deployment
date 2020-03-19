@@ -1,22 +1,22 @@
 # simple server tasks
 ---
-- name: Include feature flag settings
+- name: Deploy | Include feature flag settings
   include_vars:
     file: "{{ deploy_env }}/feature_flags.yml"
     name: feature_flags
 
-- name: Include secrets
+- name: Deploy | Include secrets
   include_vars:
     file: "{{ deploy_env }}/secrets.yml"
     name: secrets
 
-- name: Create apps directory
+- name: Deploy | Create apps directory
   file:
     path: /home/deploy/apps/{{app_name}}/shared
     state: directory
     owner: "{{ deploy_user }}"
 
-- name: Copy .env template file
+- name: Deploy | Copy .env template file
   template:
     src: .env.j2 
     dest: /home/deploy/apps/{{app_name}}/shared/.env.production
