@@ -4,7 +4,7 @@
     - { role: common, tags: ['common'] }
     - { role: ssh, tags: ['ssh'] }
     - { role: storage, tags: ['storage'] }
-- hosts: servers
+- hosts: servers:postgres
   roles:
     - { role: logshipping, tags: ['logshipping'] }
 - hosts: servers

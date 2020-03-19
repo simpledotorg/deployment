@@ -12,3 +12,12 @@ __postgresql_bin_path: "/usr/lib/postgresql/{{ __postgresql_version }}/bin"
 __postgresql_config_path: "/etc/postgresql/{{ __postgresql_version }}/main"
 
 ansible_python_interpreter: /usr/bin/python3
+
+logrotate_user: "postgres"
+logrotate_dir: "/var/log/postgresql"
+logrotate_files: "{{ logrotate_dir }}/*.log"
+logrotate_config_file: "/etc/logrotate.d/postgres"
+
+rsync_dir: "{{ logrotate_dir }}/*.gz"
+rsync_logfile: "{{ logrotate_dir }}/rsync.log"
+rsync_destination_dir: "/home/{{ deploy_user }}/logs/postgres"

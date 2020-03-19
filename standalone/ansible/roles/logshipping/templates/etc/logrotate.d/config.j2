@@ -1,5 +1,5 @@
 {{ logrotate_files }} {
-  su deploy deploy
+  su {{ logrotate_user }} {{ logrotate_user }}
   daily
   rotate 14
   missingok
@@ -11,8 +11,8 @@
   lastaction
     HOSTNAME=`hostname`
 {% for server in groups.storage %}
-    rsync -a {{ rsync_dir }} {{ deploy_user }}@{{ server }}:{{ rsync_destination_dir }}/$HOSTNAME/ --log-file={{ logrotate_dir }}/rsync.log
-    chown {{ deploy_user }} {{ logrotate_dir }}/rsync.log
+    rsync -a {{ rsync_dir }} {{ deploy_user }}@{{ server }}:{{ rsync_destination_dir }}/$HOSTNAME/ --log-file={{ rsync_logfile }}
 {% endfor %}
+    chown {{ logrotate_user }} {{ rsync_logfile }}
   endscript
 }
