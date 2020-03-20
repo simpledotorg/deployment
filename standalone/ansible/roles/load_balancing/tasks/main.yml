@@ -1,0 +1,45 @@
+# load balancing tasks
+---
+- name: Load Balancing | Install HAProxy
+  apt: 
+    pkg: "haproxy={{ haproxy_version }}"
+    update_cache: yes
+  become: true
+
+- name: Load Balancing | Enable init script
+  replace:
+    dest: '/etc/default/haproxy' 
+    regexp: 'ENABLED=0'
+    replace: 'ENABLED=1'
+
+- name: Load Balancing | load SSL cert files
+  include_vars: "ssl-vault.yml"
+  no_log: true
+
+- name: Load Balancing | copy SSL cert files
+  copy:
+    dest: "{{ item.key }}"
+    content: "{{ item.value.content }}"
+    owner: "{{ item.value.owner }}"
+    group: "{{ item.value.group }}"
+    mode: "{{ item.value.mode }}"
+  with_dict: "{{ ssl_cert_files }}"
+  no_log: true
+  become: true
+
+- name: Load Balancing | generate bundled pem files
+  shell: cat {{ item }}.crt {{ item }}.key > {{ item }}.pem
+  with_items: "{{ haproxy_cert_names }}"
+
+- name: Load Balancing | create crt-list file
+  copy:
+    content: "{{ haproxy_cert_names | map('regex_replace', '^(.*)$', '\\1.pem') | join('\n') }}"
+    dest: "{{ haproxy_crt_list }}"
+  notify: restart haproxy
+
+- name: Load Balancing | Update HAProxy config
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    backup: yes
+  notify: restart haproxy
