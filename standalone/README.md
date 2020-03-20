@@ -52,6 +52,7 @@ These instructions are to be followed in the `standalone` directory of this repo
 - Set the following in the `hosts/icmr/playground` Ansible inventory file
     - Set `domain_name` to your domain name (eg. `playground.simple.org`)
     - Set `deploy_env` to your desired environment name (eg. `staging`, `production`, `sandbox`)
+- Run `make`
 - Run `ansible-playbook --vault-id <path/to/password_file> all.yml -i ../hosts/icmr/playground`
     - Simple server should now be installed, running and accessible on your domain.
 
@@ -108,3 +109,10 @@ for development. You can view or edit the contents of these vault files directly
 ansible-vault view --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
 ansible-vault edit --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
 ```
+
+### Updating ssh keys
+Add keys to `ansible/roles/ssh/` under the appropriate environment.
+```bash
+make update-ssh-keys
+```
+Note that this clears any old keys present on the servers.
