@@ -7,21 +7,21 @@ postgres_primary
 postgres_secondary
 
 [postgres_primary]
-142.93.220.218
+139.59.78.94
 
 [postgres_secondary]
-142.93.220.138
+139.59.61.76
 
 [servers:children]
 webservers
 sidekiq
 
 [webservers]
-142.93.210.73
-159.65.145.21
+139.59.69.207
+139.59.71.72
 
 [sidekiq]
-142.93.210.65
+139.59.92.74
 
 [haproxy]
 
@@ -30,7 +30,7 @@ redis_primary
 redis_secondary
 
 [redis_primary]
-142.93.220.234
+159.65.157.119
 
 [redis_secondary]
 
@@ -39,7 +39,10 @@ prometheus
 grafana
 
 [prometheus]
-139.59.4.187
+139.59.87.89
 
 [grafana]
-139.59.4.187
+139.59.87.89
+
+[load_balancing]
+139.59.76.237
