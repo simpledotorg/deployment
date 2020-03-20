@@ -4,11 +4,13 @@
   include_vars:
     file: "{{ deploy_env }}/feature_flags.yml"
     name: feature_flags
+  tags: update-app-config
 
 - name: Deploy | Include secrets
   include_vars:
     file: "{{ deploy_env }}/secrets.yml"
     name: secrets
+  tags: update-app-config
 
 - name: Deploy | Create apps directory
   file:
@@ -20,3 +22,4 @@
   template:
     src: .env.j2 
     dest: /home/deploy/apps/{{app_name}}/shared/.env.production
+  tags: update-app-config

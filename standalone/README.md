@@ -116,3 +116,10 @@ Add keys to `ansible/roles/ssh/` under the appropriate environment.
 make update-ssh-keys hosts=icmr/playground
 ```
 Note that this clears any old keys present on the servers.
+
+### Updating app config
+The app's .env file sits in `ansible/roles/deploy/templates/.env.j2`.
+Variables are sourced from `ansible/roles/deploy/templates/vars`
+```bash
+make update-app-config hosts=icmr/playground
+```
