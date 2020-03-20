@@ -46,3 +46,6 @@ grafana
 
 [load_balancing]
 139.59.76.237
+
+[storage]
+165.22.218.14

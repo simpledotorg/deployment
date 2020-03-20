@@ -3,6 +3,7 @@
   roles:
     - { role: common, tags: ['common'] }
     - { role: ssh, tags: ['ssh'] }
+    - { role: storage, tags: ['storage'] }
 - hosts: servers
   roles:
     - { role: postgresql-client, tags: ['postgresql-client'] }

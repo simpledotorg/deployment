@@ -15,3 +15,12 @@ ansistrano_git_repo: "https://github.com/simpledotorg/simple-server.git"
 ansistrano_after_symlink_shared_tasks_file: "roles/deploy/hooks/after_symlink.yml"
 postgres:
   database_name: "{{ deploy_env }}-{{ app_name }}-db"
+
+logrotate_user: "{{ deploy_user }}"
+logrotate_dir: "{{ ansistrano_deploy_to }}/current/log"
+logrotate_files: "{{ log_dir }}/*.log"
+logrotate_config_file: "/etc/logrotate.d/rails"
+
+rsync_dir: "log_dir/*.gz"
+rsync_logfile: "{{ logrotate_dir }}/rsync.log"
+rsync_destination_dir: "/home/{{ deploy_user }}/logs/rails"

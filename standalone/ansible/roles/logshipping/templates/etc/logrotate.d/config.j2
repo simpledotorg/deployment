@@ -1,0 +1,18 @@
+{{ logrotate_files }} {
+  su {{ logrotate_user }} {{ logrotate_user }}
+  daily
+  rotate 14
+  missingok
+  notifempty
+  compress
+  delaycompress
+  copytruncate
+  dateext
+  lastaction
+    HOSTNAME=`hostname`
+{% for server in groups.storage %}
+    rsync -a {{ rsync_dir }} {{ deploy_user }}@{{ server }}:{{ rsync_destination_dir }}/$HOSTNAME/ --log-file={{ rsync_logfile }}
+{% endfor %}
+    chown {{ logrotate_user }} {{ rsync_logfile }}
+  endscript
+}
