@@ -123,3 +123,15 @@ Variables are sourced from `ansible/roles/deploy/templates/vars`
 ```bash
 make update-app-config hosts=icmr/playground
 ```
+
+### Restarting passenger
+```bash
+make restart-passenger hosts=icmr/playground
+```
+Note that this restarts passenger on all servers.
+
+### Restarting sidekiq
+```bash
+make restart-sidekiq hosts=icmr/playground
+```
+
