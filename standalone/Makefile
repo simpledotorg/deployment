@@ -35,3 +35,6 @@ update-ssh-keys: ##@Utilities Update ssh keys on boxes. Add keys to `ansible/rol
 
 update-app-config: ##@Utilities Update app config .env file
 	ansible-playbook --vault-id $(password_file) ansible/deploy.yml -i hosts/$(hosts) --tags update-app-config
+
+restart-passenger: ##@Utilities Restart passenger
+	ansible-playbook --vault-id $(password_file) ansible/setup.yml -i hosts/$(hosts) -l webservers --tags restart-passenger
