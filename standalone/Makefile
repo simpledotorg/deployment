@@ -2,7 +2,7 @@ hosts = icmr/playground
 password_file = ~/.password_file
 export ANSIBLE_CONFIG = ansible/ansible.cfg
 
-.PHONY: help init all update-ssh-keys
+.PHONY: help init all update-ssh-keys restart-passenger restart-sidekiq
 # HELP sourced from https://gist.github.com/prwhite/8168133
 
 # Add help text after each target name starting with '\#\#'
@@ -38,3 +38,6 @@ update-app-config: ##@Utilities Update app config .env file
 
 restart-passenger: ##@Utilities Restart passenger
 	ansible-playbook --vault-id $(password_file) ansible/setup.yml -i hosts/$(hosts) -l webservers --tags restart-passenger
+
+restart-sidekiq: ##@Utilities Restart sidekiq
+	ansible-playbook --vault-id $(password_file) ansible/deploy.yml -i hosts/$(hosts) -l sidekiq --tags restart-sidekiq
