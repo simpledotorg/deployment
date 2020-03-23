@@ -44,19 +44,19 @@
     backup: yes
   notify: restart haproxy
 
-- name: allow all access to tcp port 80
+- name: allow all tcp access to port 80
   ufw:
     rule: allow
     port: "{{ haproxy_frontend_http_port }}"
     proto: tcp
 
-- name: allow all access to tcp port 443
+- name: allow all tcp access to port 443
   ufw:
     rule: allow
     port: "{{ haproxy_frontend_https_port }}"
     proto: tcp
 
-- name: allow all access to load balancer status page
+- name: allow all tcp access to load balancer status page
   ufw:
     rule: allow
     port: "{{ haproxy_stats_port }}"
