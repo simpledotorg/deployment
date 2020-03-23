@@ -35,6 +35,7 @@
       - python-software-properties
       - redis-tools
       - rsync
+      - rsyslog
       - sqlite3
       - unattended-upgrades
       - vim
@@ -112,6 +113,12 @@
   ufw:
     rule: allow
     src: "{{ item }}"
+  with_items: "{{ groups.all }}"
+
+- name: rate limit ssh
+  ufw:
+    rule: limit
+    name: ssh
 
 - name: enable ufw
   ufw:
