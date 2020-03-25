@@ -25,7 +25,7 @@ help: ##@Miscellaneous Show this help.
 	@perl -e '$(HELP_FUNC)' $(MAKEFILE_LIST)
 
 init: ##@Setup Install ansible plugins
-	ansible-galaxy install -r requirements.yml
+	ansible-galaxy install -r ansible/requirements.yml
 
 all: ##@Setup Install simple-server on hosts. Runs the all.yml playbook
 	ansible-playbook --vault-id $(password_file) ansible/$@.yml -i hosts/$(hosts)
