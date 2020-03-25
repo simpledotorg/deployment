@@ -22,16 +22,13 @@
   become: true
   become_user: postgres
 
-- name: Replica | enable hot standby
+- name: Replica | set postgresql.conf replication settings
   lineinfile:
     state: present
-    backup: yes
-    dest: "{{ postgresql_config_path }}/pg_hba.conf"
-    regexp: '^#?hot_standby = \w+(\s+#.*)'
-    line: 'hot_standby = on\1'
-    backrefs: yes
-  become: yes
-  become_user: postgres
+    dest: "{{ postgresql_config_path }}/postgresql.conf"
+    regexp: "{{ item.regex }}"
+    line: "{{ item.name }}={{ item.value }}"
+  with_items: "{{ replication_config_replica }}"
 
 - name: Replica | reload postgresql
   service:

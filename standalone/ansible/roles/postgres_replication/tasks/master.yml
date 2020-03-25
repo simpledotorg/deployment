@@ -19,13 +19,13 @@
   register: postgres_hba_conf
   with_items: "{{ groups.postgres_secondary }}"
 
-- name: Master | set postgresql.conf replication settings on master
+- name: Master | set postgresql.conf replication settings
   lineinfile:
     state: present
     dest: "{{ postgresql_config_path }}/postgresql.conf"
     regexp: "{{ item.regex }}"
     line: "{{ item.name }}={{ item.value }}"
-  with_items: "{{ replication_config }}"
+  with_items: "{{ replication_config_master }}"
 
 - name: Master | reload postgresql
   service:
