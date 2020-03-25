@@ -8,6 +8,7 @@ resource "aws_alb" "simple_env_proxy" {
   name     = "simple-env-proxy"
   internal = false
   subnets  = aws_default_subnet.default.*.id
+  idle_timeout = 600
   security_groups = [
     aws_security_group.allow_all_inbound.id,
     aws_security_group.allow_all_outbound.id
@@ -38,7 +39,7 @@ resource "aws_alb_listener" "simple_listener_https" {
   load_balancer_arn = aws_alb.simple_env_proxy.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-1-2017-01"
   certificate_arn   = aws_acm_certificate.cert.arn
 
   default_action {

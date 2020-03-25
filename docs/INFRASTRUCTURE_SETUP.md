@@ -6,7 +6,7 @@ These instructions assume using EC2 for the application, and RDS for postgres.
 ## Description
 
 ### App Server
-- EC2 - t2.micro
+- EC2 - t2.small
 - Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-41e9c52e
 
 ### RDS
