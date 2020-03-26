@@ -34,7 +34,7 @@ resource "aws_instance" "ec2_sidekiq_server" {
 
 resource "aws_instance" "ec2_simple_database" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.database_ec2_instance_type
+  instance_type               = var.ec2_instance_type
   key_name                    = var.aws_key_name
   count                       = var.database_server_count
   associate_public_ip_address = true
@@ -51,7 +51,7 @@ resource "aws_instance" "ec2_simple_database" {
 
 resource "aws_instance" "ec2_simple_redis" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.database_ec2_instance_type
+  instance_type               = var.ec2_instance_type
   key_name                    = var.aws_key_name
   count                       = var.redis_server_count
   associate_public_ip_address = true
@@ -68,7 +68,7 @@ resource "aws_instance" "ec2_simple_redis" {
 
 resource "aws_instance" "ec2_simple_load_balancer" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.database_ec2_instance_type
+  instance_type               = var.ec2_instance_type
   key_name                    = var.aws_key_name
   count                       = var.create_ec2_load_balancer ? 1 : 0
   associate_public_ip_address = true

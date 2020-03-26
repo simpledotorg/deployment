@@ -8,18 +8,6 @@ variable "ec2_instance_type" {
   type        = string
 }
 
-variable "database_ec2_instance_type" {
-  description = "The type of instance for ec2 servers"
-  type        = string
-  default     = ""
-}
-
-variable "redis_ec2_instance_type" {
-  description = "The type of instance for ec2 servers"
-  type        = string
-  default     = ""
-}
-
 variable "server_count" {
   description = "The number of instance for ec2 servers"
   type        = number
