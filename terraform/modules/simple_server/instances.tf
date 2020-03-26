@@ -106,10 +106,6 @@ resource "aws_lb_target_group_attachment" "simple_server_target" {
   count            = length(aws_instance.ec2_simple_server)
   target_group_arn = aws_lb_target_group.simple_server_target_group.arn
   target_id        = aws_instance.ec2_simple_server[count.index].id
-
-  lifecycle {
-      ignore_changes = [count]
-    }
 }
 
 resource "aws_lb_listener_rule" "simple_server_listener_rule" {
