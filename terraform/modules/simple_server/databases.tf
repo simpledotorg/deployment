@@ -4,7 +4,7 @@ resource "aws_db_instance" "simple-database" {
   auto_minor_version_upgrade = false
   engine                     = "postgres"
   engine_version             = "10.3"
-  count                      = 1
+  count                      = var.create_rds_instances ? 1 : 0
   identifier                 = format("simple-db-%s-%03d", replace(var.deployment_name, "_", "-"), count.index + 1)
   instance_class             = "db.t2.medium"
   name                       = format("simple_db_%s_%03d", replace(var.deployment_name, "-", "_"), count.index + 1)
@@ -15,7 +15,7 @@ resource "aws_db_instance" "simple-database" {
   db_subnet_group_name       = var.database_subnet_group_name
   backup_retention_period    = 35
   password                   = var.database_password
-  vpc_security_group_ids     = [aws_security_group.sg_simple_database.id]
+  vpc_security_group_ids     = [aws_security_group.sg_simple_database[count.index].id]
 
   tags = {
     workload-type = var.deployment_name
@@ -24,6 +24,7 @@ resource "aws_db_instance" "simple-database" {
 
 resource "aws_security_group" "sg_simple_database" {
   name        = "sg_simple_database_${var.deployment_name}"
+  count       = var.create_rds_instances ? 1 : 0
   description = "Security group for ${var.deployment_name} database"
   vpc_id      = var.database_vpc_id
 
@@ -36,7 +37,7 @@ resource "aws_security_group" "sg_simple_database" {
 }
 
 resource "aws_db_instance" "replica_simple_database" {
-  count               = var.create_database_replica ? (length(aws_db_instance.simple-database)) : 0
+  count               = var.create_rds_instances && var.create_database_replica ? (length(aws_db_instance.simple-database)) : 0
   identifier          = format("replica-simple-db-%s-%03d", replace(var.deployment_name, "_", "-"), count.index + 1)
   replicate_source_db = aws_db_instance.simple-database[count.index].identifier
   instance_class      = "db.t2.medium"
