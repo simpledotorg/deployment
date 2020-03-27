@@ -155,7 +155,7 @@ module "simple_server_security" {
 }
 
 module "simple_server_playground" {
-  source                     = "../modules/simple_server"
+  source                     = "../modules/simple_server_standalone"
   deployment_name            = "development-playground"
   ec2_instance_type          = "t2.micro"
   instance_security_groups   = module.simple_networking.standalone_instance_security_groups
@@ -163,10 +163,7 @@ module "simple_server_playground" {
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
   host_urls                  = ["api-playground.simple.org", "dashboard-playground.simple.org"]
-  create_redis_instance      = false
-  create_rds_instances       = false
-  create_ec2_load_balancer   = true
-  server_count               = 1
+  app_server_count           = 1
   database_server_count      = 2
   redis_server_count         = 1
   sidekiq_server_count       = 1
