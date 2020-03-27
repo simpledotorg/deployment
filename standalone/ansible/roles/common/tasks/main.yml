@@ -118,7 +118,7 @@
 - name: rate limit ssh
   ufw:
     rule: limit
-    name: ssh
+    name: OpenSSH
 
 - name: enable ufw
   ufw:
