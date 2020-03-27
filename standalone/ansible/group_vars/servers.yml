@@ -18,9 +18,9 @@ postgres:
 
 logrotate_user: "{{ deploy_user }}"
 logrotate_dir: "{{ ansistrano_deploy_to }}/current/log"
-logrotate_files: "{{ log_dir }}/*.log"
+logrotate_files: "{{ logrotate_dir }}/*.log"
 logrotate_config_file: "/etc/logrotate.d/rails"
 
-rsync_dir: "log_dir/*.gz"
+rsync_dir: "{{ logrotate_dir }}/*.gz"
 rsync_logfile: "{{ logrotate_dir }}/rsync.log"
 rsync_destination_dir: "/home/{{ deploy_user }}/logs/rails"

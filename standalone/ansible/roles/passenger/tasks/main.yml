@@ -65,7 +65,12 @@
     src: /etc/nginx/sites-available/{{ domain_name }}
     dest: /etc/nginx/sites-enabled/{{ domain_name }}
   become: true
+
+- name: restart nginx
+  become: true
+  command: /bin/true
   notify: restart nginx
+  tags: restart-passenger
 
 - name: enable monit for nginx
   file: >
