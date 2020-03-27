@@ -16,3 +16,4 @@
 
 - name: Sidekiq | reload monit
   shell: monit reload
+  become: true
