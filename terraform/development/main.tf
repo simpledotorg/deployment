@@ -154,15 +154,15 @@ module "simple_server_security" {
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
 }
 
-module "simple_server_security_new" {
+module "simple_server_playground" {
   source                     = "../modules/simple_server"
-  deployment_name            = "development-security-new"
+  deployment_name            = "development-playground"
   ec2_instance_type          = "t2.micro"
-  instance_security_groups   = module.simple_networking.instance_security_groups
+  instance_security_groups   = module.simple_networking.standalone_instance_security_groups
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
-  host_urls                  = ["api-security-new.simple.org", "dashboard-security-new.simple.org"]
+  host_urls                  = ["api-playground.simple.org", "dashboard-playground.simple.org"]
   create_redis_instance      = false
   create_rds_instances       = false
   create_ec2_load_balancer   = true
