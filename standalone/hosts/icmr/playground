@@ -1,6 +1,6 @@
 [all:vars]
-deploy_env=staging
-domain_name=simple.nilenso.com
+deploy_env=demo
+domain_name=simple.org
 
 [postgres:children]
 postgres_primary
