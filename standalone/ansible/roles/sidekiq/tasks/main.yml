@@ -16,3 +16,9 @@
 
 - name: Sidekiq | reload monit
   shell: monit reload
+
+- name: Sidekiq | restart sidekiq
+  monit:
+    name: "{{ sidekiq_service_name }}"
+    state: restarted
+  tags: restart-sidekiq

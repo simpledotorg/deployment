@@ -52,7 +52,8 @@ These instructions are to be followed in the `standalone` directory of this repo
 - Set the following in the `hosts/icmr/playground` Ansible inventory file
     - Set `domain_name` to your domain name (eg. `playground.simple.org`)
     - Set `deploy_env` to your desired environment name (eg. `staging`, `production`, `sandbox`)
-- Run `ansible-playbook --vault-id <path/to/password_file> all.yml -i ../hosts/icmr/playground`
+- Run `make init`
+- Run `make all` to setup simple-server on your servers.
     - Simple server should now be installed, running and accessible on your domain.
 
 ## Provisioning Testing Servers
@@ -108,3 +109,29 @@ for development. You can view or edit the contents of these vault files directly
 ansible-vault view --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
 ansible-vault edit --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
 ```
+
+### Updating ssh keys
+Add keys to `ansible/roles/ssh/` under the appropriate environment.
+```bash
+make update-ssh-keys hosts=icmr/playground
+```
+Note that this clears any old keys present on the servers.
+
+### Updating app config
+The app's .env file sits in `ansible/roles/deploy/templates/.env.j2`.
+Variables are sourced from `ansible/roles/deploy/templates/vars`
+```bash
+make update-app-config hosts=icmr/playground
+```
+
+### Restarting passenger
+```bash
+make restart-passenger hosts=icmr/playground
+```
+Note that this restarts passenger on all servers.
+
+### Restarting sidekiq
+```bash
+make restart-sidekiq hosts=icmr/playground
+```
+
