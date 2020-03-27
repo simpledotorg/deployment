@@ -7,7 +7,7 @@ postgres_primary
 postgres_secondary
 
 [postgres_primary]
-139.59.72.135 replication_role=master
+139.59.72.135 replication_role=primary
 
 [postgres_secondary]
 167.71.238.109 replication_role=replica

@@ -1,12 +1,12 @@
 ---
-- name: Master | create replication user account
+- name: Primary | create replication user account
   postgresql_user:
     name: "{{ replication_user }}"
     role_attr_flags: replication
   become: yes
   become_user: postgres
 
-- name: Master | grant permissions for standby db to replicate
+- name: Primary | grant permissions for standby db to replicate
   postgresql_pg_hba:
     dest: "{{ postgresql_config_path }}/pg_hba.conf"
     contype: "host"
@@ -19,15 +19,15 @@
   register: postgres_hba_conf
   with_items: "{{ groups.postgres_secondary }}"
 
-- name: Master | set postgresql.conf replication settings
+- name: Primary | set postgresql.conf replication settings
   lineinfile:
     state: present
     dest: "{{ postgresql_config_path }}/postgresql.conf"
     regexp: "{{ item.regex }}"
     line: "{{ item.name }}={{ item.value }}"
-  with_items: "{{ replication_config_master }}"
+  with_items: "{{ replication_config_primary }}"
 
-- name: Master | reload postgresql
+- name: Primary | reload postgresql
   service:
     name: "{{ postgresql_daemon }}"
     state: reloaded
