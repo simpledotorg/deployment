@@ -45,7 +45,7 @@ resource "aws_instance" "ec2_simple_database" {
   }
 
   tags = {
-    Name = format("simple-server-%s-%03d", var.deployment_name, count.index + 1)
+    Name = format("simple-server-database-%s-%03d", var.deployment_name, count.index + 1)
   }
 }
 
@@ -62,7 +62,7 @@ resource "aws_instance" "ec2_simple_redis" {
   }
 
   tags = {
-    Name = format("simple-server-%s-%03d", var.deployment_name, count.index + 1)
+    Name = format("simple-server-redis-%s-%03d", var.deployment_name, count.index + 1)
   }
 }
 
@@ -79,7 +79,7 @@ resource "aws_instance" "ec2_simple_load_balancer" {
   }
 
   tags = {
-    Name = format("simple-server-%s-%03d", var.deployment_name, count.index + 1)
+    Name = format("simple-server-load-balancer-%s-%03d", var.deployment_name, count.index + 1)
   }
 }
 
