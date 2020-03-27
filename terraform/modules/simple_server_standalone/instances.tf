@@ -66,6 +66,40 @@ resource "aws_instance" "ec2_simple_redis" {
   }
 }
 
+resource "aws_instance" "ec2_simple_monitoring" {
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.ec2_instance_type
+  key_name                    = var.aws_key_name
+  count                       = var.monitoring_server_count
+  associate_public_ip_address = true
+  vpc_security_group_ids      = concat(var.instance_security_groups, [aws_security_group.sg_simple_server.id])
+
+  root_block_device {
+    volume_size = "30"
+  }
+
+  tags = {
+    Name = format("simple-server-monitoring-%s-%03d", var.deployment_name, count.index + 1)
+  }
+}
+
+resource "aws_instance" "ec2_simple_storage" {
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.ec2_instance_type
+  key_name                    = var.aws_key_name
+  count                       = var.storage_server_count
+  associate_public_ip_address = true
+  vpc_security_group_ids      = concat(var.instance_security_groups, [aws_security_group.sg_simple_server.id])
+
+  root_block_device {
+    volume_size = "30"
+  }
+
+  tags = {
+    Name = format("simple-server-storage-%s-%03d", var.deployment_name, count.index + 1)
+  }
+}
+
 resource "aws_instance" "ec2_simple_load_balancer" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.ec2_instance_type

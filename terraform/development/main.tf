@@ -164,7 +164,9 @@ module "simple_server_playground" {
   https_listener_arn         = module.simple_networking.https_listener_arn
   host_urls                  = ["api-playground.simple.org", "dashboard-playground.simple.org"]
   app_server_count           = 1
+  sidekiq_server_count       = 1
   database_server_count      = 2
   redis_server_count         = 1
-  sidekiq_server_count       = 1
+  monitoring_server_count    = 1
+  storage_server_count       = 1
 }

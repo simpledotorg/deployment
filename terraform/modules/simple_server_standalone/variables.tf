@@ -39,6 +39,12 @@ variable "app_server_count" {
   default     = 1
 }
 
+variable "sidekiq_server_count" {
+  description = "Number of instances to create for sidekiq"
+  type        = number
+  default     = 0
+}
+
 variable "database_server_count" {
   description = "The number of instance for database ec2 servers"
   type        = number
@@ -51,8 +57,14 @@ variable "redis_server_count" {
   default     = 0
 }
 
-variable "sidekiq_server_count" {
-  description = "Number of instances to create for sidekiq"
+variable "monitoring_server_count" {
+  description = "Number of instances to create for monitoring"
+  type        = number
+  default     = 0
+}
+
+variable "storage_server_count" {
+  description = "Number of instances to create for storage"
   type        = number
   default     = 0
 }
