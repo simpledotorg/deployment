@@ -1,6 +1,6 @@
 [all:vars]
-deploy_env=staging
-domain_name=simple.nilenso.com
+deploy_env=demo
+domain_name=api-playground.simple.org
 
 [postgres:children]
 postgres_primary
@@ -42,8 +42,8 @@ grafana
 [grafana]
 139.59.87.89
 
-[load_balancing]
-139.59.76.237
-
 [storage]
 165.22.218.14
+
+[load_balancing]
+139.59.76.237

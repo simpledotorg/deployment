@@ -61,3 +61,8 @@
     rule: allow
     port: "{{ haproxy_stats_port }}"
     proto: tcp
+
+- name: restart rsyslog to begin logging
+  service:
+    name: rsyslog
+    state: restarted
