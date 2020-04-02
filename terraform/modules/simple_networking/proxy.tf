@@ -39,7 +39,7 @@ resource "aws_alb_listener" "simple_listener_https" {
   load_balancer_arn = aws_alb.simple_env_proxy.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS-1-1-2017-01"
+  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
   certificate_arn   = aws_acm_certificate.cert.arn
 
   default_action {
