@@ -122,7 +122,7 @@ module "simple_server_qa" {
   deployment_name            = "development-qa"
   database_vpc_id            = module.simple_networking.database_vpc_id
   database_subnet_group_name = module.simple_networking.database_subnet_group_name
-  ec2_instance_type          = "t2.micro"
+  ec2_instance_type          = "t2.small"
   database_username          = var.qa_database_username
   database_password          = var.qa_database_password
   instance_security_groups   = module.simple_networking.instance_security_groups
@@ -152,4 +152,21 @@ module "simple_server_security" {
   server_count               = 2
   sidekiq_server_count       = 1
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+}
+
+module "simple_server_playground" {
+  source                     = "../modules/simple_server_standalone"
+  deployment_name            = "development-playground"
+  ec2_instance_type          = "t2.micro"
+  instance_security_groups   = module.simple_networking.standalone_instance_security_groups
+  aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
+  server_vpc_id              = module.simple_networking.server_vpc_id
+  https_listener_arn         = module.simple_networking.https_listener_arn
+  host_urls                  = ["api-playground.simple.org", "dashboard-playground.simple.org"]
+  app_server_count           = 1
+  sidekiq_server_count       = 1
+  database_server_count      = 2
+  redis_server_count         = 1
+  monitoring_server_count    = 1
+  storage_server_count       = 1
 }

@@ -5,4 +5,5 @@
 - import_playbook: redis.yml
 - import_playbook: deploy.yml
 - import_playbook: load_balancing.yml
+- import_playbook: monitoring.yml
 - import_playbook: logshipping.yml

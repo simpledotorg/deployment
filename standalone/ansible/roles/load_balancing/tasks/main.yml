@@ -43,3 +43,8 @@
     dest: /etc/haproxy/haproxy.cfg
     backup: yes
   notify: restart haproxy
+
+- name: restart rsyslog to begin logging
+  service:
+    name: rsyslog
+    state: restarted

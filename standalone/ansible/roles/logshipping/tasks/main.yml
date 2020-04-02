@@ -5,7 +5,8 @@
     state: directory
   become: true
   become_user: "{{ deploy_user }}"
-  delegate_to: "{{ groups.storage[0] }}"
+  delegate_to: "{{ item }}"
+  with_items: "{{ groups.storage }}"
 
 - name: set up logrotate
   template:

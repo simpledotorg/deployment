@@ -3,11 +3,13 @@
   ufw:
     direction: incoming
     default: deny
+  become: true
 
 - name: Redis | Allow SSH
   ufw:
     rule: allow
     name: OpenSSH
+  become: true
 
 - name: Redis | Allow access to redis to servers (webservers + sidekiq) only
   ufw:
@@ -16,7 +18,9 @@
     src: "{{ item }}"
     to_port: "{{ redis_port }}"
   with_items: "{{ groups.servers }}"
+  become: true
 
 - name: Redis | Enable ufw
   ufw:
     state: enabled
+  become: true
