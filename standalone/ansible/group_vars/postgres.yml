@@ -21,3 +21,5 @@ logrotate_config_file: "/etc/logrotate.d/postgres"
 rsync_dir: "{{ logrotate_dir }}/*.gz"
 rsync_logfile: "{{ logrotate_dir }}/rsync.log"
 rsync_destination_dir: "/home/{{ deploy_user }}/logs/postgres"
+
+prometheus_postgres_dbname: "{{ postgres.database_name }}"

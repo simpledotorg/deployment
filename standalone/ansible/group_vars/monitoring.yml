@@ -1,18 +1,15 @@
-prometheus_postgres_dbname: "{{ postgres.database_name }}"
 prometheus_port: 9090
 prometheus_web_listen_address: "0.0.0.0:{{ prometheus_port }}"
-node_exporter_port: 9100
-node_exporter_web_listen_address: "0.0.0.0:{{ node_exporter_port }}"
-prometheus_postgres_port: 9187
-redis_exporter_port: 9121
 
 prometheus_targets:
   node:
-    - targets: "{{ groups.all | map('regex_replace', '^(.*)$', '\\1:' ~ node_exporter_port) | list }}"
+    - targets: "{{ groups.all | map('regex_replace', '^(.*)$', '\\1:9100') | list }}"
   postgres:
-    - targets: "{{ groups.postgres | map('regex_replace', '^(.*)$', '\\1:' ~ prometheus_postgres_port) | list }}"
+    - targets: "{{ groups.postgres | map('regex_replace', '^(.*)$', '\\1:9187') | list }}"
   redis:
-    - targets: "{{ groups.redis | map('regex_replace', '^(.*)$', '\\1:' ~ redis_exporter_port) | list }}"
+    - targets: "{{ groups.redis | map('regex_replace', '^(.*)$', '\\1:9121') | list }}"
+  load_balancing:
+    - targets: "{{ groups.load_balancing | map('regex_replace', '^(.*)$', '\\1:9101') | list }}"
 
 prometheus_scrape_configs:
   - job_name: prometheus
@@ -32,6 +29,10 @@ prometheus_scrape_configs:
     file_sd_configs:
     - files:
       - "{{ prometheus_config_dir }}/file_sd/redis.yml"
+  - job_name: load balancing
+    file_sd_configs:
+    - files:
+      - "{{ prometheus_config_dir }}/file_sd/load_balancing.yml"
 
 grafana_security:
   admin_user: admin
@@ -42,12 +43,15 @@ grafana_datasources:
     access: proxy
     url: "http://{{ groups.prometheus.0 }}:{{ prometheus_port }}"
 grafana_dashboards:
-  - dashboard_id: 11074
+  - dashboard_id: 11074 # Node exporter
     revision_id: 2
     datasource: "{{ grafana_datasources.0.name }}"
-  - dashboard_id: 6742
+  - dashboard_id: 6742 # Postgres
     revision_id: 1
     datasource: "{{ grafana_datasources.0.name }}"
-  - dashboard_id: 763
+  - dashboard_id: 763 # Redis
+    revision_id: 1
+    datasource: "{{ grafana_datasources.0.name }}"
+  - dashboard_id: 2428 # HAProxy
     revision_id: 1
     datasource: "{{ grafana_datasources.0.name }}"

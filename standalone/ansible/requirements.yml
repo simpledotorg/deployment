@@ -10,3 +10,4 @@
   scm: git
   version: 2.0.0
   name: prometheus_redis_exporter
+- src: bdellegrazie.haproxy_exporter

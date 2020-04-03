@@ -4,16 +4,21 @@
   roles:
     - cloudalchemy.node-exporter
 
-- name: Setup postgres exporter on postgres boxes
+- name: Setup postgres exporter
   hosts: postgres
   roles:
     - ome.prometheus_postgres
 
-- name: Setup redis exporter on redis boxes
+- name: Setup redis exporter
   hosts: redis
   roles:
     - prometheus_redis_exporter
   become: true
+
+- name: Setup haproxy exporter
+  hosts: load_balancing
+  roles:
+    - { role: bdellegrazie.haproxy_exporter }
 
 - name: Setup Prometheus
   hosts: monitoring
