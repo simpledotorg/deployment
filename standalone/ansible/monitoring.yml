@@ -1,15 +1,26 @@
 ---
-- name: Setup Prometheus
-  hosts: monitoring
-  roles:
-    - cloudalchemy.prometheus
-    
-- name: Setup Grafana
-  hosts: monitoring
-  roles:
-    - cloudalchemy.grafana
-    
 - name: Setup node exporter for all nodes
   hosts: all
   roles:
     - cloudalchemy.node-exporter
+
+- name: Setup postgres exporter on postgres boxes
+  hosts: postgres
+  roles:
+    - ome.prometheus_postgres
+
+- name: Setup redis exporter on redis boxes
+  hosts: redis
+  roles:
+    - prometheus_redis_exporter
+  become: true
+
+- name: Setup Prometheus
+  hosts: monitoring
+  roles:
+    - cloudalchemy.prometheus
+
+- name: Setup Grafana
+  hosts: monitoring
+  roles:
+    - cloudalchemy.grafana

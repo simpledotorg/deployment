@@ -51,7 +51,7 @@ These instructions are to be followed in the `standalone` directory of this repo
       creating/editing an ALIAS or CNAME record.
 - Set the following in the `hosts/icmr/playground` Ansible inventory file
     - Set `domain_name` to your domain name (eg. `playground.simple.org`)
-    - Set `deploy_env` to your desired environment name (eg. `staging`, `production`, `sandbox`)
+    - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
 - Run `make init`
 - Run `make all` to setup simple-server on your servers.
     - Simple server should now be installed, running and accessible on your domain.
