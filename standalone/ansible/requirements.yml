@@ -2,6 +2,7 @@
 - src: ansistrano.deploy
 - src: ansistrano.rollback
 - src: cloudalchemy.prometheus
+- src: cloudalchemy.alertmanager
 - src: cloudalchemy.grafana
 - src: cloudalchemy.node-exporter
 - src: davidwittman.redis

@@ -1,0 +1,4 @@
+---
+- name: include config vars
+  include_vars:
+    dir: vars/

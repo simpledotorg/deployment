@@ -1,31 +1,40 @@
 ---
-- name: Setup node exporter for all nodes
+- name: setup node exporter for all nodes
   hosts: all
   roles:
+    - monitoring
     - cloudalchemy.node-exporter
 
-- name: Setup postgres exporter
+- name: setup postgres exporter
   hosts: postgres
   roles:
+    - monitoring
     - ome.prometheus_postgres
 
-- name: Setup redis exporter
+- name: setup redis exporter
   hosts: redis
   roles:
+    - monitoring
     - prometheus_redis_exporter
   become: true
 
-- name: Setup haproxy exporter
+- name: setup HAProxy exporter
   hosts: load_balancing
   roles:
-    - { role: bdellegrazie.haproxy_exporter }
+    - monitoring
+    - bdellegrazie.haproxy_exporter
 
-- name: Setup Prometheus
-  hosts: monitoring
+- name: setup Prometheus and Alertmanager
+  hosts: prometheus
+  vars_files:
+    - "roles/deploy/vars/{{ deploy_env }}/secrets.yml"
   roles:
+    - monitoring
     - cloudalchemy.prometheus
+    - cloudalchemy.alertmanager
 
-- name: Setup Grafana
-  hosts: monitoring
+- name: setup Grafana
+  hosts: grafana
   roles:
+    - monitoring
     - cloudalchemy.grafana
