@@ -34,6 +34,8 @@ prometheus_scrape_configs:
     - files:
       - "{{ prometheus_config_dir }}/file_sd/load_balancing.yml"
 
+prometheus_storage_retention: "15d"
+
 grafana_security:
   admin_user: admin
   admin_password: admin
