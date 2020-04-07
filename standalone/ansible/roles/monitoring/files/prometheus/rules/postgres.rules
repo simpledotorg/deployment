@@ -18,12 +18,3 @@ groups:
       annotations:
         summary: "Postgresql too many connections (instance {{ $labels.instance }})"
         description: "PostgreSQL instance has too many connections\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-
-    - alert: PostgresqlCommitRateLow
-      expr: rate(pg_stat_database_xact_commit[1m]) < 10
-      for: 5m
-      labels:
-        severity: error
-      annotations:
-        summary: "Postgresql commit rate low (instance {{ $labels.instance }})"
-        description: "Postgres seems to be processing very few transactions\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
