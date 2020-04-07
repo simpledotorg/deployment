@@ -28,6 +28,15 @@ groups:
         summary: "Host unusual network throughput in (instance {{ $labels.instance }})"
         description: "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
+    - alert: HostUnusualNetworkThroughputOut
+      expr: sum by (instance) (irate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Host unusual network throughput out (instance {{ $labels.instance }})"
+        description: "Host network interfaces are probably sending too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
     - alert: HostUnusualDiskReadRate
       expr: sum by (instance) (irate(node_disk_read_bytes_total[2m])) / 1024 / 1024 > 50
       for: 5m
