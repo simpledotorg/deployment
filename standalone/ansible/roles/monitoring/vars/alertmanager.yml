@@ -1,4 +1,5 @@
 ---
+alertmanager_template_files: "roles/monitoring/files/alertmanager/templates/*.tmpl"
 alertmanager_receivers:
   - name: email
     email_configs:
@@ -7,7 +8,7 @@ alertmanager_receivers:
         smarthost: 'smtp.sendgrid.net:587'
         auth_username: "{{ server.config.sendgrid_username }}"
         auth_password: "{{ server.config.sendgrid_password }}"
-        html: "error"
+        html: '{% raw %}{{ template "email" . }}{% endraw %}'
 
 alertmanager_route:
   receiver: "email"
