@@ -24,6 +24,12 @@
     - monitoring
     - bdellegrazie.haproxy_exporter
 
+- name: setup nginx exporter
+  hosts: webservers
+  roles:
+    - monitoring
+    - bdellegrazie.nginx_exporter
+
 - name: setup Prometheus and Alertmanager
   hosts: prometheus
   vars_files:

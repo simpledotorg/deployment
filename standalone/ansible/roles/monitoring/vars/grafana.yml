@@ -20,3 +20,6 @@ grafana_dashboards:
   - dashboard_id: 2428 # HAProxy
     revision_id: 1
     datasource: "{{ grafana_datasources.0.name }}"
+  - dashboard_id: 11199 # nginx
+    revision_id: 1
+    datasource: "{{ grafana_datasources.0.name }}"

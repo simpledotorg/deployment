@@ -9,6 +9,8 @@ prometheus_targets:
     - targets: "{{ groups.redis | map('regex_replace', '^(.*)$', '\\1:' ~ redis_exporter_port) | list }}"
   load_balancing:
     - targets: "{{ groups.load_balancing | map('regex_replace', '^(.*)$', '\\1:9101') | list }}"
+  nginx:
+    - targets: "{{ groups.webservers | map('regex_replace', '^(.*)$', '\\1:9113') | list }}"
 prometheus_scrape_configs:
   - job_name: prometheus
     metrics_path: /metrics
@@ -31,6 +33,10 @@ prometheus_scrape_configs:
     file_sd_configs:
       - files:
           - "{{ prometheus_config_dir }}/file_sd/load_balancing.yml"
+  - job_name: nginx
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/nginx.yml"
 prometheus_storage_retention: "15d"
 prometheus_alertmanager_config:
   - static_configs:
