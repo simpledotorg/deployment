@@ -1,0 +1,11 @@
+groups:
+  - name: nginx
+    rules:
+      - alert: NginxDown
+        expr: nginx_up == 0
+        for: 3m
+        labels:
+          severity: error
+        annotations:
+          summary: "nginx down (instance {{ $labels.instance }})"
+          description: "nginx down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
