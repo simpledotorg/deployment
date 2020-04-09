@@ -22,7 +22,6 @@ rsync_dir: "{{ logrotate_dir }}/*.gz"
 rsync_logfile: "{{ logrotate_dir }}/rsync.log"
 rsync_destination_dir: "/home/{{ deploy_user }}/logs/postgres"
 
-backups_dir: "~/backups"
-backup_files: "~/backups/*.sql"
+backups_dir: "backups/"
 backups_destination_dir: "/home/{{ deploy_user }}/backups/postgres"
 backups_days_to_keep: 30

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-BACKUP_DIR="backups"
-FILENAME=$BACKUP_DIR"/`date +\%Y-\%m-\%d`"
+BACKUP_DIR={{ backups_dir }}
+FILENAME=$BACKUP_DIR"`date +\%Y-\%m-\%d`"
 HOSTNAME=`hostname`
 DAYS_TO_KEEP={{ backups_days_to_keep }}
 
 if ! mkdir -p $BACKUP_DIR; then
-    echo "Cannot create backup directory in $FINAL_BACKUP_DIR. Go and fix it!" 1>&2
+    echo "Cannot create backup directory in $BACKUP_DIR. Go and fix it!" 1>&2
     exit 1;
 fi;
 
@@ -15,7 +15,7 @@ if ! pg_dump -U {{ secrets.postgres.username }} {{ postgres.database_name }} | g
 else
     mv "$FILENAME".sql.gz.in_progress "$FILENAME".sql.gz
   {% for server in groups.storage %}
-    rsync -a {{ backups_dir }}/*.gz {{ deploy_user }}@{{ server }}:{{ backups_destination_dir }}/$HOSTNAME/
+    rsync -a "$BACKUP_DIR"*.gz {{ deploy_user }}@{{ server }}:{{ backups_destination_dir }}/$HOSTNAME/
   {% endfor %}
 fi
 
