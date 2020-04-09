@@ -122,26 +122,28 @@
 - name: copy .pgpass file
   template:
     src: .pgpass
-    dest: /home/{{ deploy_user }}/.pgpass
+    dest: ~/.pgpass
     mode: 0600
-  become_user: "{{ deploy_user }}"
-  become: true
 
 - name: copy backup dump script
   template:
     src: pg_backup.sh
-    dest: /home/{{ deploy_user }}/pg_backup.sh
+    dest: pg_backup.sh
     mode: +x
-  become_user: "{{ deploy_user }}"
-  become: true
 
-- name: setup cron job to generate backups
+- name: create backups directory on storage
+  file:
+    path: "{{ backups_destination_dir }}"
+    state: directory
+  become: true
+  become_user: "{{ deploy_user }}"
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ groups.storage }}"
+
+- name: setup cron job to generate backups (and ship if storage host exists)
   cron:
     name: "postgres backup"
     minute: "0"
     hour: "0"
-    job: "/home/{{ deploy_user }}/pg_backup.sh"
-  become_user: "{{ deploy_user }}"
-  become: true
-
-#TODO: setup logrotate
+    job: "./pg_backup.sh"
