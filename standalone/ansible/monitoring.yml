@@ -13,3 +13,14 @@
   hosts: all
   roles:
     - cloudalchemy.node-exporter
+
+- name: allow all access to prometheus
+  ufw:
+    rule: allow
+    port: "{{ prometheus_port }}"
+
+name: allow all access to grafana
+  ufw:
+    rule: allow
+    port: "{{ grafana_port }}"
+    proto: tcp

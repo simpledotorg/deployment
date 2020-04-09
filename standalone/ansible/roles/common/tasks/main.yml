@@ -35,6 +35,7 @@
       - python-software-properties
       - redis-tools
       - rsync
+      - rsyslog
       - sqlite3
       - unattended-upgrades
       - vim
@@ -96,3 +97,29 @@
 - name: enable systemctl services for deploy user
   become: true
   shell: loginctl enable-linger deploy
+
+# firewalling
+- name: change default incoming policy changed to 'deny'
+  ufw:
+    direction: incoming
+    default: deny
+
+- name: allow SSH
+  ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: restrict network access within standalone boxes only
+  ufw:
+    rule: allow
+    src: "{{ item }}"
+  with_items: "{{ groups.all }}"
+
+- name: rate limit ssh
+  ufw:
+    rule: limit
+    name: OpenSSH
+
+- name: enable ufw
+  ufw:
+    state: enabled
