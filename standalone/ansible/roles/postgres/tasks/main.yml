@@ -118,3 +118,30 @@
     name: "{{ postgresql_daemon }}"
     state: reloaded
   when: postgres_hba_conf.changed
+
+- name: copy .pgpass file
+  template:
+    src: .pgpass
+    dest: /home/{{ deploy_user }}/.pgpass
+    mode: 0600
+  become_user: "{{ deploy_user }}"
+  become: true
+
+- name: copy backup dump script
+  template:
+    src: pg_backup.sh
+    dest: /home/{{ deploy_user }}/pg_backup.sh
+    mode: +x
+  become_user: "{{ deploy_user }}"
+  become: true
+
+- name: setup cron job to generate backups
+  cron:
+    name: "postgres backup"
+    minute: "0"
+    hour: "0"
+    job: "/home/{{ deploy_user }}/pg_backup.sh"
+  become_user: "{{ deploy_user }}"
+  become: true
+
+#TODO: setup logrotate
