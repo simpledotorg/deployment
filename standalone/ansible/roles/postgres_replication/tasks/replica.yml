@@ -1,0 +1,36 @@
+---
+- name: Replica | stop PostgreSQL
+  service:
+    name: "{{ postgresql_daemon }}"
+    state: stopped
+
+- name: Replica | clear out data directory
+  file:
+    path: "{{ postgresql_data_dir }}"
+    state: absent
+
+- name: Replica | create empty data directory
+  file:
+    path: "{{ postgresql_data_dir }}"
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: '0700'
+
+- name: Replica | do an initial pg_basebackup and auto-generate recovery.conf
+  shell: pg_basebackup -h {{ groups.postgres_primary[0] }} -U {{ replication_user }} -p 5432 -D {{ postgresql_data_dir }} -P -Xs -R
+  become: true
+  become_user: postgres
+
+- name: Replica | set postgresql.conf replication settings
+  lineinfile:
+    state: present
+    dest: "{{ postgresql_config_path }}/postgresql.conf"
+    regexp: "{{ item.regex }}"
+    line: "{{ item.name }}={{ item.value }}"
+  with_items: "{{ replication_config_replica }}"
+
+- name: Replica | reload postgresql
+  service:
+    name: "{{ postgresql_daemon }}"
+    state: reloaded

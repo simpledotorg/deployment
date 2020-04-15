@@ -1,0 +1,33 @@
+---
+- name: Primary | create replication user account
+  postgresql_user:
+    name: "{{ replication_user }}"
+    role_attr_flags: replication
+  become: yes
+  become_user: postgres
+
+- name: Primary | grant permissions for standby db to replicate
+  postgresql_pg_hba:
+    dest: "{{ postgresql_config_path }}/pg_hba.conf"
+    contype: "host"
+    users: "{{ replication_user }}"
+    source: "{{ item }}/32"
+    databases: "replication"
+    method: "trust"
+    create: true
+    backup: true
+  register: postgres_hba_conf
+  with_items: "{{ groups.postgres_secondary }}"
+
+- name: Primary | set postgresql.conf replication settings
+  lineinfile:
+    state: present
+    dest: "{{ postgresql_config_path }}/postgresql.conf"
+    regexp: "{{ item.regex }}"
+    line: "{{ item.name }}={{ item.value }}"
+  with_items: "{{ replication_config_primary }}"
+
+- name: Primary | reload postgresql
+  service:
+    name: "{{ postgresql_daemon }}"
+    state: reloaded

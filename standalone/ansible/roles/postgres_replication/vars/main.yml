@@ -1,0 +1,8 @@
+---
+replication_user: replicator
+replication_config_primary:
+  - {name: wal_level, value: replica, regex: '#?wal_level = \w+(\s+#.*)'}
+  - {name: max_wal_senders, value: 3, regex: '#?max_wal_senders = \d+(\s+#.*)'}
+  - {name: wal_keep_segments, value: 64, regex: '#?wal_keep_segments = .*(\s+#.*)'}
+replication_config_replica:
+  - {name: hot_standby, value: on, regex: '^#?hot_standby = \w+(\s+#.*)'}
