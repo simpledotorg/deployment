@@ -21,7 +21,7 @@ sidekiq
 68.183.93.139
 
 [sidekiq]
-167.71.230.192
+139.59.0.217
 
 [redis:children]
 redis_primary

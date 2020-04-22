@@ -1,5 +1,5 @@
 check process {{ sidekiq_service_name }}
 with pidfile {{ ansistrano_deploy_to }}/current/tmp/pids/sidekiq.pid
 start program = "/bin/su - {{ deploy_user }} -c 'cd {{ ansistrano_deploy_to }}/current && RAILS_ENV=production bundle exec sidekiq -e production -C {{ ansistrano_deploy_to }}/current/config/sidekiq.yml -P tmp/pids/sidekiq.pid >> {{ ansistrano_deploy_to }}/current/log/sidekiq.log'" with timeout 30 seconds
-stop program = "/bin/bash -c 'kill -s INT `cat /path/to/shared/tmp/pids/sidekiq.pid`'" with timeout 90 seconds
+stop program = "/bin/bash -c 'kill -s INT `cat {{ ansistrano_deploy_to }}/current/tmp/pids/sidekiq.pid`'" with timeout 90 seconds
 group sidekiq

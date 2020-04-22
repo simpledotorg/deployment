@@ -1,12 +1,12 @@
 ---
-- name: Sidekiq | Copy sidekiq monit file
+- name: copy sidekiq monit file
   template:
     src: etc/monit/conf-available/sidekiq.monitrc
     dest: /etc/monit/conf-available/sidekiq.monitrc
   become: true
   notify: restart monit
 
-- name: Sidekiq | enable monit for sidekiq
+- name: enable monit for sidekiq
   file: >
     state=link
     src=/etc/monit/conf-available/sidekiq.monitrc
@@ -14,13 +14,10 @@
   become: true
   notify: restart monit
 
-- name: Sidekiq | reload monit
-  shell: monit reload
-  become: true
+- name: reload monit
+  service: name=monit state=reloaded
 
-- name: Sidekiq | restart sidekiq
-  monit:
-    name: "{{ sidekiq_service_name }}"
-    state: restarted
+- name: restart sidekiq
+  shell: monit restart "{{ sidekiq_service_name }}"
   tags: restart-sidekiq
   become: true
