@@ -1,0 +1,25 @@
+---
+grafana_security:
+  admin_user: admin
+  admin_password: admin
+grafana_datasources:
+  - name: prometheus
+    type: prometheus
+    access: proxy
+    url: "http://{{ groups.prometheus.0 }}:{{ prometheus_port }}"
+grafana_dashboards:
+  - dashboard_id: 11074 # Node exporter
+    revision_id: 2
+    datasource: "{{ grafana_datasources.0.name }}"
+  - dashboard_id: 6742 # Postgres
+    revision_id: 1
+    datasource: "{{ grafana_datasources.0.name }}"
+  - dashboard_id: 763 # Redis
+    revision_id: 1
+    datasource: "{{ grafana_datasources.0.name }}"
+  - dashboard_id: 2428 # HAProxy
+    revision_id: 1
+    datasource: "{{ grafana_datasources.0.name }}"
+  - dashboard_id: 11199 # nginx
+    revision_id: 1
+    datasource: "{{ grafana_datasources.0.name }}"

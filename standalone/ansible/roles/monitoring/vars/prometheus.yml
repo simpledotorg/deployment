@@ -1,0 +1,45 @@
+---
+prometheus_web_listen_address: "0.0.0.0:{{ prometheus_port }}"
+prometheus_targets:
+  node:
+    - targets: "{{ groups.all | map('regex_replace', '^(.*)$', '\\1:' ~ node_exporter_port) | list }}"
+  postgres:
+    - targets: "{{ groups.postgres | map('regex_replace', '^(.*)$', '\\1:' ~ prometheus_postgres_port) | list }}"
+  redis:
+    - targets: "{{ groups.redis | map('regex_replace', '^(.*)$', '\\1:' ~ redis_exporter_port) | list }}"
+  load_balancing:
+    - targets: "{{ groups.load_balancing | map('regex_replace', '^(.*)$', '\\1:9101') | list }}"
+  nginx:
+    - targets: "{{ groups.webservers | map('regex_replace', '^(.*)$', '\\1:9113') | list }}"
+prometheus_scrape_configs:
+  - job_name: prometheus
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - "{{ inventory_hostname }}:{{ prometheus_port }}"
+  - job_name: node
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/node.yml"
+  - job_name: postgres
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/postgres.yml"
+  - job_name: redis
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/redis.yml"
+  - job_name: load balancing
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/load_balancing.yml"
+  - job_name: nginx
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/nginx.yml"
+prometheus_storage_retention: "15d"
+prometheus_alertmanager_config:
+  - static_configs:
+      - targets:
+          - "{{ alertmanager_web_listen_address }}"
+prometheus_alert_rules_files: "roles/monitoring/files/prometheus/rules/*.rules"

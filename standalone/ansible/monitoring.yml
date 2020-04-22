@@ -1,26 +1,60 @@
 ---
-- name: Setup Prometheus
-  hosts: monitoring
-  roles:
-    - cloudalchemy.prometheus
-    
-- name: Setup Grafana
-  hosts: monitoring
-  roles:
-    - cloudalchemy.grafana
-    
-- name: Setup node exporter for all nodes
+- name: setup node exporter for all nodes
   hosts: all
   roles:
+    - monitoring
     - cloudalchemy.node-exporter
 
-- name: allow all access to prometheus
-  ufw:
-    rule: allow
-    port: "{{ prometheus_port }}"
+- name: setup postgres exporter
+  hosts: postgres
+  roles:
+    - monitoring
+    - ome.prometheus_postgres
 
-name: allow all access to grafana
-  ufw:
-    rule: allow
-    port: "{{ grafana_port }}"
-    proto: tcp
+- name: setup redis exporter
+  hosts: redis
+  roles:
+    - monitoring
+    - prometheus_redis_exporter
+  become: true
+
+- name: setup HAProxy exporter
+  hosts: load_balancing
+  roles:
+    - monitoring
+    - bdellegrazie.haproxy_exporter
+
+- name: setup nginx exporter
+  hosts: webservers
+  roles:
+    - monitoring
+    - bdellegrazie.nginx_exporter
+
+- name: setup Prometheus and Alertmanager
+  hosts: prometheus
+  vars_files:
+    - "roles/deploy/vars/{{ deploy_env }}/secrets.yml"
+  roles:
+    - monitoring
+    - cloudalchemy.prometheus
+    - cloudalchemy.alertmanager
+
+- name: setup Grafana
+  hosts: grafana
+  roles:
+    - monitoring
+    - cloudalchemy.grafana
+
+- name: allow monitoring ports through firewall
+  hosts: monitoring
+  become: true
+  tasks:
+  - name: allow all access to prometheus
+    ufw:
+      rule: allow
+      port: "{{ prometheus_port }}"
+
+  - name: allow all access to grafana
+    ufw:
+      rule: allow
+      port: "{{ grafana_port }}"

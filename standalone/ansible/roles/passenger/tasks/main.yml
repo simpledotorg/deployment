@@ -33,7 +33,7 @@
   notify: restart nginx
 
 - name: re-configure nginx
-  copy: src=etc/nginx/nginx.conf dest=/etc/nginx/nginx.conf
+  template: src=etc/nginx/nginx.conf dest=/etc/nginx/nginx.conf
   become: true
   notify: restart nginx
 

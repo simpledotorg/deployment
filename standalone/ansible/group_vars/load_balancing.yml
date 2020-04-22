@@ -32,3 +32,7 @@ haproxy_stats_refresh: 10s
 haproxy_stats_username: admin
 haproxy_stats_password: admin
 haproxy_stats_uri: /
+
+haproxy_exporter_options:
+  - "--haproxy.scrape-uri=http://{{ haproxy_stats_username }}:{{ haproxy_stats_password }}@localhost:{{ haproxy_stats_port }}?stats;csv"
+  - "--no-haproxy.ssl-verify"
