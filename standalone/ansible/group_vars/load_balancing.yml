@@ -15,6 +15,7 @@ haproxy_cert_names:
   - /etc/ssl/simple.org
   - /etc/ssl/in.simple.org
   - /etc/ssl/bd.simple.org
+  - /etc/ssl/api-demo.et.simple.org
 haproxy_crt_list: '/etc/ssl/crt-list.txt'
 
 # Backend settings.

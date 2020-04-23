@@ -108,8 +108,8 @@ There are other vault files that are checked into this repository that do not ha
 for development. You can view or edit the contents of these vault files directly by running:
 
 ```bash
-ansible-vault view --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
-ansible-vault edit --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
+ansible-vault view --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
+ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
 ```
 
 ### Updating ssh keys
