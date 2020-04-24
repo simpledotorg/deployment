@@ -55,6 +55,9 @@ These instructions are to be followed in the `standalone` directory of this repo
 - Run `make init`
 - Run `make all` to setup simple-server on your servers.
     - Simple server should now be installed, running and accessible on your domain.
+    - Note: Some versions of MacOS fail on running the node exporter setup scripts due to
+      [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54). You will have to run
+     `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` to fix this.
 
 ## Provisioning Testing Servers
 
@@ -106,8 +109,8 @@ There are other vault files that are checked into this repository that do not ha
 for development. You can view or edit the contents of these vault files directly by running:
 
 ```bash
-ansible-vault view --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
-ansible-vault edit --vault-id ../../password_file roles/passenger/vars/ssl-vault.yml
+ansible-vault view --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
+ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
 ```
 
 ### Updating ssh keys

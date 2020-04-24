@@ -1,35 +1,35 @@
 [all:vars]
 deploy_env=demo
-domain_name=api-playground.simple.org
-new_relic_app_env=playground
+domain_name=api-demo.et.simple.org
+new_relic_app_env=ethiopia
 
 [postgres:children]
 postgres_primary
 postgres_secondary
 
 [postgres_primary]
-139.59.72.135 replication_role=primary
+167.71.230.150 replication_role=primary
 
 [postgres_secondary]
-167.71.238.109 replication_role=replica
+167.71.230.157 replication_role=replica
 
 [servers:children]
 webservers
 sidekiq
 
 [webservers]
-139.59.69.207
-139.59.71.72
+167.71.230.191
+68.183.93.139
 
 [sidekiq]
-139.59.92.74
+139.59.0.217
 
 [redis:children]
 redis_primary
 redis_secondary
 
 [redis_primary]
-159.65.157.119
+167.71.230.201
 
 [redis_secondary]
 
@@ -38,13 +38,13 @@ prometheus
 grafana
 
 [prometheus]
-139.59.87.89
+167.71.230.195
 
 [grafana]
-139.59.87.89
+167.71.230.195
 
 [storage]
-165.22.218.14
+167.71.230.65
 
 [load_balancing]
-139.59.76.237
+167.71.230.189

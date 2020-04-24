@@ -103,23 +103,28 @@
   ufw:
     direction: incoming
     default: deny
+  become: true
 
 - name: allow SSH
   ufw:
     rule: allow
     name: OpenSSH
+  become: true
 
 - name: restrict network access within standalone boxes only
   ufw:
     rule: allow
     src: "{{ item }}"
   with_items: "{{ groups.all }}"
+  become: true
 
 - name: rate limit ssh
   ufw:
     rule: limit
     name: OpenSSH
+  become: true
 
 - name: enable ufw
   ufw:
     state: enabled
+  become: true

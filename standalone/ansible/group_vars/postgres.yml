@@ -11,8 +11,6 @@ postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/main"
 postgresql_bin_path: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
 postgresql_config_path: "/etc/postgresql/{{ postgresql_version }}/main"
 
-ansible_python_interpreter: /usr/bin/python3
-
 logrotate_user: "postgres"
 logrotate_dir: "/var/log/postgresql"
 logrotate_files: "{{ logrotate_dir }}/*.log"
