@@ -1,6 +1,7 @@
 [all:vars]
 deploy_env=demo
 domain_name=api-demo.et.simple.org
+new_relic_app_env=ethiopia
 
 [postgres:children]
 postgres_primary
