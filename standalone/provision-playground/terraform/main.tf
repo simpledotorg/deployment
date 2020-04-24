@@ -29,7 +29,7 @@ resource "digitalocean_droplet" "icmr-box" {
   count  = 9
   name   = "p-icmr-box-${count.index + 1}"
   region = "blr1"
-  size   = "c-2"
+  size   = "s-2vcpu-2gb"
   ssh_keys = [var.kitallis_fingerprint, var.prabhanshu_fingerprint]
 }
 
