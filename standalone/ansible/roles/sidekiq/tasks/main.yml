@@ -21,3 +21,4 @@
   shell: monit restart "{{ sidekiq_service_name }}"
   tags: restart-sidekiq
   become: true
+  ignore_errors: yes
