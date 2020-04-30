@@ -2,12 +2,12 @@ Scripts for setting up simple-server in a standalone environment.
 
 ## Table of Contents
 
-* [Simple Architecture](#simple-architecture)
+* [Simple Standalone Architecture](#simple-standalone-architecture)
 * [Setting Up `simple-server`](#setting-up-simple-server)
 * [Provisioning Testing Servers](#provisioning-testing-servers)
 * [Helpful Commands](#helpful-commands)
 
-## Simple Architecture
+## Simple Standalone Architecture
 
 ### Components
 
@@ -41,6 +41,10 @@ need to do so first.
 
 These instructions are to be followed in the `standalone` directory of this repository.
 
+- Install ansible with homebrew
+```bash
+brew install ansible
+```
 - `cd ansible/`
 - Add the IP addresses of your servers to the `hosts/icmr/playground` Ansible inventory file.
 - Set up your domain and SSL certificate.
@@ -56,7 +60,7 @@ These instructions are to be followed in the `standalone` directory of this repo
 - Run `make all` to setup simple-server on your servers.
     - Simple server should now be installed, running and accessible on your domain.
     - Note: Some versions of MacOS fail on running the node exporter setup scripts due to
-      [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54). You will have to run
+      [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54). You will have to
      `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` to fix this.
 
 ## Provisioning Testing Servers
@@ -78,6 +82,7 @@ For testing purposes, `provision-playground/terraform` contains a terraform scri
 
 ### Provision the test servers
 
+- `brew install terraform`
 - Add aws credentials to `~/.aws/credentials` (for storing tfstate to s3):
     ```
     [development]
