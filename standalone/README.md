@@ -35,27 +35,27 @@ If this image is out-of-date, you can edit it [here](https://docs.google.com/dra
 
 ## Setting Up `simple-server`
 
-Below are instructions to setting up simple-server on a set of servers. These instructions assume that you have already
-provisioned servers and have their static IP addresses available. If you don't have servers provisioned yet, you will
-need to do so first.
+These instructions assume that you have already provisioned servers and have their static IP addresses available.
+If you don't have servers provisioned yet, you will need to do so first. See [provisioning testing servers](#provisioning-testing-servers)
 
-These instructions are to be followed in the `standalone` directory of this repository.
+These instructions are to be followed in the [standalone](/standalone) directory.
 
 - Install ansible with homebrew
 ```bash
 brew install ansible
 ```
-- `cd ansible/`
-- Add the IP addresses of your servers to the `hosts/icmr/playground` Ansible inventory file.
-- Set up your domain and SSL certificate.
-    - Add SSL certificates for your domain to `roles/load_balancing/vars/ssl-vault.yml`. This is an encrypted Ansible
-      vault file. See [Editing vault files](#editing-vault-files) for instructions on how to edit it.
-    - Add the SSL certificate domain names to `haproxy_cert_names` in `group_vars/load_balancing.yml`
-    - Configure your DNS records to point your domain/subdomain to the load balancer's IP address. You may do this by
-      creating/editing an ALIAS or CNAME record.
-- Set the following in the `hosts/icmr/playground` Ansible inventory file
-    - Set `domain_name` to your domain name (eg. `playground.simple.org`)
-    - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
+- Configure the ansible setup:
+    - `cd ansible/`
+    - Add the IP addresses of your servers to the `hosts/icmr/playground` Ansible inventory file.
+    - Set up your domain and SSL certificate.
+        - Add SSL certificates for your domain to `roles/load_balancing/vars/ssl-vault.yml`. This is an encrypted Ansible
+          vault file. See [Editing vault files](#editing-vault-files) for instructions on how to edit it.
+        - Add the SSL certificate domain names to `haproxy_cert_names` in `group_vars/load_balancing.yml`
+        - Configure your DNS records to point your domain/subdomain to the load balancer's IP address. You may do this by
+          creating/editing an ALIAS or CNAME record.
+    - Set the following in the `hosts/icmr/playground` Ansible inventory file
+        - Set `domain_name` to your domain name (eg. `playground.simple.org`)
+        - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
 - Run `make init`
 - Run `make all` to setup simple-server on your servers.
     - Simple server should now be installed, running and accessible on your domain.
@@ -82,7 +82,10 @@ For testing purposes, `provision-playground/terraform` contains a terraform scri
 
 ### Provision the test servers
 
-- `brew install terraform`
+- Install ansible with homebrew
+```bash
+brew install terraform
+```
 - Add aws credentials to `~/.aws/credentials` (for storing tfstate to s3):
     ```
     [development]

@@ -7,5 +7,4 @@ We use [terraform](https://www.terraform.io/) for provisioning servers and [ansi
 - `terraform/`-  Scripts for provisioning infrastructure on AWS.
 - `ansible/` - Scripts for setting up simple-server on AWS.
 - `standalone/` - Scripts for self-hosting simple-server (bare-metal servers/vanilla VMs). It sets up simple-server with 
-the required peripheral applications (load balancing, monitoring et al) and aims to be detached from 
-third party applications as far as possible. 
+the required peripherals (load balancing, monitoring etc.) and aims to be independent of third party applications as far as possible.
