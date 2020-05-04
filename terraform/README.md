@@ -5,9 +5,9 @@
 This setup needs to be run only once per AWS account.
 
 - Create an AWS account.
-- The repo contains separate directories for managing separate AWS accounts. For using this with a new account, 
-we recommend creating a new directory similar to `development/` with the appropriate profile set in its `main.tf`.
-See [managing environments](managing-environments) to customize your infra.
+- The repo contains a separate directory for each AWS account. For setting this up with a new account,
+we recommend creating a directory similar to `development/` with the appropriate profile set in its `main.tf`.
+See [managing environments](#managing-environments) to customize your infra.
 - Create a new group called `Provisioners` with the following policies (`My Security Credentials` > `Groups` > `Create new group`)
  ```
   AmazonRDSFullAccess
@@ -41,7 +41,9 @@ See [managing environments](managing-environments) to customize your infra.
 
 ## Managing environments
 
-* TODO: How to add a new module for a new environment setup (like sandbox, qa etc.)
+- `main.tf` contains several `modules`. Each `module` captures the resources for an env (sandbox, qa, staging etc).
+- To setup a new env, you can start with duplicating one of the modules and tweaking it to your needs.
+- To delete an env, simply remove the module from `main.tf`.
 
 ## Helpful commands
 
