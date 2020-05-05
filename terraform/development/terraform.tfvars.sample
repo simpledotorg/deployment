@@ -1,0 +1,12 @@
+sandbox_database_username =
+sandbox_database_password =
+
+qa_database_username =
+qa_database_password =
+
+security_database_username =
+security_database_password =
+
+certificate_body_file = "./simple.org.pem"
+certificate_chain_file = "./simple.org.chain.pem"
+certificate_private_key_file = "./simple.org.private_key.pem"

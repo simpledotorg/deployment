@@ -1,11 +1,10 @@
 # Simple Server deployment
 
-This project contains the deployments scripts and instructions for simple-server.
+This project contains deployment scripts for running [simple-server](https://github.com/simpledotorg/simple-server).
 
-## Getting started
+We use [terraform](https://www.terraform.io/) for provisioning servers and [ansible](http://docs.ansible.com/) for orchestration.
 
-The provisioning of servers is done using terraform, and ocrhestration is done using ansible.
-The terraform scripts are not complete yet. The final topology of the infrastructure is also a WIP.
-In the mean time, the following [instructions](docs/INFRASTRUCTURE_SETUP.md) can be used to setup a new enviroment from aws console.
-
-Instructions to setup provisioned instances for deploys are in [ansible/README.md](ansible/README.md).
+- [`terraform/`](/terraform)-  Scripts for provisioning infrastructure on AWS.
+- [`ansible/`](/ansible) - Scripts for setting up simple-server on AWS.
+- [`standalone/`](/standalone) - Scripts for self-hosting simple-server (bare-metal servers/vanilla VMs). It sets up simple-server with
+the required peripherals (load balancing, monitoring etc.) and aims to be independent of third party applications as far as possible.
