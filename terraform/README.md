@@ -6,8 +6,8 @@ This setup needs to be run only once per AWS account.
 
 - Create an AWS account.
 - The repo contains a separate directory for each AWS account. For setting this up with a new account,
-we recommend creating a directory similar to `development/` with the appropriate profile set in its `main.tf`.
-See [managing environments](#managing-environments) to customize your infra.
+  we recommend creating a directory similar to `development/` with the appropriate profile set in its `main.tf`.
+  See [managing environments](#managing-environments) to customize your infra.
 - Create a new group called `Provisioners` with the following policies (`My Security Credentials` > `Groups` > `Create new group`)
  ```
   AmazonRDSFullAccess
@@ -21,7 +21,8 @@ See [managing environments](#managing-environments) to customize your infra.
 - Add the user's access id and secret key to AWS credentials file under the appropriate profile.
  See [using AWS credential files.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 - Create an s3 bucket. Add the bucket's name to `main.tf` > `terraform` > `backend` > `bucket`
-- Create a [DynamoDB](https://ap-south-1.console.aws.amazon.com/dynamodb) table called `terraform-lock` with `LockID` as primary key.
+- Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
+  called `terraform-lock` with `LockID` as primary key.
 
 ## Using the scripts
 
@@ -42,7 +43,7 @@ See [managing environments](#managing-environments) to customize your infra.
 ## Managing environments
 
 - `main.tf` contains several `modules`. Each `module` captures the resources for an env (sandbox, qa, staging etc).
-- To setup a new env, you can start with duplicating one of the modules and tweaking it to your needs.
+- To setup a new env, you can start with duplicating one of the modules and tweak it to your needs.
 - To delete an env, simply remove the module from `main.tf`.
 
 ## Helpful commands
