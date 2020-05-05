@@ -2,7 +2,7 @@
 passenger_pre_start http://{{ domain_name }}/;
 
 server {
-  listen 80 default_server;
+  listen {{ nginx_port }} default_server;
   server_name {{ domain_name }};
 
   client_max_body_size 4G;
