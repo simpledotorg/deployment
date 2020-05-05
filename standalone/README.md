@@ -129,6 +129,12 @@ ansible-vault view --vault-id ../../password_file roles/load-balancing/vars/ssl-
 ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
 ```
 
+### Making a deploy
+```bash
+make deploy hosts=icmr/playground
+```
+This deploys simple-server/master on hosts.
+
 ### Updating ssh keys
 Add keys to `ansible/roles/ssh/` under the appropriate environment.
 ```bash
