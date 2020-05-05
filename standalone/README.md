@@ -36,7 +36,7 @@ If this image is out-of-date, you can edit it [here](https://docs.google.com/dra
 ## Setting Up `simple-server`
 
 These instructions assume that you have already provisioned servers and have their static IP addresses available.
-If you don't have servers provisioned yet, you will need to do so first. See [provisioning testing servers.](#provisioning-testing-servers)
+If you don't have servers provisioned yet, you will need to do so first. See [provisioning testing servers](#provisioning-testing-servers).
 
 These instructions are to be followed in the [standalone](/standalone) directory.
 
