@@ -56,7 +56,7 @@ brew install ansible
     - Configure your DNS records to point your domain/subdomain to the load balancer's IP address. You may do this by
       creating/editing an ALIAS or CNAME record.
 - Set the following in the inventory file
-    - Set `domain_name` to your domain name (eg. `playground.simple.org`)
+    - Set `domain_name` to your domain name `example.com`
     - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
 
 ### Run the ansible scripts
