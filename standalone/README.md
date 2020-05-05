@@ -2,12 +2,12 @@ Scripts for setting up simple-server in a standalone environment.
 
 ## Table of Contents
 
-* [Simple Standalone Architecture](#simple-standalone-architecture)
+* [Simple Architecture](#simple-architecture)
 * [Setting Up `simple-server`](#setting-up-simple-server)
 * [Provisioning Testing Servers](#provisioning-testing-servers)
 * [Helpful Commands](#helpful-commands)
 
-## Simple Standalone Architecture
+## Simple Architecture
 
 ### Components
 
@@ -35,43 +35,33 @@ If this image is out-of-date, you can edit it [here](https://docs.google.com/dra
 
 ## Setting Up `simple-server`
 
-These instructions assume that you have already provisioned servers and have their static IP addresses available.
-If you don't have servers provisioned yet, you will need to do so first. See [provisioning testing servers](#provisioning-testing-servers).
+Below are instructions to setting up simple-server on a set of servers. These instructions assume that you have already
+provisioned servers and have their static IP addresses available. If you don't have servers provisioned yet, you will
+need to do so first.
 
-These instructions are to be followed in the [standalone](/standalone) directory.
-
-### Install ansible
-```bash
-brew install ansible
-```
-### Configure the ansible setup:
+These instructions are to be followed in the `standalone` directory of this repository.
 
 - `cd ansible/`
-- Create an hosts inventory file. The setup uses `hosts/icmr/playground` as an example. You can use it as a template to setup your own.
-- Add the IP addresses of your servers to the inventory file.
+- Add the IP addresses of your servers to the `hosts/icmr/playground` Ansible inventory file.
 - Set up your domain and SSL certificate.
     - Add SSL certificates for your domain to `roles/load_balancing/vars/ssl-vault.yml`. This is an encrypted Ansible
       vault file. See [Editing vault files](#editing-vault-files) for instructions on how to edit it.
     - Add the SSL certificate domain names to `haproxy_cert_names` in `group_vars/load_balancing.yml`
     - Configure your DNS records to point your domain/subdomain to the load balancer's IP address. You may do this by
       creating/editing an ALIAS or CNAME record.
-- Set the following in the inventory file
-    - Set `domain_name` to your domain name `example.com`
+- Set the following in the `hosts/icmr/playground` Ansible inventory file
+    - Set `domain_name` to your domain name (eg. `playground.simple.org`)
     - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
-
-### Run the ansible scripts
-
 - Run `make init`
 - Run `make all` to setup simple-server on your servers.
     - Simple server should now be installed, running and accessible on your domain.
     - Note: Some versions of MacOS fail on running the node exporter setup scripts due to
-      [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54). You will have to
+      [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54). You will have to run
      `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` to fix this.
 
 ## Provisioning Testing Servers
 
 For testing purposes, `provision-playground/terraform` contains a terraform script to spin up servers on digitalocean.
-You will need a digitalocean account and an AWS account (for storing tfstate to s3).
 
 ### Decrypt the terraform vault
 
@@ -79,9 +69,7 @@ You will need a digitalocean account and an AWS account (for storing tfstate to 
     ```bash
     cat terraform.tfvars.vault | ansible-vault decrypt --vault-id ../../password_file > terraform.tfvars
     ```
-  This will create a `terraform.tfvars` file for local use. You may use the `terraform.tfvars.sample` to set up credentials
-  if you don't have vault access. See [creating a personal access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
-  to generate your `do_token`.
+  This will create a `terraform.tfvars` file for local use.
 
 ### Add SSH credentials
 
@@ -90,11 +78,7 @@ You will need a digitalocean account and an AWS account (for storing tfstate to 
 
 ### Provision the test servers
 
-- Install ansible with homebrew
-```bash
-brew install terraform
-```
-- Add aws credentials to `~/.aws/credentials`:
+- Add aws credentials to `~/.aws/credentials` (for storing tfstate to s3):
     ```
     [development]
     aws_access_key_id=
@@ -128,12 +112,6 @@ for development. You can view or edit the contents of these vault files directly
 ansible-vault view --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
 ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
 ```
-
-### Making a deploy
-```bash
-make deploy hosts=icmr/playground
-```
-This deploys simple-server/master on hosts.
 
 ### Updating ssh keys
 Add keys to `ansible/roles/ssh/` under the appropriate environment.
