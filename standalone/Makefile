@@ -2,7 +2,7 @@ hosts = icmr/playground
 password_file = ~/.password_file
 export ANSIBLE_CONFIG = ansible/ansible.cfg
 
-.PHONY: help init all update-ssh-keys restart-passenger restart-sidekiq
+.PHONY: help init all deploy ship update-ssh-keys update-app-config restart-passenger restart-sidekiq
 # HELP sourced from https://gist.github.com/prwhite/8168133
 
 # Add help text after each target name starting with '\#\#'
@@ -29,6 +29,11 @@ init: ##@Setup Install ansible plugins
 
 all: ##@Setup Install simple-server on hosts. Runs the all.yml playbook
 	ansible-playbook --vault-id $(password_file) ansible/$@.yml -i hosts/$(hosts)
+
+deploy: ship restart-passenger ##@Deploy Deploy simple-server/master on hosts.
+
+ship: ##@Deploy Ship simple-server/master to hosts. Runs an ansitrano deploy
+	ansible-playbook --vault-id $(password_file) ansible/deploy.yml -i hosts/$(hosts)
 
 update-ssh-keys: ##@Utilities Update ssh keys on boxes. Add keys to `ansible/roles/ssh/` under the appropriate environment
 	ansible-playbook --vault-id $(password_file) ansible/setup.yml -i hosts/$(hosts) --tags ssh
