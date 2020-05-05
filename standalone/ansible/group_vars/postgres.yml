@@ -1,7 +1,7 @@
 ---
 postgres:
   locale: "en_US.UTF-8"
-  database_name: "{{ database_name }}"
+  database_name: "{{ deploy_env }}-{{ app_name }}-db"
   pg_hba:
     - {contype: local, databases: all, users: postgres, method: peer}
     - {contype: host,  databases: all, users: all, source: all, method: md5}
