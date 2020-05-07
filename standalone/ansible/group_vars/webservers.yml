@@ -1,4 +1,3 @@
-nginx_port: 8008  # Use 8008 (HTTP Alternate) to avoid conflict with HAProxy in case deployment is on a single box
 nginx_stats_port: 8080
 nginx_exporter_options:
   - "-nginx.scrape-uri=http://localhost:{{ nginx_stats_port }}/stub_status"
