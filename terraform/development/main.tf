@@ -155,6 +155,9 @@ module "simple_server_security" {
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
 }
 
+/* This sets up a bunch of ec2 servers for the standalone setup
+   with the appropriate security groups.
+
 module "simple_server_playground" {
   source                     = "../modules/simple_server_standalone"
   deployment_name            = "development-playground"
@@ -170,4 +173,4 @@ module "simple_server_playground" {
   redis_server_count         = 1
   monitoring_server_count    = 1
   storage_server_count       = 1
-}
+} */
