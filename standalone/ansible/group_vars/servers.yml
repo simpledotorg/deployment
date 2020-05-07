@@ -13,8 +13,6 @@ ansistrano_deploy_via: "git"
 ansistrano_allow_anonymous_stats: no
 ansistrano_git_repo: "https://github.com/simpledotorg/simple-server.git"
 ansistrano_after_symlink_shared_tasks_file: "roles/deploy/hooks/after_symlink.yml"
-postgres:
-  database_name: "{{ deploy_env }}-{{ app_name }}-db"
 
 logrotate_user: "{{ deploy_user }}"
 logrotate_dir: "{{ ansistrano_deploy_to }}/current/log"
