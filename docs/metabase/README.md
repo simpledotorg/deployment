@@ -4,8 +4,8 @@ The instructions on [Metabase docs](https://www.metabase.com/docs/latest/operati
 
 ## Caveat Lector
 
-* The entire Elastic Beanstalk UI is an SPA, so don't forget to save your changes before you launch your app in the intermediary steps and/or press the back button because you will have to start off the whole process again.
-* While the app is launching, the progress bar gets stuck and doesn't show you the true progress and it might appear that it's taking too long. One way to validate its progress is to check if it has created the RDS instance or not. You can also refresh the page at this point and you might get a fresher state back.
+* The entire Elastic Beanstalk UI is an SPA, so don't forget to save your changes before you launch your app in the intermediary steps. Also try to avoid presssing the back button during setup as you may have to start off the whole process again.
+* While the app is launching, the progress bar gets stuck and doesn't show you the true progress and it might appear that it's taking too long. One way to validate its progress is to check if it has created the RDS instance. You can also refresh the page at this point and you might get a fresher state back.
 
 ## Quick Launch ([ref](https://www.metabase.com/docs/latest/operations-guide/running-metabase-on-elastic-beanstalk.html#quick-launch))
 
@@ -19,13 +19,13 @@ The instructions on [Metabase docs](https://www.metabase.com/docs/latest/operati
 
 Hit `Review and Launch`. Once you do this, you will be redirected to a screen that looks like the following:
 
-![Config Screen](edit-configs.png)
+![Config Screen](images/edit-configs.png)
 
 You only need to worry about the marked sections in the screenshot. Refer to the same screenshot above for the following sections:
 
 ### Network
 
-![Network Config Screen](edit-network.png)
+![Network Config Screen](images/edit-network.png)
 
 * Select the default VPC.
 * Select `Visibility: Public`.
@@ -36,7 +36,7 @@ You only need to worry about the marked sections in the screenshot. Refer to the
 
 ### Database
 
-![DB Config Screen](edit-db.png)
+![DB Config Screen](images/edit-db.png)
 
 * Leave all the defaults be.
 * Set a username and passsword for the database. Please store this in 1password.
@@ -53,12 +53,12 @@ You only need to worry about the marked sections in the screenshot. Refer to the
 
 * Select the Security Group, choose the one that your app/db are in, for eg., for SBX it'd be: `sg_simple_server_development-sandbox`
 
-<br/>
+### Launch
 
 Once you've configured all these, click on `Launch App` and wait.
 
 ## DNS
 
-You've already setup the SSL policy and specified the cert. Go in and add the generated IPV4 address in CloudFlare under the appropriate CNAME you'd want this hosted.
+You've already setup the SSL policy and specified the cert. Go in and add the generated IPV4 address in CloudFlare (or the appropriate DNS service) under the appropriate CNAME you'd want this hosted.
 
 Everything else should be self-explanatory if you're following the official Metabase docs. Even if you get something wrong, you can always launch the app and then configure it later.
