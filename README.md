@@ -9,6 +9,10 @@ We use [terraform](https://www.terraform.io/) for provisioning servers and [ansi
 - [`standalone/`](/standalone) - Scripts for self-hosting simple-server (bare-metal servers/vanilla VMs). It sets up simple-server with the required peripherals (load balancing, monitoring etc.) and aims to be independent of third party applications as far as possible.
 - [`docs/`](/docs) - Miscellaneous docs.
 
+# Terraform migration status
+
+The `terraform/` setup is not fully utilized for all running environments yet. We track the current environment status in this [document](https://docs.google.com/spreadsheets/d/1JCfFYetk9Jrtc5iUHp-7Fx5V3QqpuCWojjcEibRJN7I/edit#gid=0) (refer to `Provisioned with terraform`) along with other notes and details.
+
 # Setting up Ansible Vault
 
 We use [ansible vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) to manage encrypted secrets. The recommended way to set things up is below, which will allow you to use `ansible-vault` to view / edit encryptes files without having to
@@ -25,3 +29,4 @@ export ANSIBLE_VAULT_PASSWORD_FILE=.vault_password
 ```
 
 Now you can use git diff to view any changes locally on `.env` files.
+
