@@ -174,3 +174,11 @@ module "simple_server_playground" {
   monitoring_server_count    = 1
   storage_server_count       = 1
 } */
+
+#
+# cloudwatch alerts
+#
+module "sandbox_cloudwatch_alerts" {
+	source = "../modules/simple_cloudwatch_alerts"
+	ec2_sidekiq_server_id = module.simple_server_sandbox.ec2_sidekiq_server_id
+}
