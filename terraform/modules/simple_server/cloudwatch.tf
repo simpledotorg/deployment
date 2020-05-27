@@ -12,7 +12,7 @@ resource "aws_cloudwatch_metric_alarm" "sidekiq_cpu" {
   ok_actions           = [ var.cloudwatch_alerts_sns_arn ]
 
   dimensions = {
-    InstanceId = "${aws_instance.ec2_sidekiq_server[count.index].id}"
+    InstanceId = aws_instance.ec2_sidekiq_server[count.index].id
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_cloudwatch_metric_alarm" "master_database_cpu" {
   ok_actions           = [ var.cloudwatch_alerts_sns_arn ]
 
   dimensions = {
-    DBInstanceIdentifier = "${aws_db_instance.simple-database[0].id}"
+    DBInstanceIdentifier = aws_db_instance.simple-database[0].id
   }
 }
 
@@ -48,7 +48,7 @@ resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
   ok_actions           = [ var.cloudwatch_alerts_sns_arn ]
 
   dimensions = {
-    DBInstanceIdentifier = "${aws_db_instance.replica_simple_database[0].id}"
+    DBInstanceIdentifier = aws_db_instance.replica_simple_database[0].id
   }
 }
 
