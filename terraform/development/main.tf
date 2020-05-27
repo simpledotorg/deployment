@@ -146,6 +146,7 @@ module "simple_server_sandbox" {
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
   host_urls                  = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name

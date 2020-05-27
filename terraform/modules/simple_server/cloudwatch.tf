@@ -51,3 +51,23 @@ resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
     DBInstanceIdentifier = "${aws_db_instance.replica_simple_database[0].id}"
   }
 }
+
+resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts" {
+  count                = var.load_balancer_arn_suffix == "" || var.cloudwatch_alerts_sns_arn == "" ? 0 : 1
+  alarm_name           = "High 5xx / timeouts on [${var.deployment_name}]"
+  comparison_operator  = "GreaterThanOrEqualToThreshold"
+  evaluation_periods   = "1"
+  metric_name          = "HTTPCode_Target_5XX_Count"
+  namespace            = "AWS/ApplicationELB"
+  period               = "60"
+  statistic            = "Average"
+  threshold            = "5"
+  alarm_actions        = [ var.cloudwatch_alerts_sns_arn ]
+  ok_actions           = [ var.cloudwatch_alerts_sns_arn ]
+  treat_missing_data   = "notBreaching"
+
+  dimensions = {
+  	LoadBalancer = var.load_balancer_arn_suffix
+  	TargetGroup  = aws_lb_target_group.simple_server_target_group.arn_suffix
+  }
+}

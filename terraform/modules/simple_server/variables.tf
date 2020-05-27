@@ -54,6 +54,12 @@ variable "https_listener_arn" {
   type        = string
 }
 
+variable "load_balancer_arn_suffix" {
+  description = "Load balancer arn"
+  type        = string
+  default     = ""
+}
+
 variable "host_urls" {
   description = "List of host URL"
   type        = list(string)
