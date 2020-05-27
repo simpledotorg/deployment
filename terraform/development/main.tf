@@ -84,7 +84,7 @@ variable "slack_channel" {
 
 variable "slack_username" {
 	description = "Slack username to user for sending notifications"
-	type = string
+	type        = string
 }
 
 #
@@ -209,7 +209,7 @@ module "notify_slack" {
 }
 
 module "sandbox_cloudwatch_alerts" {
-	source                = "../modules/simple_cloudwatch_alerts"
-	ec2_sidekiq_server_id = module.simple_server_sandbox.ec2_sidekiq_server_id
-	sns_arn               = module.notify_slack.this_slack_topic_arn
+  source                = "../modules/simple_cloudwatch_alerts"
+  ec2_sidekiq_server_id = module.simple_server_sandbox.ec2_sidekiq_server_id
+  sns_arn               = module.notify_slack.this_slack_topic_arn
 }
