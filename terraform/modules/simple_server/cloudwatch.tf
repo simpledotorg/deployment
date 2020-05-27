@@ -15,3 +15,39 @@ resource "aws_cloudwatch_metric_alarm" "sidekiq_cpu" {
     InstanceId = "${aws_instance.ec2_sidekiq_server[count.index].id}"
   }
 }
+
+resource "aws_cloudwatch_metric_alarm" "master_database_cpu" {
+  count                = var.cloudwatch_alerts_sns_arn == "" ? 0 : 1
+  alarm_name           = "High CPU on master DB [${var.deployment_name}]"
+  comparison_operator  = "GreaterThanOrEqualToThreshold"
+  evaluation_periods   = "1"
+  metric_name          = "CPUUtilization"
+  namespace            = "AWS/RDS"
+  period               = "60"
+  statistic            = "Average"
+  threshold            = "78"
+  alarm_actions        = [ var.cloudwatch_alerts_sns_arn ]
+  ok_actions           = [ var.cloudwatch_alerts_sns_arn ]
+
+  dimensions = {
+    DBInstanceIdentifier = "${aws_db_instance.simple-database[0].id}"
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
+  count                = !var.create_database_replica || var.cloudwatch_alerts_sns_arn == "" ? 0 : 1
+  alarm_name           = "High CPU on standby DB [${var.deployment_name}]"
+  comparison_operator  = "GreaterThanOrEqualToThreshold"
+  evaluation_periods   = "1"
+  metric_name          = "CPUUtilization"
+  namespace            = "AWS/RDS"
+  period               = "60"
+  statistic            = "Average"
+  threshold            = "30"
+  alarm_actions        = [ var.cloudwatch_alerts_sns_arn ]
+  ok_actions           = [ var.cloudwatch_alerts_sns_arn ]
+
+  dimensions = {
+    DBInstanceIdentifier = "${aws_db_instance.replica_simple_database[0].id}"
+  }
+}
