@@ -3,6 +3,7 @@ variable "ec2_sidekiq_server_id" {
   type        = string
 }
 
-output "alert_arn" {
-	value = aws_cloudwatch_metric_alarm.sidekiq_cpu.arn
+variable "sns_arn" {
+  description = "The ARN of the SNS topic from which messages will be sent"
+  type        = string
 }

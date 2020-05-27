@@ -7,8 +7,8 @@ resource "aws_cloudwatch_metric_alarm" "sidekiq_cpu" {
   period               = "60"
   statistic            = "Average"
   threshold            = "22.5"
-  alarm_actions        = [ "arn:aws:sns:ap-south-1:844366897011:cloudwatch-test-sns" ]
-  ok_actions           = [ "arn:aws:sns:ap-south-1:844366897011:cloudwatch-test-sns" ]
+  alarm_actions        = [ var.sns_arn ]
+  ok_actions           = [ var.sns_arn ]
 
   dimensions = {
     InstanceId = "${var.ec2_sidekiq_server_id}"

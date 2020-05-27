@@ -70,6 +70,24 @@ variable "certificate_private_key_file" {
 }
 
 #
+# slack credentials for cloudwatch
+#
+variable "slack_webhook_url" {
+	description = "Slack webhook URL for creating AWS SNS topic"
+	type        = string
+}
+
+variable "slack_channel" {
+	description = "Slack channel name to which notifications are sent"
+	type        = string
+}
+
+variable "slack_username" {
+	description = "Slack username to user for sending notifications"
+	type = string
+}
+
+#
 # aws key pair
 #
 module "simple_aws_key_pair" {
@@ -178,7 +196,20 @@ module "simple_server_playground" {
 #
 # cloudwatch alerts
 #
+module "notify_slack" {
+  source  = "terraform-aws-modules/notify-slack/aws"
+  version = "2.15.0"
+
+  sns_topic_name = "cloudwatch-to-slack"
+  slack_webhook_url = var.slack_webhook_url
+  slack_channel     = var.slack_channel
+  slack_username    = var.slack_username
+
+  lambda_function_name = "cloudwatch-to-slack"
+}
+
 module "sandbox_cloudwatch_alerts" {
-	source = "../modules/simple_cloudwatch_alerts"
+	source                = "../modules/simple_cloudwatch_alerts"
 	ec2_sidekiq_server_id = module.simple_server_sandbox.ec2_sidekiq_server_id
+	sns_arn               = module.notify_slack.this_slack_topic_arn
 }
