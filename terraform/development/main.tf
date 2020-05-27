@@ -115,6 +115,21 @@ module "simple_networking" {
 }
 
 #
+# slack alerts lambda
+#
+module "notify_slack" {
+  source  = "terraform-aws-modules/notify-slack/aws"
+  version = "2.15.0"
+
+  sns_topic_name       = "cloudwatch-to-slack"
+  slack_webhook_url    = var.slack_webhook_url
+  slack_channel        = var.slack_channel
+  slack_username       = var.slack_username
+
+  lambda_function_name = "cloudwatch-to-slack"
+}
+
+#
 # server configs
 #
 module "simple_server_sandbox" {
@@ -130,10 +145,11 @@ module "simple_server_sandbox" {
   instance_security_groups   = module.simple_networking.instance_security_groups
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
-  https_listener_arn          = module.simple_networking.https_listener_arn
+  https_listener_arn         = module.simple_networking.https_listener_arn
   host_urls                  = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
 
 module "simple_server_qa" {
@@ -192,24 +208,3 @@ module "simple_server_playground" {
   monitoring_server_count    = 1
   storage_server_count       = 1
 } */
-
-#
-# cloudwatch alerts
-#
-module "notify_slack" {
-  source  = "terraform-aws-modules/notify-slack/aws"
-  version = "2.15.0"
-
-  sns_topic_name = "cloudwatch-to-slack"
-  slack_webhook_url = var.slack_webhook_url
-  slack_channel     = var.slack_channel
-  slack_username    = var.slack_username
-
-  lambda_function_name = "cloudwatch-to-slack"
-}
-
-module "sandbox_cloudwatch_alerts" {
-  source                = "../modules/simple_cloudwatch_alerts"
-  ec2_sidekiq_server_id = module.simple_server_sandbox.ec2_sidekiq_server_id
-  sns_arn               = module.notify_slack.this_slack_topic_arn
-}
