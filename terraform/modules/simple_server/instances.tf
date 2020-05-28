@@ -5,6 +5,7 @@ resource "aws_instance" "ec2_simple_server" {
   count                       = var.server_count
   associate_public_ip_address = true
   vpc_security_group_ids      = concat(var.instance_security_groups, [aws_security_group.sg_simple_server.id])
+  monitoring                  = true
 
   root_block_device {
     volume_size = "30"
