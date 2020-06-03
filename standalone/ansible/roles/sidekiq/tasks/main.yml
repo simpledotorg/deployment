@@ -16,6 +16,7 @@
 
 - name: reload monit
   service: name=monit state=reloaded
+  become: yes
 
 - name: restart sidekiq
   shell: monit restart "{{ sidekiq_service_name }}"

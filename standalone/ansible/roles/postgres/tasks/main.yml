@@ -118,6 +118,7 @@
     name: "{{ postgresql_daemon }}"
     state: reloaded
   when: postgres_hba_conf.changed
+  become: true
 
 - name: copy .pgpass file
   template:

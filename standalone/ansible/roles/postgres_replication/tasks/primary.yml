@@ -18,7 +18,7 @@
     backup: true
   register: postgres_hba_conf
   with_items: "{{ groups.postgres_secondary }}"
-  become: true
+  become: yes
 
 - name: Primary | set postgresql.conf replication settings
   lineinfile:
@@ -27,10 +27,10 @@
     regexp: "{{ item.regex }}"
     line: "{{ item.name }}={{ item.value }}"
   with_items: "{{ replication_config_primary }}"
-  become: true
+  become: yes
 
 - name: Primary | reload postgresql
   service:
     name: "{{ postgresql_daemon }}"
     state: reloaded
-  become: true
+  become: yes
