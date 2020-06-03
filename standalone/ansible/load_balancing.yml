@@ -3,4 +3,4 @@
   hosts: load_balancing
   roles:
     - { role: load_balancing, tags: ['load_balancing'] }
-  become: true
+  become: yes

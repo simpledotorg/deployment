@@ -1,5 +1,5 @@
 ---
 # monit handlers
 - name: restart monit
-  become: true
+  become: yes
   service: name=monit state=restarted enabled=yes

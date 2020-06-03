@@ -4,7 +4,7 @@
   apt:
     pkg: "haproxy={{ haproxy_version }}"
     update_cache: yes
-  become: true
+  become: yes
 
 - name: enable init script
   replace:
@@ -25,19 +25,19 @@
     mode: "{{ item.value.mode }}"
   with_dict: "{{ ssl_cert_files }}"
   no_log: true
-  become: true
+  become: yes
 
 - name: generate bundled pem files
   shell: cat {{ item }}.crt {{ item }}.key > {{ item }}.pem
   with_items: "{{ haproxy_cert_names }}"
-  become: true
+  become: yes
 
 - name: create crt-list file
   copy:
     content: "{{ haproxy_cert_names | map('regex_replace', '^(.*)$', '\\1.pem') | join('\n') }}"
     dest: "{{ haproxy_crt_list }}"
   notify: restart haproxy
-  become: true
+  become: yes
 
 - name: update HAProxy config
   template:
@@ -45,31 +45,31 @@
     dest: /etc/haproxy/haproxy.cfg
     backup: yes
   notify: restart haproxy
-  become: true
+  become: yes
 
 - name: allow all tcp access to port 80
   ufw:
     rule: allow
     port: "{{ haproxy_frontend_http_port }}"
     proto: tcp
-  become: true
+  become: yes
 
 - name: allow all tcp access to port 443
   ufw:
     rule: allow
     port: "{{ haproxy_frontend_https_port }}"
     proto: tcp
-  become: true
+  become: yes
 
 - name: allow all tcp access to load balancer status page
   ufw:
     rule: allow
     port: "{{ haproxy_stats_port }}"
     proto: tcp
-  become: true
+  become: yes
 
 - name: restart rsyslog to begin logging
   service:
     name: rsyslog
     state: restarted
-  become: true
+  become: yes

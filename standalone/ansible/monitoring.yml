@@ -16,7 +16,7 @@
   roles:
     - monitoring
     - prometheus_redis_exporter
-  become: true
+  become: yes
 
 - name: setup HAProxy exporter
   hosts: load_balancing
@@ -47,7 +47,7 @@
 
 - name: allow monitoring ports through firewall
   hosts: monitoring
-  become: true
+  become: yes
   tasks:
   - name: allow all access to prometheus
     ufw:

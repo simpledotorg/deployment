@@ -3,7 +3,7 @@
   file:
     path: "{{ rsync_destination_dir }}"
     state: directory
-  become: true
+  become: yes
   become_user: "{{ deploy_user }}"
   delegate_to: "{{ item }}"
   with_items: "{{ groups.storage }}"
@@ -13,4 +13,4 @@
     src: "etc/logrotate.d/config.j2"
     dest: "{{ logrotate_config_file }}"
     owner: root
-  become: true
+  become: yes

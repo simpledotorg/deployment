@@ -1,15 +1,15 @@
 ---
 - name: update apt cache
   apt: update_cache=yes
-  become: true
+  become: yes
 
 - name: install aptitude
   apt: name=aptitude state=present
-  become: true
+  become: yes
 
 - name: upgrade the distro
   apt: upgrade=safe
-  become: true
+  become: yes
 
 - name: install common packages
   apt: 
@@ -44,12 +44,12 @@
       - zlib1g-dev
       - zsh
     state: latest
-  become: true
+  become: yes
 
 - name: update hostname
   hostname:
     name: "{{ inventory_hostname }}"
-  become: true
+  become: yes
 
 - name: add hostname to /etc/hosts
   lineinfile:
@@ -57,7 +57,7 @@
     regexp: '^127\.0\.0\.1[ \t]+localhost'
     line: '127.0.0.1 localhost {{ inventory_hostname }}'
     state: present
-  become: true
+  become: yes
 
 - name: Reboot system if required
   shell: sleep 2 && shutdown -r now 'Rebooting to complete system upgrade'
@@ -65,7 +65,7 @@
   poll: 0
   args:
     removes: /var/run/reboot-required
-  become: true
+  become: yes
   register: restart_system
 
 - name: Wait for server to restart
@@ -73,29 +73,29 @@
   when: restart_system.changed
 
 - name: ensure fail2ban is running
-  become: true
+  become: yes
   action: service name=fail2ban state=restarted enabled=yes
 
 - name: configure sshd
   copy: src=etc/ssh/sshd_config dest=/etc/ssh/sshd_config
-  become: true
+  become: yes
   notify: restart ssh
 
 - name: Ensure group "deploy" exists
   group:
     name: deploy
     state: present
-  become: true
+  become: yes
 
 - name: create deploy user
   user:
     name: deploy
     group: deploy
     shell: /bin/bash
-  become: true
+  become: yes
 
 - name: enable systemctl services for deploy user
-  become: true
+  become: yes
   shell: loginctl enable-linger deploy
 
 # firewalling
@@ -103,28 +103,28 @@
   ufw:
     direction: incoming
     default: deny
-  become: true
+  become: yes
 
 - name: allow SSH
   ufw:
     rule: allow
     name: OpenSSH
-  become: true
+  become: yes
 
 - name: restrict network access within standalone boxes only
   ufw:
     rule: allow
     src: "{{ item }}"
   with_items: "{{ groups.all }}"
-  become: true
+  become: yes
 
 - name: rate limit ssh
   ufw:
     rule: limit
     name: OpenSSH
-  become: true
+  become: yes
 
 - name: enable ufw
   ufw:
     state: enabled
-  become: true
+  become: yes

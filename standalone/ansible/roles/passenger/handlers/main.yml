@@ -1,5 +1,5 @@
 ---
 # nginx handlers
 - name: restart nginx
-  become: true
+  become: yes
   service: name=nginx state=restarted enabled=yes
