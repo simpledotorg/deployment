@@ -1,8 +1,8 @@
-- name: add ssh keys for root
+- name: add ssh keys for the remote user
   become: true
   authorized_key:
     key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
-    user: "{{ root_user }}"
+    user: "{{ ansible_ssh_user }}"
     exclusive: yes
 
 - name: add ssh keys for the deploy user
