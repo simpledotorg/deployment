@@ -1,5 +1,5 @@
 hosts = icmr/playground
-password_file = ~/.password_file
+password_file = ~/.vault_password
 export ANSIBLE_CONFIG = ansible/ansible.cfg
 
 .PHONY: help init all deploy ship update-ssh-keys update-app-config restart-passenger restart-sidekiq
