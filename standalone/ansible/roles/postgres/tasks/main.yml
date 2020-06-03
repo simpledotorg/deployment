@@ -49,7 +49,7 @@
   apt:
     pkg:
       - postgresql-10
-      - postgresql-contrib
+      - postgresql-contrib-10
     state: present
   become: true
 
