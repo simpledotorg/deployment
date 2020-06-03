@@ -42,7 +42,7 @@ These instructions are to be followed in the [standalone](/standalone) directory
 
 ### Install ansible
 ```bash
-brew install ansible
+brew install ansible@2.8.3
 ```
 ### Configure the ansible setup:
 
@@ -92,7 +92,7 @@ You will need a digitalocean account and an AWS account (for storing tfstate to 
 
 - Install ansible with homebrew
 ```bash
-brew install terraform
+brew install terraform0.12.21
 ```
 - Add aws credentials to `~/.aws/credentials`:
     ```
