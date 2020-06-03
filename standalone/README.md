@@ -63,10 +63,7 @@ brew install ansible@2.8.3 gnu-tar
 
 - Run `make init`
 - Run `make all` to setup simple-server on your servers.
-    - Simple server should now be installed, running and accessible on your domain.
-    - Note: Some versions of MacOS fail on running the node exporter setup scripts due to
-      [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54). You will have to
-     `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` to fix this.
+- Simple server should now be installed, running and accessible on your domain.
 
 ## Provisioning Testing Servers
 
@@ -158,5 +155,26 @@ Note that this restarts passenger on all servers.
 ### Restarting sidekiq
 ```bash
 make restart-sidekiq hosts=icmr/playground
+```
+
+# Troubleshooting
+
+Depending on your system, you may run into the following known issues:
+
+### Errors with cloudalchemy.node-exporter
+
+If you see output like this, it's likely due to [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54).
+
+```
+TASK [cloudalchemy.node-exporter : Get checksum list from github] *******************************************************************************************************************************************************
+objc[5848]: +[__NSCFConstantString initialize] may have been in progress in another thread when fork() was called.
+objc[5848]: +[__NSCFConstantString initialize] may have been in progress in another thread when fork() was called. We cannot safely call it or ignore it in the fork() child process. Crashing instead. Set a breakpoint on objc_initializeAfterForkError to debug.
+ERROR! A worker was found in a dead state
+```
+
+
+#### Run this to fix:
+```
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ```
 
