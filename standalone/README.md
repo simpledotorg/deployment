@@ -40,9 +40,9 @@ If you don't have servers provisioned yet, you will need to do so first. See [pr
 
 These instructions are to be followed in the [standalone](/standalone) directory.
 
-### Install ansible
+### Install local requirements
 ```bash
-brew install ansible@2.8.3
+brew install ansible@2.8.3 gnu-tar
 ```
 ### Configure the ansible setup:
 
