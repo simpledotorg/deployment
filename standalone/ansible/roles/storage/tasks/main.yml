@@ -16,6 +16,6 @@
     # This is to avoid conflict with authorized_keys, which is cleared with keys present in the ssh role.
     # AuthorizedKeysFile looks at authorized_keys2 by default.
     path: "/home/{{ deploy_user }}/.ssh/authorized_keys2"
-  become: yes
+  become: true
   delegate_to: "{{ item }}"
   with_items: "{{ groups.storage }}"

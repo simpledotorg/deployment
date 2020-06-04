@@ -16,25 +16,25 @@
 
 - name: ensure apt-transport-https is installed
   apt: name=apt-transport-https state=present
-  become: yes
+  become: true
 
 - name: add postgresql apt key
   apt_key:
     url:  https://www.postgresql.org/media/keys/ACCC4CF8.asc
     state: present
-  become: yes
+  become: true
 
 - name: add postgresql repositories
   apt_repository:
     repo: "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main"
     state: present
   register: postgres_repo
-  become: yes
+  become: true
 
 - name: update apt cache if repo was added
   apt: update_cache=yes
   when: postgres_repo.changed
-  become: yes
+  become: true
 
 - name: Ensure PostgreSQL 10 dependencies are installed.
   apt:
@@ -43,7 +43,7 @@
       - libpq-dev
       - python-ipaddress
     state: present
-  become: yes
+  become: true
 
 - name: Ensure PostgreSQL 10 packages are installed.
   apt:
@@ -51,7 +51,7 @@
       - postgresql-10
       - postgresql-contrib-10
     state: present
-  become: yes
+  become: true
 
 - name: Ensure all configured locales are present.
   locale_gen:
@@ -71,7 +71,7 @@
     create: true
     backup: true
   register: postgres_hba_conf
-  become: yes
+  become: true
   become_user: postgres
 
 - name: Force-restart PostgreSQL after new locales are generated.
@@ -79,7 +79,7 @@
     name: "{{ postgresql_daemon }}"
     state: restarted
   when: locale_gen_result.changed
-  become: yes
+  become: true
 
 - name: Create Postgresql database
   postgresql_db:
@@ -95,7 +95,7 @@
     encrypted: true
     role_attr_flags: 'SUPERUSER'
     priv: 'ALL'
-  become: yes
+  become: true
   become_user: postgres
 
 - name: Allow postgres to accept all connections
@@ -103,7 +103,7 @@
     name: listen_addresses
     value: "*"
   register: postgres_listen_addresses
-  become: yes
+  become: true
   become_user: postgres
 
 - name: Restart postgresql
@@ -111,14 +111,14 @@
     name: "{{ postgresql_daemon }}"
     state: restarted
   when: postgres_listen_addresses.changed
-  become: yes
+  become: true
 
 - name: Reload postgresql
   service:
     name: "{{ postgresql_daemon }}"
     state: reloaded
   when: postgres_hba_conf.changed
-  become: yes
+  become: true
 
 - name: copy .pgpass file
   template:
@@ -136,7 +136,7 @@
   file:
     path: "{{ backups_destination_dir }}"
     state: directory
-  become: yes
+  become: true
   become_user: "{{ deploy_user }}"
   delegate_to: "{{ item }}"
   with_items: "{{ groups.storage }}"

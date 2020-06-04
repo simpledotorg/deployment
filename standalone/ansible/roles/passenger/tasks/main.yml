@@ -2,29 +2,29 @@
 # nginx + passenger tasks
 - name: install PGP key supprt
   apt: pkg={{ item }} state=latest
-  become: yes
+  become: true
   with_items:
     - dirmngr
     - gnupg
 
 - name: add passenger PGP key
   apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7 state=present
-  become: yes
+  become: true
 
 - name: add passenger apt repo
   apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main' state=present
-  become: yes
+  become: true
   register: passenger_repo
 
 - name: apt-get update
   apt:
     update_cache: yes
-  become: yes
+  become: true
   when: passenger_repo.changed
 
 - name: install nginx and passenger packages
   apt: pkg={{ item }} state=latest
-  become: yes
+  become: true
   with_items:
     - apt-transport-https
     - ca-certificates
@@ -34,12 +34,12 @@
 
 - name: re-configure nginx
   template: src=etc/nginx/nginx.conf dest=/etc/nginx/nginx.conf
-  become: yes
+  become: true
   notify: restart nginx
 
 - name: disable the default nginx config
   file: path={{ item }} state=absent
-  become: yes
+  become: true
   with_items:
     - /etc/nginx/sites-enabled/default
   notify: restart nginx
@@ -56,7 +56,7 @@
   template:
     src: etc/nginx/sites-available/simple.org
     dest: /etc/nginx/sites-available/{{ domain_name }}
-  become: yes
+  become: true
   notify: restart nginx
 
 - name: enable site configs
@@ -64,10 +64,10 @@
     state: link
     src: /etc/nginx/sites-available/{{ domain_name }}
     dest: /etc/nginx/sites-enabled/{{ domain_name }}
-  become: yes
+  become: true
 
 - name: restart nginx
-  become: yes
+  become: true
   command: /bin/true
   notify: restart nginx
   tags: restart-passenger
@@ -77,5 +77,5 @@
     state=link
     src=/etc/monit/conf-available/nginx
     dest=/etc/monit/conf-enabled/nginx
-  become: yes
+  become: true
   notify: restart monit

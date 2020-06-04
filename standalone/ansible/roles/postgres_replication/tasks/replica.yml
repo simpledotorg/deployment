@@ -19,7 +19,7 @@
 
 - name: Replica | do an initial pg_basebackup and auto-generate recovery.conf
   shell: pg_basebackup -h {{ groups.postgres_primary[0] }} -U {{ replication_user }} -p 5432 -D {{ postgresql_data_dir }} -P -Xs -R
-  become: yes
+  become: true
   become_user: postgres
 
 - name: Replica | set postgresql.conf replication settings
