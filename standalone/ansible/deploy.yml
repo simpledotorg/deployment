@@ -9,3 +9,4 @@
 - hosts: sidekiq
   roles:
     - { role: sidekiq, tags: ['sidekiq'] }
+  remote_user: "{{ deploy_user }}"
