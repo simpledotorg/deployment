@@ -48,3 +48,7 @@ output "standalone_instance_security_groups" {
 output "https_listener_arn" {
   value = aws_alb_listener.simple_listener_https.arn
 }
+
+output "load_balancer_arn_suffix" {
+  value = aws_alb.simple_env_proxy.arn_suffix
+}
