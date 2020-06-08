@@ -106,10 +106,9 @@ This deploys simple-server/master on hosts.
 
 ### Running capistrano commands
 
-You can run cap commands on the servers by adding a new `stage` in the `simple-server` repository.
-- Add a new file in `config/deploy/<country_name>/<environment>` with the `webserver` and `sidekiq` addresses.
-- Add the appropriate roles to the servers. Make sure these host addresses are always
-in sync with the `deployment` repository.
+You can run cap commands on the servers from the `simple-server` repository.
+- Add a new stage (`config/deploy/<country_name>/<environment>`) with the `webserver` and `sidekiq` addresses as in the inventory file.
+- Add the appropriate roles to the servers. Make sure these host addresses are always in sync with the `deployment` repository.
 
 Note: We run deployments through ansistrano. Running a `cap deploy` is not recommended and breaks currently.
 
