@@ -58,6 +58,8 @@ brew install ansible@2.8.3 gnu-tar
 - Set the following in the inventory file
     - Set `domain_name` to your domain name `example.com`
     - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
+- To setup email alerts (optional), you will need to configure an SMTP host in `roles/monitoring/vars/alertmanager.yml > email_configs`.
+  You will also need to specify the `To` address here where emails will be sent.
 
 ### Run the ansible scripts
 
