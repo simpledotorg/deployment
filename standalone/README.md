@@ -74,6 +74,7 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
     - `secrets.yml` contains secret env vars. Make sure this file is encrypted.
     - `feature_flags.yml` contains feature flags.
     - See `roles/deploy/vars/sample/` for a sample. These vars are interpolated into `roles/deploy/vars/templates/.env.j2` and shipped.
+- Add your ssh keys to `ssh/files/ssh_keys/<deploy_env>`. These keys are added to all the servers to access the remote user(`ubuntu`) and the `deploy` user.
 - Set the following in the inventory file
     - Set `domain_name` to your domain name `example.com`
     - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
