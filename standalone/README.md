@@ -44,6 +44,21 @@ These instructions are to be followed in the [standalone](/standalone) directory
 ```bash
 brew install ansible@2.8.3 gnu-tar
 ```
+
+### Setup remote user
+
+- You will need to setup a sudo remote user with `NOPASSWD` access on the servers.
+The scripts assume an `ubuntu` user by default, this can be configured in `ansible.cfg`.
+```
+sudo visudo
+
+# At the end of the file add
+ubuntu     ALL=(ALL) NOPASSWD:ALL
+```
+Note: AWS ec2 instances already come with an `ubuntu` sudoer.
+
+- Setup your keys on the server. Make sure you can ssh as the remote user.
+
 ### Configure the ansible setup:
 
 - `cd ansible/`
