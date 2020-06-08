@@ -54,6 +54,12 @@ variable "https_listener_arn" {
   type        = string
 }
 
+variable "load_balancer_arn_suffix" {
+  description = "Load balancer arn"
+  type        = string
+  default     = ""
+}
+
 variable "host_urls" {
   description = "List of host URL"
   type        = list(string)
@@ -87,4 +93,10 @@ variable "sidekiq_server_count" {
   description = "Number of instances to create for sidekiq"
   type        = number
   default     = 0
+}
+
+variable "cloudwatch_alerts_sns_arn" {
+  description = "The ARN of the SNS topic to which cloudwatch alerts will be sent"
+  type        = string
+  default     = ""
 }

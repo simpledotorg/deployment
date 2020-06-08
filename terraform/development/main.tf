@@ -70,6 +70,24 @@ variable "certificate_private_key_file" {
 }
 
 #
+# slack credentials for cloudwatch
+#
+variable "slack_webhook_url" {
+	description = "Slack webhook URL for creating AWS SNS topic"
+	type        = string
+}
+
+variable "slack_channel" {
+	description = "Slack channel name to which notifications are sent"
+	type        = string
+}
+
+variable "slack_username" {
+	description = "Slack username to user for sending notifications"
+	type        = string
+}
+
+#
 # aws key pair
 #
 module "simple_aws_key_pair" {
@@ -97,6 +115,21 @@ module "simple_networking" {
 }
 
 #
+# slack alerts lambda
+#
+module "notify_slack" {
+  source  = "terraform-aws-modules/notify-slack/aws"
+  version = "2.15.0"
+
+  sns_topic_name       = "cloudwatch-to-slack"
+  slack_webhook_url    = var.slack_webhook_url
+  slack_channel        = var.slack_channel
+  slack_username       = var.slack_username
+
+  lambda_function_name = "cloudwatch-to-slack"
+}
+
+#
 # server configs
 #
 module "simple_server_sandbox" {
@@ -112,10 +145,12 @@ module "simple_server_sandbox" {
   instance_security_groups   = module.simple_networking.instance_security_groups
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
-  https_listener_arn          = module.simple_networking.https_listener_arn
+  https_listener_arn         = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
   host_urls                  = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
 
 module "simple_server_qa" {
@@ -130,9 +165,11 @@ module "simple_server_qa" {
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
   host_urls                  = ["api-qa.simple.org", "dashboard-qa.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
 
 module "simple_server_security" {
