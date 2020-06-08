@@ -82,55 +82,6 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 - Run `make all` to setup simple-server on your servers.
 - Simple server should now be installed, running and accessible on your domain.
 
-## Provisioning Testing Servers
-
-For testing purposes, `provision-playground/terraform` contains a terraform script to spin up servers on digitalocean.
-You will need a digitalocean account and an AWS account (for storing tfstate to s3).
-
-### Decrypt the terraform vault
-
-- Decrypt the `terraform.tfvars.vault` file by running:
-    ```bash
-    cat terraform.tfvars.vault | ansible-vault decrypt --vault-id ../../password_file > terraform.tfvars
-    ```
-  This will create a `terraform.tfvars` file for local use. You may use the `terraform.tfvars.sample` to set up credentials
-  if you don't have vault access. See [creating a personal access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
-  to generate your `do_token`.
-
-### Add SSH credentials
-
-- Add your SSH key to the list of SSH keys in the digitalocean console ([ref](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)).
-- Add your SSH fingerprint to the `terraform.tfvars` file.
-
-### Provision the test servers
-
-- Install ansible with homebrew
-```bash
-brew install terraform0.12.21
-```
-- Add aws credentials to `~/.aws/credentials`:
-    ```
-    [development]
-    aws_access_key_id=
-    aws_secret_access_key=
-    ```
-- Run the following commands:
-    ```
-    terraform init
-    terraform plan
-    terraform apply
-    ```
-This will provision the necessary servers for an instance of simple-server on digitalocean. The IPs of the servers will be printed at the end.
-- Copy over IPs of the created servers to `ansible/hosts/icmr/playground`. You can use any of the servers for any purpose, they are generic.
-
-### Check in your vault
-
-- Update the vault by running:
-    ```bash
-    cat terraform.tfvars | ansible-vault encrypt --vault-id ../../password_file --output terraform.tfvars.vault
-    ```
-  Check in the updated vault.
-
 ## Helpful Commands
 
 ### Editing vault files
@@ -139,8 +90,8 @@ There are other vault files that are checked into this repository that do not ha
 for development. You can view or edit the contents of these vault files directly by running:
 
 ```bash
-ansible-vault view --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
-ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
+ansible-vault view --vault-id ../../vault_password roles/load-balancing/vars/ssl-vault.yml
+ansible-vault edit --vault-id ../../vault_password roles/load-balancing/vars/ssl-vault.yml
 ```
 
 ### Making a deploy
@@ -173,8 +124,56 @@ Note that this restarts passenger on all servers.
 ```bash
 make restart-sidekiq hosts=icmr/playground
 ```
+## Provisioning Testing Servers
 
-# Troubleshooting
+For testing purposes, `provision-playground/terraform` contains a terraform script to spin up servers on digitalocean.
+You will need a digitalocean account and an AWS account (for storing tfstate to s3).
+
+### Decrypt the terraform vault
+
+- Decrypt the `terraform.tfvars.vault` file by running:
+    ```bash
+    cat terraform.tfvars.vault | ansible-vault decrypt --vault-id ../../vault_password > terraform.tfvars
+    ```
+  This will create a `terraform.tfvars` file for local use. You may use the `terraform.tfvars.sample` to set up credentials
+  if you don't have vault access. See [creating a personal access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
+  to generate your `do_token`.
+
+### Add SSH credentials
+
+- Add your SSH key to the list of SSH keys in the digitalocean console ([ref](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)).
+- Add your SSH fingerprint to the `terraform.tfvars` file.
+
+### Provision the test servers
+
+- Install terraform with homebrew
+```bash
+brew install terraform0.12.21
+```
+- Add aws credentials to `~/.aws/credentials`:
+    ```
+    [development]
+    aws_access_key_id=
+    aws_secret_access_key=
+    ```
+- Run the following commands:
+    ```
+    terraform init
+    terraform plan
+    terraform apply
+    ```
+This will provision the necessary servers for an instance of simple-server on digitalocean. The IPs of the servers will be printed at the end.
+- Copy over IPs of the created servers to `ansible/hosts/icmr/playground`. You can use any of the servers for any purpose, they are generic.
+
+### Check in your vault
+
+- Update the vault by running:
+    ```bash
+    cat terraform.tfvars | ansible-vault encrypt --vault-id ../../vault_password --output terraform.tfvars.vault
+    ```
+  Check in the updated vault.
+
+## Troubleshooting
 
 Depending on your system, you may run into the following known issues:
 
