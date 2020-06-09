@@ -1,6 +1,7 @@
 hosts = icmr/playground
 password_file = ~/.vault_password
 export ANSIBLE_CONFIG = ansible/ansible.cfg
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 .PHONY: help init all deploy ship update-ssh-keys update-app-config restart-passenger restart-sidekiq
 # HELP sourced from https://gist.github.com/prwhite/8168133
