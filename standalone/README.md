@@ -48,7 +48,7 @@ brew install ansible@2.8.3 gnu-tar
 ### Setup remote user
 
 - You will need to setup a sudo remote user with `NOPASSWD` access on the servers.
-The scripts assume an `ubuntu` user by default, this can be configured in `ansible.cfg`.
+The scripts assume an `ubuntu` user by default, this can be configured in [`ansible.cfg`](/standalone/ansible/ansible.cfg).
 ```
 sudo visudo
 
