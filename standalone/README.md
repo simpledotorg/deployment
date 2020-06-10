@@ -57,7 +57,7 @@ ubuntu     ALL=(ALL) NOPASSWD:ALL
 ```
 Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 
-- Setup your keys on the server. Make sure you can ssh as the remote user.
+- Setup your keys on the server. Make sure you can establish an SSH connection to your server as the remote user (default `ubuntu`).
 
 ### Configure the ansible setup:
 
