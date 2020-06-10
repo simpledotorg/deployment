@@ -5,4 +5,4 @@
   service:
     name: "{{ postgresql_daemon }}"
     state: restarted
-  become: yes
+  become: true

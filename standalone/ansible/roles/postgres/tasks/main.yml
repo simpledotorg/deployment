@@ -84,7 +84,7 @@
 - name: Create Postgresql database
   postgresql_db:
     name: "{{ postgres.database_name }}"
-  become: yes
+  become: true
   become_user: postgres
 
 - name: Create Postgresql user
