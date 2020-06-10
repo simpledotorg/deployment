@@ -1,13 +1,25 @@
 # Sets up SSH keys on the storage server so that other servers can rsync.
-- name: generate ssh keys for root user
+- name: generate ssh keys for remote user
   openssh_keypair:
     path: ~/.ssh/id_rsa
 
-- name: fetch ssh keys to be added to storage server
+- name: generate ssh keys for root user
+  openssh_keypair:
+    path: ~/.ssh/id_rsa
+  become: true
+
+- name: fetch remote user ssh keys to be added to storage server
   fetch:
     src: "~/.ssh/id_rsa.pub"
     dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
     flat: yes
+
+- name: fetch root user ssh keys to be added to storage server
+  fetch:
+    src: "~/.ssh/id_rsa.pub"
+    dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
+    flat: yes
+  become: true
 
 - name: add keys to the storage server
   authorized_key:
