@@ -95,8 +95,8 @@ There are other vault files that are checked into this repository that do not ha
 for development. You can view or edit the contents of these vault files directly by running:
 
 ```bash
-ansible-vault view --vault-id ../../vault_password roles/load-balancing/vars/ssl-vault.yml
-ansible-vault edit --vault-id ../../vault_password roles/load-balancing/vars/ssl-vault.yml
+ansible-vault view --vault-id ~/.vault_password roles/load-balancing/vars/ssl-vault.yml
+ansible-vault edit --vault-id ~/.vault_password roles/load-balancing/vars/ssl-vault.yml
 ```
 
 ### Making a deploy
@@ -146,7 +146,7 @@ You will need a digitalocean account and an AWS account (for storing tfstate to 
 
 - Decrypt the `terraform.tfvars.vault` file by running:
     ```bash
-    cat terraform.tfvars.vault | ansible-vault decrypt --vault-id ../../vault_password > terraform.tfvars
+    cat terraform.tfvars.vault | ansible-vault decrypt --vault-id ~/.vault_password > terraform.tfvars
     ```
   This will create a `terraform.tfvars` file for local use. You may use the `terraform.tfvars.sample` to set up credentials
   if you don't have vault access. See [creating a personal access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
@@ -182,7 +182,7 @@ This will provision the necessary servers for an instance of simple-server on di
 
 - Update the vault by running:
     ```bash
-    cat terraform.tfvars | ansible-vault encrypt --vault-id ../../vault_password --output terraform.tfvars.vault
+    cat terraform.tfvars | ansible-vault encrypt --vault-id ~/.vault_password --output terraform.tfvars.vault
     ```
   Check in the updated vault.
 
