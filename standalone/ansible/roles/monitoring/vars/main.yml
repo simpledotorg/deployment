@@ -6,6 +6,8 @@ prometheus_postgres_port: 9187
 redis_exporter_port: 9121
 redis_exporter_user: redis_exporter
 redis_exporter_group: redis_exporter
+nginx_exporter_port: 9101
+haproxy_exporter_port: 9113
 
 alertmanager_web_port: 9093
 alertmanager_web_listen_address: '0.0.0.0:{{ alertmanager_web_port }}'
