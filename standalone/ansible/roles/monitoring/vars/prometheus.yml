@@ -8,9 +8,9 @@ prometheus_targets:
   redis:
     - targets: "{{ groups.redis | map('regex_replace', '^(.*)$', '\\1:' ~ redis_exporter_port) | list }}"
   load_balancing:
-    - targets: "{{ groups.load_balancing | map('regex_replace', '^(.*)$', '\\1:9101') | list }}"
+    - targets: "{{ groups.load_balancing | map('regex_replace', '^(.*)$', '\\1:' ~ haproxy_exporter_port) | list }}"
   nginx:
-    - targets: "{{ groups.webservers | map('regex_replace', '^(.*)$', '\\1:9113') | list }}"
+    - targets: "{{ groups.webservers | map('regex_replace', '^(.*)$', '\\1:' ~ nginx_exporter_port) | list }}"
 prometheus_scrape_configs:
   - job_name: prometheus
     metrics_path: /metrics

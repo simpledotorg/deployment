@@ -40,10 +40,25 @@ If you don't have servers provisioned yet, you will need to do so first. See [pr
 
 These instructions are to be followed in the [standalone](/standalone) directory.
 
-### Install ansible
+### Install local requirements
 ```bash
-brew install ansible
+brew install ansible@2.8.3 gnu-tar
 ```
+
+### Setup remote user
+
+- You will need to setup a sudo remote user with `NOPASSWD` access on the servers.
+The scripts assume an `ubuntu` user by default, this can be configured in [`ansible.cfg`](/standalone/ansible/ansible.cfg).
+```
+sudo visudo
+
+# At the end of the file add
+ubuntu     ALL=(ALL) NOPASSWD:ALL
+```
+Note: AWS ec2 instances already come with an `ubuntu` sudoer.
+
+- Setup your keys on the server. Make sure you can establish an SSH connection to your server as the remote user (default `ubuntu`).
+
 ### Configure the ansible setup:
 
 - `cd ansible/`
@@ -55,67 +70,22 @@ brew install ansible
     - Add the SSL certificate domain names to `haproxy_cert_names` in `group_vars/load_balancing.yml`
     - Configure your DNS records to point your domain/subdomain to the load balancer's IP address. You may do this by
       creating/editing an ALIAS or CNAME record.
+- Configure app environment variables in `roles/deploy/vars/<deploy_env>/`
+    - `secrets.yml` contains secret env vars. Make sure this file is encrypted.
+    - `feature_flags.yml` contains feature flags.
+    - See `roles/deploy/vars/sample/` for a sample. These vars are interpolated into `roles/deploy/vars/templates/.env.j2` and shipped.
+- Add your ssh keys to `ssh/files/ssh_keys/<deploy_env>`. These keys are added to all the servers to access the remote user(`ubuntu`) and the `deploy` user.
 - Set the following in the inventory file
     - Set `domain_name` to your domain name `example.com`
     - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
+- To setup email alerts (optional), you will need to configure an SMTP host in `roles/monitoring/vars/alertmanager.yml > email_configs`.
+  You will also need to specify the `To` address here where emails will be sent.
 
 ### Run the ansible scripts
 
 - Run `make init`
 - Run `make all` to setup simple-server on your servers.
-    - Simple server should now be installed, running and accessible on your domain.
-    - Note: Some versions of MacOS fail on running the node exporter setup scripts due to
-      [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54). You will have to
-     `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` to fix this.
-
-## Provisioning Testing Servers
-
-For testing purposes, `provision-playground/terraform` contains a terraform script to spin up servers on digitalocean.
-You will need a digitalocean account and an AWS account (for storing tfstate to s3).
-
-### Decrypt the terraform vault
-
-- Decrypt the `terraform.tfvars.vault` file by running:
-    ```bash
-    cat terraform.tfvars.vault | ansible-vault decrypt --vault-id ../../password_file > terraform.tfvars
-    ```
-  This will create a `terraform.tfvars` file for local use. You may use the `terraform.tfvars.sample` to set up credentials
-  if you don't have vault access. See [creating a personal access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
-  to generate your `do_token`.
-
-### Add SSH credentials
-
-- Add your SSH key to the list of SSH keys in the digitalocean console ([ref](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)).
-- Add your SSH fingerprint to the `terraform.tfvars` file.
-
-### Provision the test servers
-
-- Install ansible with homebrew
-```bash
-brew install terraform
-```
-- Add aws credentials to `~/.aws/credentials`:
-    ```
-    [development]
-    aws_access_key_id=
-    aws_secret_access_key=
-    ```
-- Run the following commands:
-    ```
-    terraform init
-    terraform plan
-    terraform apply
-    ```
-This will provision the necessary servers for an instance of simple-server on digitalocean. The IPs of the servers will be printed at the end.
-- Copy over IPs of the created servers to `ansible/hosts/icmr/playground`. You can use any of the servers for any purpose, they are generic.
-
-### Check in your vault
-
-- Update the vault by running:
-    ```bash
-    cat terraform.tfvars | ansible-vault encrypt --vault-id ../../password_file --output terraform.tfvars.vault
-    ```
-  Check in the updated vault.
+- Simple server should now be installed, running and accessible on your domain.
 
 ## Helpful Commands
 
@@ -125,8 +95,8 @@ There are other vault files that are checked into this repository that do not ha
 for development. You can view or edit the contents of these vault files directly by running:
 
 ```bash
-ansible-vault view --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
-ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-vault.yml
+ansible-vault view --vault-id ~/.vault_password roles/load-balancing/vars/ssl-vault.yml
+ansible-vault edit --vault-id ~/.vault_password roles/load-balancing/vars/ssl-vault.yml
 ```
 
 ### Making a deploy
@@ -134,6 +104,14 @@ ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-
 make deploy hosts=icmr/playground
 ```
 This deploys simple-server/master on hosts.
+
+### Running capistrano commands
+
+You can run cap commands on the servers from the `simple-server` repository.
+- Add a new stage (`config/deploy/<country_name>/<environment>`) with the `webserver` and `sidekiq` addresses as in the inventory file.
+- Add the appropriate roles to the servers. Make sure these host addresses are always in sync with the `deployment` repository.
+
+Note: We run deployments through ansistrano. Running a `cap deploy` is not recommended and breaks currently.
 
 ### Updating ssh keys
 Add keys to `ansible/roles/ssh/` under the appropriate environment.
@@ -158,5 +136,74 @@ Note that this restarts passenger on all servers.
 ### Restarting sidekiq
 ```bash
 make restart-sidekiq hosts=icmr/playground
+```
+## Provisioning Testing Servers
+
+For testing purposes, `provision-playground/terraform` contains a terraform script to spin up servers on digitalocean.
+You will need a digitalocean account and an AWS account (for storing tfstate to s3).
+
+### Decrypt the terraform vault
+
+- Decrypt the `terraform.tfvars.vault` file by running:
+    ```bash
+    cat terraform.tfvars.vault | ansible-vault decrypt --vault-id ~/.vault_password > terraform.tfvars
+    ```
+  This will create a `terraform.tfvars` file for local use. You may use the `terraform.tfvars.sample` to set up credentials
+  if you don't have vault access. See [creating a personal access token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
+  to generate your `do_token`.
+
+### Add SSH credentials
+
+- Add your SSH key to the list of SSH keys in the digitalocean console ([ref](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)).
+- Add your SSH fingerprint to the `terraform.tfvars` file.
+
+### Provision the test servers
+
+- Install terraform with homebrew
+```bash
+brew install terraform0.12.21
+```
+- Add aws credentials to `~/.aws/credentials`:
+    ```
+    [development]
+    aws_access_key_id=
+    aws_secret_access_key=
+    ```
+- Run the following commands:
+    ```
+    terraform init
+    terraform plan
+    terraform apply
+    ```
+This will provision the necessary servers for an instance of simple-server on digitalocean. The IPs of the servers will be printed at the end.
+- Copy over IPs of the created servers to `ansible/hosts/icmr/playground`. You can use any of the servers for any purpose, they are generic.
+
+### Check in your vault
+
+- Update the vault by running:
+    ```bash
+    cat terraform.tfvars | ansible-vault encrypt --vault-id ~/.vault_password --output terraform.tfvars.vault
+    ```
+  Check in the updated vault.
+
+## Troubleshooting
+
+Depending on your system, you may run into the following known issues:
+
+### Errors with cloudalchemy.node-exporter
+
+If you see output like this, it's likely due to [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54).
+
+```
+TASK [cloudalchemy.node-exporter : Get checksum list from github] *******************************************************************************************************************************************************
+objc[5848]: +[__NSCFConstantString initialize] may have been in progress in another thread when fork() was called.
+objc[5848]: +[__NSCFConstantString initialize] may have been in progress in another thread when fork() was called. We cannot safely call it or ignore it in the fork() child process. Crashing instead. Set a breakpoint on objc_initializeAfterForkError to debug.
+ERROR! A worker was found in a dead state
+```
+
+
+#### Run this to fix:
+```
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ```
 

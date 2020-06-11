@@ -1,2 +1,2 @@
 ---
-sidekiq_service_name: sidekiq_application_production0
+sidekiq_processes: 4

@@ -1,0 +1,52 @@
+[all:vars]
+deploy_env=production
+domain_name=api.et.simple.org
+new_relic_app_env=ethiopia
+
+[postgres:children]
+postgres_primary
+postgres_secondary
+
+[postgres_primary]
+68.23.16.143 replication_role=primary
+
+[postgres_secondary]
+# 68.23.16.143 ansible_port=20022 replication_role=replica
+
+[servers:children]
+webservers
+sidekiq
+
+[webservers]
+68.23.16.143
+# 68.23.16.143 ansible_port=20022 replication_role=replica
+
+[sidekiq]
+68.23.16.143
+# 68.23.16.143 ansible_port=20022 replication_role=replica
+
+[redis:children]
+redis_primary
+redis_secondary
+
+[redis_primary]
+68.23.16.143
+
+[redis_secondary]
+# 68.23.16.143 ansible_port=20022
+
+[monitoring:children]
+prometheus
+grafana
+
+[prometheus]
+68.23.16.143
+
+[grafana]
+68.23.16.143
+
+[storage]
+68.23.16.143
+
+[load_balancing]
+68.23.16.143

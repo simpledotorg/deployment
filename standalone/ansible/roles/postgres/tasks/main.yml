@@ -49,7 +49,7 @@
   apt:
     pkg:
       - postgresql-10
-      - postgresql-contrib
+      - postgresql-contrib-10
     state: present
   become: true
 
@@ -84,7 +84,7 @@
 - name: Create Postgresql database
   postgresql_db:
     name: "{{ postgres.database_name }}"
-  become: yes
+  become: true
   become_user: postgres
 
 - name: Create Postgresql user
@@ -118,6 +118,7 @@
     name: "{{ postgresql_daemon }}"
     state: reloaded
   when: postgres_hba_conf.changed
+  become: true
 
 - name: copy .pgpass file
   template:
