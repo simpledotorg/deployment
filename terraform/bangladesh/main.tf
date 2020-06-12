@@ -64,6 +64,24 @@ variable "certificate_private_key_file" {
 }
 
 #
+# slack credentials for cloudwatch
+#
+variable "slack_webhook_url" {
+	description = "Slack webhook URL for creating AWS SNS topic"
+	type        = string
+}
+
+variable "slack_channel" {
+	description = "Slack channel name to which notifications are sent"
+	type        = string
+}
+
+variable "slack_username" {
+	description = "Slack username to user for sending notifications"
+	type        = string
+}
+
+#
 # AWS key pair
 #
 module "simple_aws_key_pair" {
@@ -89,6 +107,21 @@ module "simple_networking" {
 #
 module "simple_redis_param_group" {
   source = "../modules/simple_redis_param_group"
+}
+
+#
+# slack alerts lambda
+#
+module "notify_slack" {
+  source  = "terraform-aws-modules/notify-slack/aws"
+  version = "~> 3.0"
+
+  sns_topic_name       = "cloudwatch-to-slack"
+  slack_webhook_url    = var.slack_webhook_url
+  slack_channel        = var.slack_channel
+  slack_username       = var.slack_username
+
+  lambda_function_name = "cloudwatch-to-slack"
 }
 
 #
