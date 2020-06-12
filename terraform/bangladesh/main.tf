@@ -139,12 +139,15 @@ module "simple_server_bangladesh_production" {
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
   host_urls                  = ["bd.simple.org", "api.bd.simple.org", "dashboard.bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
   server_count               = 2
   sidekiq_server_count       = 1
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts   = true
+  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
 
 module "simple_server_bangladesh_staging" {
