@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_metric_alarm" "average_webserver_cpu" {
-  count                     = var.cloudwatch_alerts_sns_arn == "" ? 0 : var.server_count
+  count                     = var.enable_cloudwatch_alerts ? var.server_count : 0
   alarm_name                = "High CPU on Webserver-${count.index + 1} [${var.deployment_name}]"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
@@ -19,7 +19,7 @@ resource "aws_cloudwatch_metric_alarm" "average_webserver_cpu" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "sidekiq_cpu" {
-  count                     = var.cloudwatch_alerts_sns_arn == "" ? 0 : var.sidekiq_server_count
+  count                     = var.enable_cloudwatch_alerts ? var.sidekiq_server_count : 0
   alarm_name                = "High CPU on Sidekiq-${count.index + 1} [${var.deployment_name}]"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
@@ -39,7 +39,7 @@ resource "aws_cloudwatch_metric_alarm" "sidekiq_cpu" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "master_database_cpu" {
-  count                     = var.cloudwatch_alerts_sns_arn == "" ? 0 : 1
+  count                     = var.enable_cloudwatch_alerts ? 1 : 0
   alarm_name                = "High CPU on master DB [${var.deployment_name}]"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
@@ -59,7 +59,7 @@ resource "aws_cloudwatch_metric_alarm" "master_database_cpu" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
-  count                     = !var.create_database_replica || var.cloudwatch_alerts_sns_arn == "" ? 0 : 1
+  count                     = var.create_database_replica && var.enable_cloudwatch_alerts ? 1 : 0
   alarm_name                = "High CPU on standby DB [${var.deployment_name}]"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "1"
@@ -79,7 +79,7 @@ resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts" {
-  count               = var.load_balancer_arn_suffix == "" || var.cloudwatch_alerts_sns_arn == "" ? 0 : 1
+  count               = var.load_balancer_arn_suffix != "" && var.enable_cloudwatch_alerts ? 1 : 0
   alarm_name          = "High 5xx / timeouts on [${var.deployment_name}]"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"

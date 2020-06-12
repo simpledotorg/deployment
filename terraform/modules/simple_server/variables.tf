@@ -95,6 +95,12 @@ variable "sidekiq_server_count" {
   default     = 0
 }
 
+variable "enable_cloudwatch_alerts" {
+  description = "Setup cloudwatch alerts"
+  type        = bool
+  default     = false
+}
+
 variable "cloudwatch_alerts_sns_arn" {
   description = "The ARN of the SNS topic to which cloudwatch alerts will be sent"
   type        = string

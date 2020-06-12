@@ -150,6 +150,7 @@ module "simple_server_sandbox" {
   host_urls                  = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts   = true
   cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
 
@@ -169,6 +170,7 @@ module "simple_server_qa" {
   host_urls                  = ["api-qa.simple.org", "dashboard-qa.simple.org"]
   create_redis_instance      = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts   = true
   cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
 
