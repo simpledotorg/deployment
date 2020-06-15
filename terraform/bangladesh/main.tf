@@ -64,6 +64,24 @@ variable "certificate_private_key_file" {
 }
 
 #
+# slack credentials for cloudwatch
+#
+variable "slack_webhook_url" {
+	description = "Slack webhook URL for creating AWS SNS topic"
+	type        = string
+}
+
+variable "slack_channel" {
+	description = "Slack channel name to which notifications are sent"
+	type        = string
+}
+
+variable "slack_username" {
+	description = "Slack username to user for sending notifications"
+	type        = string
+}
+
+#
 # AWS key pair
 #
 module "simple_aws_key_pair" {
@@ -92,6 +110,21 @@ module "simple_redis_param_group" {
 }
 
 #
+# slack alerts lambda
+#
+module "notify_slack" {
+  source  = "terraform-aws-modules/notify-slack/aws"
+  version = "3.2"
+
+  sns_topic_name       = "cloudwatch-to-slack"
+  slack_webhook_url    = var.slack_webhook_url
+  slack_channel        = var.slack_channel
+  slack_username       = var.slack_username
+
+  lambda_function_name = "cloudwatch-to-slack"
+}
+
+#
 # server configs
 #
 module "simple_server_bangladesh_production" {
@@ -106,12 +139,15 @@ module "simple_server_bangladesh_production" {
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
   host_urls                  = ["bd.simple.org", "api.bd.simple.org", "dashboard.bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
   server_count               = 2
   sidekiq_server_count       = 1
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts   = true
+  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
 
 module "simple_server_bangladesh_staging" {
@@ -126,10 +162,13 @@ module "simple_server_bangladesh_staging" {
   aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id              = module.simple_networking.server_vpc_id
   https_listener_arn         = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
   host_urls                  = ["api-demo.bd.simple.org", "api-staging.bd.simple.org", "dashboard-demo.bd.simple.org", "dashboard-staging.bd.simple.org"]
   create_redis_instance      = true
   create_database_replica    = true
   server_count               = 1
   sidekiq_server_count       = 1
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts   = true
+  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
 }
