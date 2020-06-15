@@ -114,7 +114,7 @@ module "simple_redis_param_group" {
 #
 module "notify_slack" {
   source  = "terraform-aws-modules/notify-slack/aws"
-  version = "~> 3.0"
+  version = "3.2"
 
   sns_topic_name       = "cloudwatch-to-slack"
   slack_webhook_url    = var.slack_webhook_url
