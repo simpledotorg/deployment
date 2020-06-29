@@ -2,6 +2,7 @@
 deploy_env=demo
 domain_name=api-playground.simple.org
 new_relic_app_env=playground
+default_country=IN
 
 [postgres:children]
 postgres_primary
