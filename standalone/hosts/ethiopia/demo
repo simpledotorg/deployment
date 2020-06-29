@@ -4,6 +4,7 @@ domain_name=api-demo.et.simple.org
 new_relic_app_env=ethiopia
 default_country=ET
 analytics_dashboard_cache_ttl=60
+cron_time_zone=Africa/Addis_Ababa
 
 [postgres:children]
 postgres_primary
