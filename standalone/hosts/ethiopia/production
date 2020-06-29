@@ -3,6 +3,7 @@ deploy_env=production
 domain_name=api.et.simple.org
 new_relic_app_env=ethiopia
 default_country=ET
+analytics_dashboard_cache_ttl=86400
 
 [postgres:children]
 postgres_primary
