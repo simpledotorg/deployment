@@ -4,7 +4,6 @@ domain_name=api-playground.simple.org
 new_relic_app_env=playground
 default_country=IN
 analytics_dashboard_cache_ttl=60
-cron_time_zone=Asia/Kolkata
 
 
 [postgres:children]
