@@ -27,7 +27,7 @@ resource "aws_cloudwatch_metric_alarm" "sidekiq_cpu" {
   namespace                 = "AWS/EC2"
   period                    = "60"
   statistic                 = "Average"
-  threshold                 = "22.5"
+  threshold                 = "65"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
   ok_actions                = [var.cloudwatch_alerts_sns_arn]
   insufficient_data_actions = [var.cloudwatch_alerts_sns_arn]
