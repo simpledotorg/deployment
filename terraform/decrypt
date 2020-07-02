@@ -1,0 +1,9 @@
+#! /bin/bash
+
+DIR="${2:-**}"
+
+for f in ${DIR}/*.vault
+do
+  echo "Decrypting $f to `echo $f | sed -e 's/\.vault$//'`"
+  cat $f | ansible-vault decrypt --vault-id $1 --output `echo $f | sed -e 's/\.vault$//'`
+done
