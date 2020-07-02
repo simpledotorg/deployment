@@ -36,7 +36,7 @@ decrypt the latest versions of the encrypted ansible vault files in this directo
 
 ```bash
 $ cd terraform
-$ ./decrypt ~/code/simple/ansible_password_file
+$ ./decrypt ~/.vault_password
 
 Decrypting bangladesh/bd.simple.org.chain.pem.vault to bangladesh/bd.simple.org.chain.pem
 Decrypting bangladesh/bd.simple.org.pem.vault to bangladesh/bd.simple.org.pem
@@ -58,24 +58,39 @@ may have changed since you last decrypted them.
 $ cd bangladesh
 ```
 
-### 4. If you haven't already, initialize Terraform. This command is safe to re-run several times.
+### 4. Add AWS credentials to your machine
+
+Add the credentials for the AWS account to your `~/.aws/credentials` file. Include them in a profile whose name matches
+the profile declared in your terraform configuration's `main.tf` file. For example, for `bangladesh` your credentials
+file should look like this.
+
+```
+[bangladesh]
+aws_access_key_id=<YOUR_ACCESS_KEY_ID>
+aws_secret_access_key=<YOUR_ACCESS_KEY>
+```
+
+See [Amazon's documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for more
+information how to store your AWS credentials on your machine.
+
+### 5. If you haven't already, initialize Terraform. This command is safe to re-run several times.
 
 ```bash
 $ terraform init
 ```
 
-### 5. Encrypt any changed secrets
+### 6. Encrypt any changed secrets
 
 If you modify a decrypted file during development, update the encrypted file and check it into the repository. For
 example, if you've modified `terraform.tfvars`,
 
 ```bash
-$ cat terraform.tfvars | ansible-vault encrypt --vault-id ~/code/simple/ansible_password --output terraform.tfvars.vault
+$ cat terraform.tfvars | ansible-vault encrypt --vault-id ~/.vault_password --output terraform.tfvars.vault
 $ git add terraform.tfvars.vault
 $ git commit -m 'Update Bangladesh terraform secrets'
 ```
 
-### 6. Verify your changes
+### 7. Verify your changes
 
 After development, run `terraform plan` to check whether the execution plan for your set of changes matches your
 expectations without making any changes to real resources.
@@ -84,7 +99,7 @@ expectations without making any changes to real resources.
 $ terraform plan
 ```
 
-### 7. Apply
+### 8. Apply
 
 Once you are confident with the execution plan, run `terraform apply` to apply your changes to the AWS environment.
 
