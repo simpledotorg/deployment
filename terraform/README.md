@@ -31,11 +31,23 @@ $ touch ~/.ssh/simple_aws_key ~/.ssh/simple_aws_key.pub
 
 Sensitive terraform configuration is stored and checked into Github as encrypted files using
 [ansible-vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). These files are decrypted locally and
-git-ignored for local development. Before doing any development, run `./decrypt path-to-your-vault-file` to make sure to
-decrypt the latest versions of the encrypted ansible vault files in this directory. For example:
+git-ignored for local development. Before doing any development, run `./decrypt path-to-your-vault-file aws-account` to
+make sure to decrypt the latest versions of the encrypted ansible vault files in this directory.
+
+You can omit the second argument to decrypt all vault files in the terraform directory.
+
+For example:
 
 ```bash
 $ cd terraform
+
+$ ./decrypt ~/.vault_password bangladesh
+
+Decrypting bangladesh/bd.simple.org.chain.pem.vault to bangladesh/bd.simple.org.chain.pem
+Decrypting bangladesh/bd.simple.org.pem.vault to bangladesh/bd.simple.org.pem
+Decrypting bangladesh/bd.simple.org.private_key.pem.vault to bangladesh/bd.simple.org.private_key.pem
+Decrypting bangladesh/terraform.tfvars.vault to bangladesh/terraform.tfvars
+
 $ ./decrypt ~/.vault_password
 
 Decrypting bangladesh/bd.simple.org.chain.pem.vault to bangladesh/bd.simple.org.chain.pem
@@ -46,7 +58,6 @@ Decrypting development/simple.org.chain.pem.vault to development/simple.org.chai
 Decrypting development/simple.org.pem.vault to development/simple.org.pem
 Decrypting development/simple.org.private_key.pem.vault to development/simple.org.private_key.pem
 Decrypting development/terraform.tfvars.vault to development/terraform.tfvars
-Decryption complete!
 ```
 
 Even if you've already decrypted these files, it's a good idea to do this again, as the contents of the encrypted files
