@@ -1,0 +1,9 @@
+#! /bin/bash
+
+for f in **/*.vault
+do
+  echo "Decrypting $f to `echo $f | sed -e 's/\.vault$//'`"
+  cat $f | ansible-vault decrypt --vault-id $1 --output `echo $f | sed -e 's/\.vault$//'`
+done
+
+echo "Decryption complete!"
