@@ -1,6 +1,7 @@
 ---
 server:
   config:
+    ENABLE_SMS_REMINDERS: false
     ENABLE_SMS_NOTIFICATION_FOR_OTP: true
     ENABLE_PURGE_ENDPOINT_FOR_QA: false
     ENABLE_PATIENT_FOLLOWUPS: true
