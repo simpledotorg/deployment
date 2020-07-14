@@ -149,6 +149,7 @@ module "simple_server_sandbox" {
   load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
   host_urls                  = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
   create_redis_instance      = true
+  create_redis_cache_instance = true
   redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
   enable_cloudwatch_alerts   = true
   cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn

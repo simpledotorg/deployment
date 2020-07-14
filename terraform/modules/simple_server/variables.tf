@@ -39,7 +39,7 @@ variable "instance_security_groups" {
   type        = list(string)
 }
 
-variable "aws_key_name" { 
+variable "aws_key_name" {
   description = "Name of the default aws key"
   type        = string
 }
@@ -67,6 +67,12 @@ variable "host_urls" {
 
 variable "create_redis_instance" {
   description = "Create an additional redis instance"
+  type        = bool
+  default     = false
+}
+
+variable "create_redis_cache_instance" {
+  description = "Create a dedicated redis instance for application cache"
   type        = bool
   default     = false
 }
