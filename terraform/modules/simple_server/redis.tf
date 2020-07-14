@@ -15,7 +15,7 @@ resource "aws_elasticache_cluster" "simple_elasticache" {
   }
 }
 
-resource "aws_elasticache_cluster" "simple_elasticache" {
+resource "aws_elasticache_cluster" "redis_app_cache" {
   count                = var.create_redis_cache_instance ? 1 : 0
   cluster_id           = "${var.deployment_name}-elasticache"
   engine               = "redis"
