@@ -97,3 +97,23 @@ resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts" {
     TargetGroup  = aws_lb_target_group.simple_server_target_group.arn_suffix
   }
 }
+
+resource "aws_cloudwatch_metric_alarm" "elb_unhealthy_hosts" {
+  count               = var.load_balancer_arn_suffix != "" && var.enable_cloudwatch_alerts ? 1 : 0
+  alarm_name          = "Unhealthy hosts on [${var.deployment_name}]"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "UnHealthyHostCount"
+  namespace           = "AWS/ApplicationELB"
+  period              = "60"
+  statistic           = "Sum"
+  threshold           = "0"
+  alarm_actions       = [var.cloudwatch_alerts_sns_arn]
+  ok_actions          = [var.cloudwatch_alerts_sns_arn]
+  treat_missing_data  = "breaching"
+
+  dimensions = {
+    LoadBalancer = var.load_balancer_arn_suffix
+    TargetGroup  = aws_lb_target_group.simple_server_target_group.arn_suffix
+  }
+}
