@@ -1,7 +1,7 @@
 [all:vars]
-deploy_env=demo
+deploy_env=ethiopia-demo
+app_env=demo
 domain_name=api-demo.et.simple.org
-new_relic_app_env=ethiopia
 default_country=ET
 analytics_dashboard_cache_ttl=60
 

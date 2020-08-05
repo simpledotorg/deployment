@@ -1,5 +1,5 @@
 [Unit]
-Description=Sidekiq for simple-server {{ deploy_env }}
+Description=Sidekiq for simple-server {{ app_env }}
 After=syslog.target network.target
 
 # restarts/stops with sidekiq
