@@ -7,7 +7,7 @@ resource "aws_cloudwatch_metric_alarm" "average_webserver_cpu" {
   namespace                 = "AWS/EC2"
   period                    = "60"
   statistic                 = "Average"
-  threshold                 = "22.5"
+  threshold                 = "65"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
   ok_actions                = [var.cloudwatch_alerts_sns_arn]
   insufficient_data_actions = [var.cloudwatch_alerts_sns_arn]
@@ -42,10 +42,10 @@ resource "aws_cloudwatch_metric_alarm" "master_database_cpu" {
   count                     = var.enable_cloudwatch_alerts ? 1 : 0
   alarm_name                = "High CPU on master DB [${var.deployment_name}]"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "1"
+  evaluation_periods        = "5"
   metric_name               = "CPUUtilization"
   namespace                 = "AWS/RDS"
-  period                    = "60"
+  period                    = "300"
   statistic                 = "Average"
   threshold                 = "78"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
@@ -91,6 +91,26 @@ resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts" {
   alarm_actions       = [var.cloudwatch_alerts_sns_arn]
   ok_actions          = [var.cloudwatch_alerts_sns_arn]
   treat_missing_data  = "notBreaching"
+
+  dimensions = {
+    LoadBalancer = var.load_balancer_arn_suffix
+    TargetGroup  = aws_lb_target_group.simple_server_target_group.arn_suffix
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "elb_unhealthy_hosts" {
+  count               = var.load_balancer_arn_suffix != "" && var.enable_cloudwatch_alerts ? 1 : 0
+  alarm_name          = "Unhealthy hosts on [${var.deployment_name}]"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "UnHealthyHostCount"
+  namespace           = "AWS/ApplicationELB"
+  period              = "60"
+  statistic           = "Sum"
+  threshold           = "0"
+  alarm_actions       = [var.cloudwatch_alerts_sns_arn]
+  ok_actions          = [var.cloudwatch_alerts_sns_arn]
+  treat_missing_data  = "breaching"
 
   dimensions = {
     LoadBalancer = var.load_balancer_arn_suffix
