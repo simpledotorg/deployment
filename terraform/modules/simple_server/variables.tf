@@ -65,14 +65,14 @@ variable "host_urls" {
   type        = list(string)
 }
 
-variable "create_redis_instance" {
-  description = "Create an additional redis instance"
+variable "create_redis_cache_instance" {
+  description = "Create a dedicated redis instance for app cache"
   type        = bool
   default     = false
 }
 
-variable "create_redis_cache_instance" {
-  description = "Create a dedicated redis instance for application cache"
+variable "create_redis_sidekiq_instance" {
+  description = "Create a dedicated redis instance for sidekiq"
   type        = bool
   default     = false
 }
