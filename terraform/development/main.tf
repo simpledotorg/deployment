@@ -133,65 +133,68 @@ module "notify_slack" {
 # server configs
 #
 module "simple_server_sandbox" {
-  source                     = "../modules/simple_server"
-  deployment_name            = "development-sandbox"
-  database_vpc_id            = module.simple_networking.database_vpc_id
-  database_subnet_group_name = module.simple_networking.database_subnet_group_name
-  ec2_instance_type          = "t2.2xlarge"
-  server_count               = 1
-  sidekiq_server_count       = 1
-  database_username          = var.sandbox_database_username
-  database_password          = var.sandbox_database_password
-  instance_security_groups   = module.simple_networking.instance_security_groups
-  aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
-  server_vpc_id              = module.simple_networking.server_vpc_id
-  https_listener_arn         = module.simple_networking.https_listener_arn
-  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
-  host_urls                  = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
-  create_redis_instance      = true
-  redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
-  enable_cloudwatch_alerts   = true
-  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
+  source                        = "../modules/simple_server"
+  deployment_name               = "development-sandbox"
+  database_vpc_id               = module.simple_networking.database_vpc_id
+  database_subnet_group_name    = module.simple_networking.database_subnet_group_name
+  ec2_instance_type             = "t2.2xlarge"
+  server_count                  = 1
+  sidekiq_server_count          = 1
+  database_username             = var.sandbox_database_username
+  database_password             = var.sandbox_database_password
+  instance_security_groups      = module.simple_networking.instance_security_groups
+  aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
+  server_vpc_id                 = module.simple_networking.server_vpc_id
+  https_listener_arn            = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
+  host_urls                     = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
+  create_redis_cache_instance   = true
+  create_redis_sidekiq_instance = true
+  redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts      = true
+  cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
 module "simple_server_qa" {
-  source                     = "../modules/simple_server"
-  deployment_name            = "development-qa"
-  database_vpc_id            = module.simple_networking.database_vpc_id
-  database_subnet_group_name = module.simple_networking.database_subnet_group_name
-  ec2_instance_type          = "t2.small"
-  database_username          = var.qa_database_username
-  database_password          = var.qa_database_password
-  instance_security_groups   = module.simple_networking.instance_security_groups
-  aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
-  server_vpc_id              = module.simple_networking.server_vpc_id
-  https_listener_arn         = module.simple_networking.https_listener_arn
-  load_balancer_arn_suffix   = module.simple_networking.load_balancer_arn_suffix
-  host_urls                  = ["api-qa.simple.org", "dashboard-qa.simple.org"]
-  create_redis_instance      = true
-  redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
-  enable_cloudwatch_alerts   = true
-  cloudwatch_alerts_sns_arn  = module.notify_slack.this_slack_topic_arn
+  source                        = "../modules/simple_server"
+  deployment_name               = "development-qa"
+  database_vpc_id               = module.simple_networking.database_vpc_id
+  database_subnet_group_name    = module.simple_networking.database_subnet_group_name
+  ec2_instance_type             = "t2.small"
+  database_username             = var.qa_database_username
+  database_password             = var.qa_database_password
+  instance_security_groups      = module.simple_networking.instance_security_groups
+  aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
+  server_vpc_id                 = module.simple_networking.server_vpc_id
+  https_listener_arn            = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
+  host_urls                     = ["api-qa.simple.org", "dashboard-qa.simple.org"]
+  create_redis_cache_instance   = true
+  create_redis_sidekiq_instance = true
+  redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts      = true
+  cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
 module "simple_server_security" {
-  source                     = "../modules/simple_server"
-  deployment_name            = "development-security"
-  database_vpc_id            = module.simple_networking.database_vpc_id
-  database_subnet_group_name = module.simple_networking.database_subnet_group_name
-  ec2_instance_type          = "t2.medium"
-  database_username          = var.security_database_username
-  database_password          = var.security_database_password
-  instance_security_groups   = module.simple_networking.instance_security_groups
-  aws_key_name               = module.simple_aws_key_pair.simple_aws_key_name
-  server_vpc_id              = module.simple_networking.server_vpc_id
-  https_listener_arn         = module.simple_networking.https_listener_arn
-  host_urls                  = ["api-security.simple.org", "dashboard-security.simple.org"]
-  create_redis_instance      = true
-  create_database_replica    = true
-  server_count               = 2
-  sidekiq_server_count       = 1
-  redis_param_group_name     = module.simple_redis_param_group.redis_param_group_name
+  source                        = "../modules/simple_server"
+  deployment_name               = "development-security"
+  database_vpc_id               = module.simple_networking.database_vpc_id
+  database_subnet_group_name    = module.simple_networking.database_subnet_group_name
+  ec2_instance_type             = "t2.medium"
+  database_username             = var.security_database_username
+  database_password             = var.security_database_password
+  instance_security_groups      = module.simple_networking.instance_security_groups
+  aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
+  server_vpc_id                 = module.simple_networking.server_vpc_id
+  https_listener_arn            = module.simple_networking.https_listener_arn
+  host_urls                     = ["api-security.simple.org", "dashboard-security.simple.org"]
+  create_redis_cache_instance   = true
+  create_redis_sidekiq_instance = true
+  create_database_replica       = true
+  server_count                  = 2
+  sidekiq_server_count          = 1
+  redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
 }
 
 /* This sets up a bunch of ec2 servers for the standalone setup
