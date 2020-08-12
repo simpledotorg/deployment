@@ -4,5 +4,5 @@
 [rails:children]
 simple
 
-[perf-primary:children]
+[performance-primary:children]
 simple
