@@ -10,28 +10,27 @@ postgres_primary
 postgres_secondary
 
 [postgres_primary]
-167.71.230.37 replication_role=primary
+167.71.226.153 replication_role=primary
 
 [postgres_secondary]
-68.183.94.245 replication_role=replica
+157.245.99.197 replication_role=replica
 
 [servers:children]
 webservers
 sidekiq
 
 [webservers]
-167.71.230.18
-167.71.234.57
+167.71.226.153
 
 [sidekiq]
-167.71.238.74
+167.71.226.153
 
 [redis:children]
 redis_primary
 redis_secondary
 
 [redis_primary]
-167.71.230.21
+167.71.226.153
 
 [redis_secondary]
 
@@ -40,13 +39,13 @@ prometheus
 grafana
 
 [prometheus]
-167.71.238.67
+167.71.226.153
 
 [grafana]
-167.71.238.67
+167.71.226.153
 
 [storage]
-167.71.238.38
+157.245.99.197
 
 [load_balancing]
-167.71.230.22
+167.71.226.153
