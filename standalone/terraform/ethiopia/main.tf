@@ -1,8 +1,7 @@
 # Set the variable value in *.tfvars file
 # or using -var="do_token=..." CLI option
 variable "do_token" {}
-variable "kitallis_fingerprint" {}
-variable "prabhanshu_fingerprint" {}
+variable "ssh_fingerprints" {}
 
 #
 # Set remote backend to save state
@@ -28,7 +27,7 @@ module "ethiopia_demo" {
   deployment_name            = "ethiopia-demo"
   server_count               = 2
   digitalocean_instance_type = "s-2vcpu-2gb"
-  ssh_keys                   = [var.kitallis_fingerprint, var.prabhanshu_fingerprint]
+  ssh_keys                   = var.ssh_fingerprints
 }
 
 output "instance_ips" {
