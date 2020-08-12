@@ -3,7 +3,7 @@ alertmanager_template_files: "roles/monitoring/files/alertmanager/templates/*.tm
 alertmanager_receivers:
   - name: email
     email_configs:
-      - to: 'alerts@simple.org'
+      - to: 'prabhanshu@nilenso.com'
         from: 'standalone-alerts@simple.org'
         smarthost: 'smtp.sendgrid.net:587'
         auth_username: "{{ server.config.sendgrid_username }}"
