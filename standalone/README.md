@@ -141,7 +141,7 @@ make restart-sidekiq hosts=icmr/playground
 ```
 ## Provisioning Testing Servers
 
-For testing purposes, `provision-playground/terraform` contains a terraform script to spin up servers on digitalocean.
+For testing purposes, `terraform/playground` contains a terraform script to spin up servers on digitalocean.
 You will need a digitalocean account and an AWS account (for storing tfstate to s3).
 
 ### Decrypt the terraform vault
