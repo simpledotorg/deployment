@@ -24,14 +24,14 @@ provider "digitalocean" {
 
 # Set server_count to the number of instances to create,
 # this depends on how you want to distribute your services across multiple boxes.
-module "icmr_playground" {
+module "playground" {
   source                     = "../modules/simple_server_standalone"
-  deployment_name            = "icmr-playground"
+  deployment_name            = "playground"
   server_count               = 0
   digitalocean_instance_type = "s-2vcpu-2gb"
   ssh_keys                   = var.ssh_fingerprints
 }
 
 output "instance_ips" {
-  value = module.icmr_playground.instance_ips
+  value = module.playground.instance_ips
 }

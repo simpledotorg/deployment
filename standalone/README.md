@@ -62,7 +62,7 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 ### Configure the ansible setup:
 
 - `cd ansible/`
-- Create an hosts inventory file. The setup uses `hosts/icmr/playground` as an example. You can use it as a template to setup your own.
+- Create an hosts inventory file. The setup uses `hosts/sample/playground` as an example. You can use it as a template to setup your own.
 - Add the IP addresses of your servers to the inventory file.
 - Set up your domain and SSL certificate.
     - Add SSL certificates for your domain to `roles/load_balancing/vars/ssl-vault.yml`. This is an encrypted Ansible
@@ -85,8 +85,8 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 
 ### Run the ansible scripts
 
-- Run `make init`
-- Run `make all` to setup simple-server on your servers.
+- Run `make init hosts=sample/playground`
+- Run `make all hosts=sample/playground` to setup simple-server on your servers.
 - Simple server should now be installed, running and accessible on your domain.
 
 ## Helpful Commands
@@ -103,7 +103,7 @@ ansible-vault edit --vault-id ~/.vault_password roles/load-balancing/vars/ssl-va
 
 ### Making a deploy
 ```bash
-make deploy hosts=icmr/playground
+make deploy hosts=sample/playground
 ```
 This deploys simple-server/master on hosts.
 
@@ -118,7 +118,7 @@ Note: We run deployments through ansistrano. Running a `cap deploy` is not recom
 ### Updating ssh keys
 Add keys to `ansible/roles/ssh/` under the appropriate environment.
 ```bash
-make update-ssh-keys hosts=icmr/playground
+make update-ssh-keys hosts=sample/playground
 ```
 Note that this clears any old keys present on the servers.
 
@@ -126,18 +126,18 @@ Note that this clears any old keys present on the servers.
 The app's .env file sits in `ansible/roles/deploy/templates/.env.j2`.
 Variables are sourced from `ansible/roles/deploy/templates/vars`
 ```bash
-make update-app-config hosts=icmr/playground
+make update-app-config hosts=sample/playground
 ```
 
 ### Restarting passenger
 ```bash
-make restart-passenger hosts=icmr/playground
+make restart-passenger hosts=sample/playground
 ```
 Note that this restarts passenger on all servers.
 
 ### Restarting sidekiq
 ```bash
-make restart-sidekiq hosts=icmr/playground
+make restart-sidekiq hosts=sample/playground
 ```
 ## Provisioning Testing Servers
 
@@ -178,7 +178,7 @@ brew install terraform0.12.21
     terraform apply
     ```
 This will provision the necessary servers for an instance of simple-server on digitalocean. The IPs of the servers will be printed at the end.
-- Copy over IPs of the created servers to `ansible/hosts/icmr/playground`. You can use any of the servers for any purpose, they are generic.
+- Copy over IPs of the created servers to `ansible/hosts/sample/playground`. You can use any of the servers for any purpose, they are generic.
 
 ### Check in your vault
 

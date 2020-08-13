@@ -1,4 +1,4 @@
-hosts = icmr/playground
+hosts = sample/playground
 password_file = ~/.vault_password
 export ANSIBLE_CONFIG = ansible/ansible.cfg
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
@@ -15,7 +15,7 @@ HELP_FUNC = \
             push(@{$$help{$$2}}, [$$1, $$3]); \
         } \
     }; \
-    print "usage: make [target] hosts=<icmr/playground>\n\n"; \
+    print "usage: make [target] hosts=<sample/playground>\n\n"; \
     for ( sort keys %help ) { \
         print "$$_:\n"; \
         printf("  %-20s %s\n", $$_->[0], $$_->[1]) for @{$$help{$$_}}; \

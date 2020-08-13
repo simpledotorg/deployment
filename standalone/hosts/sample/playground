@@ -1,5 +1,5 @@
 [all:vars]
-deploy_env=icmr-playground
+deploy_env=sample-playground
 app_env=demo
 domain_name=api-playground.simple.org
 default_country=IN
