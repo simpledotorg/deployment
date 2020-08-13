@@ -1,7 +1,7 @@
 ---
 - name: Include secrets
   include_vars:
-    file: "../deploy/vars/{{ deploy_env }}/secrets.yml"
+    file: "../simple-server/vars/{{ deploy_env }}/secrets.yml"
     name: secrets
 
 - name: Define postgresql version

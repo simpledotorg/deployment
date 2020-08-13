@@ -1,7 +1,7 @@
 ---
 - hosts: servers
   roles:
-    - { role: deploy, tags: ['deploy'] }
+    - { role: simple-server, tags: ['simple-server'] }
     - { role: ansistrano.deploy, tags: ['ansistrano.deploy'] }
   environment:
     RAILS_ENV: production

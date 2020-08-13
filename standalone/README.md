@@ -70,11 +70,11 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
     - Add the SSL certificate domain names to `haproxy_cert_names` in `group_vars/load_balancing.yml`
     - Configure your DNS records to point your domain/subdomain to the load balancer's IP address. You may do this by
       creating/editing an ALIAS or CNAME record.
-- Configure app environment variables in `roles/deploy/vars/<deploy_env>/`. `deploy_env` is the shortname you wish to give to
+- Configure app environment variables in `roles/simple-server/vars/<deploy_env>/`. `deploy_env` is the shortname you wish to give to
   a specific deployment (e.g. `ethiopia-demo`, `bangladesh-production`).
     - `secrets.yml` contains secret env vars. Make sure this file is encrypted.
     - `feature_flags.yml` contains feature flags.
-    - See `roles/deploy/vars/sample/` for a sample. These vars are interpolated into `roles/deploy/vars/templates/.env.j2` and shipped.
+    - See `roles/simple-server/vars/sample/` for a sample. These vars are interpolated into `roles/simple-server/vars/templates/.env.j2` and shipped.
 - Add your ssh keys to `ssh/files/ssh_keys/<deploy_env>`. These keys are added to all the servers to access the remote user(`ubuntu`) and the `deploy` user.
 - Set the following in the inventory file
     - Set `domain_name` to your domain name `example.com`
@@ -123,8 +123,8 @@ make update-ssh-keys hosts=sample/playground
 Note that this clears any old keys present on the servers.
 
 ### Updating app config
-The app's .env file sits in `ansible/roles/deploy/templates/.env.j2`.
-Variables are sourced from `ansible/roles/deploy/templates/vars`
+The app's .env file sits in `ansible/roles/simple-server/templates/.env.j2`.
+Variables are sourced from `ansible/roles/simple-server/templates/vars`
 ```bash
 make update-app-config hosts=sample/playground
 ```

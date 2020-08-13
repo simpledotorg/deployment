@@ -33,7 +33,7 @@
 - name: setup Prometheus and Alertmanager
   hosts: prometheus
   vars_files:
-    - "roles/deploy/vars/{{ deploy_env }}/secrets.yml"
+    - "roles/simple-server/vars/{{ deploy_env }}/secrets.yml"
   roles:
     - monitoring
     - cloudalchemy.prometheus
