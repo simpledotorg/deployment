@@ -62,7 +62,7 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 ### Configure the ansible setup:
 
 - `cd ansible/`
-- Create an hosts inventory file. The setup uses `hosts/icmr/playground` as an example. You can use it as a template to setup your own.
+- Create an hosts inventory file. The setup uses `hosts/sample/playground` as an example. You can use it as a template to setup your own.
 - Add the IP addresses of your servers to the inventory file.
 - Set up your domain and SSL certificate.
     - Add SSL certificates for your domain to `roles/load_balancing/vars/ssl-vault.yml`. This is an encrypted Ansible
@@ -70,21 +70,23 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
     - Add the SSL certificate domain names to `haproxy_cert_names` in `group_vars/load_balancing.yml`
     - Configure your DNS records to point your domain/subdomain to the load balancer's IP address. You may do this by
       creating/editing an ALIAS or CNAME record.
-- Configure app environment variables in `roles/deploy/vars/<deploy_env>/`
+- Configure app environment variables in `roles/simple-server/vars/<deploy_env>/`. `deploy_env` is the shortname you wish to give to
+  a specific deployment (e.g. `ethiopia-demo`, `bangladesh-production`).
     - `secrets.yml` contains secret env vars. Make sure this file is encrypted.
     - `feature_flags.yml` contains feature flags.
-    - See `roles/deploy/vars/sample/` for a sample. These vars are interpolated into `roles/deploy/vars/templates/.env.j2` and shipped.
+    - See `roles/simple-server/vars/sample/` for a sample. These vars are interpolated into `roles/simple-server/vars/templates/.env.j2` and shipped.
 - Add your ssh keys to `ssh/files/ssh_keys/<deploy_env>`. These keys are added to all the servers to access the remote user(`ubuntu`) and the `deploy` user.
 - Set the following in the inventory file
     - Set `domain_name` to your domain name `example.com`
-    - Set `deploy_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
+    - Set `deploy_env` to the correct shortname (e.g. `ethiopia-demo`, `bangladesh-production`)
+    - Set `app_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
 - To setup email alerts (optional), you will need to configure an SMTP host in `roles/monitoring/vars/alertmanager.yml > email_configs`.
   You will also need to specify the `To` address here where emails will be sent.
 
 ### Run the ansible scripts
 
-- Run `make init`
-- Run `make all` to setup simple-server on your servers.
+- Run `make init hosts=sample/playground`
+- Run `make all hosts=sample/playground` to setup simple-server on your servers.
 - Simple server should now be installed, running and accessible on your domain.
 
 ## Helpful Commands
@@ -101,7 +103,7 @@ ansible-vault edit --vault-id ~/.vault_password roles/load-balancing/vars/ssl-va
 
 ### Making a deploy
 ```bash
-make deploy hosts=icmr/playground
+make deploy hosts=sample/playground
 ```
 This deploys simple-server/master on hosts.
 
@@ -116,30 +118,30 @@ Note: We run deployments through ansistrano. Running a `cap deploy` is not recom
 ### Updating ssh keys
 Add keys to `ansible/roles/ssh/` under the appropriate environment.
 ```bash
-make update-ssh-keys hosts=icmr/playground
+make update-ssh-keys hosts=sample/playground
 ```
 Note that this clears any old keys present on the servers.
 
 ### Updating app config
-The app's .env file sits in `ansible/roles/deploy/templates/.env.j2`.
-Variables are sourced from `ansible/roles/deploy/templates/vars`
+The app's .env file sits in `ansible/roles/simple-server/templates/.env.j2`.
+Variables are sourced from `ansible/roles/simple-server/templates/vars`
 ```bash
-make update-app-config hosts=icmr/playground
+make update-app-config hosts=sample/playground
 ```
 
 ### Restarting passenger
 ```bash
-make restart-passenger hosts=icmr/playground
+make restart-passenger hosts=sample/playground
 ```
 Note that this restarts passenger on all servers.
 
 ### Restarting sidekiq
 ```bash
-make restart-sidekiq hosts=icmr/playground
+make restart-sidekiq hosts=sample/playground
 ```
 ## Provisioning Testing Servers
 
-For testing purposes, `provision-playground/terraform` contains a terraform script to spin up servers on digitalocean.
+For testing purposes, `terraform/playground` contains a terraform script to spin up servers on digitalocean.
 You will need a digitalocean account and an AWS account (for storing tfstate to s3).
 
 ### Decrypt the terraform vault
@@ -176,7 +178,7 @@ brew install terraform0.12.21
     terraform apply
     ```
 This will provision the necessary servers for an instance of simple-server on digitalocean. The IPs of the servers will be printed at the end.
-- Copy over IPs of the created servers to `ansible/hosts/icmr/playground`. You can use any of the servers for any purpose, they are generic.
+- Copy over IPs of the created servers to `ansible/hosts/sample/playground`. You can use any of the servers for any purpose, they are generic.
 
 ### Check in your vault
 

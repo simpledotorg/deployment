@@ -7,5 +7,5 @@ app_name: "simple-server"
 rbenv_root: "/home/{{ deploy_user }}/.rbenv"
 bundle_path: "{{ rbenv_root }}/shims/bundle"
 aws_deploy: false
-database_name: "{{ deploy_env }}-{{ app_name }}-db"
+database_name: "{{ app_env }}-{{ app_name }}-db"
 nginx_port: 8008  # Use 8008 (HTTP Alternate) to avoid conflict with HAProxy in case deployment is on a single box

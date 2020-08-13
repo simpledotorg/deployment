@@ -1,8 +1,7 @@
 # Set the variable value in *.tfvars file
 # or using -var="do_token=..." CLI option
 variable "do_token" {}
-variable "kitallis_fingerprint" {}
-variable "prabhanshu_fingerprint" {}
+variable "ssh_fingerprints" {}
 
 #
 # Set remote backend to save state
@@ -11,7 +10,7 @@ terraform {
   backend "s3" {
     bucket = "simple-server-development-terraform-state"
     encrypt = true
-    key = "dummy.tfstate"
+    key = "ethiopia.tfstate"
     region = "ap-south-1"
     profile = "development"
   }
@@ -23,16 +22,14 @@ provider "digitalocean" {
   version = "~> 1.12"
 }
 
-# Create a new Web Droplet in the nyc2 region
-resource "digitalocean_droplet" "icmr-box" {
-  image  = "ubuntu-16-04-x64"
-  count  = 9
-  name   = "p-icmr-box-${count.index + 1}"
-  region = "blr1"
-  size   = "s-2vcpu-2gb"
-  ssh_keys = [var.kitallis_fingerprint, var.prabhanshu_fingerprint]
+module "ethiopia_demo" {
+  source                     = "../modules/simple_server_standalone"
+  deployment_name            = "ethiopia-demo"
+  server_count               = 2
+  digitalocean_instance_type = "s-2vcpu-2gb"
+  ssh_keys                   = var.ssh_fingerprints
 }
 
 output "instance_ips" {
-  value = digitalocean_droplet.icmr-box.*.ipv4_address
+  value = module.ethiopia_demo.instance_ips
 }

@@ -1,0 +1,3 @@
+do_token =
+ssh_fingerprints = ["aa:bb:cc:dd:97:9b:d8:da:04:f7:4c:7e:23:55:a5:5b",
+                    "aa:bb:cc:dd:d5:20:0b:de:64:d8:f2:6b:56:57:0b:dd"]

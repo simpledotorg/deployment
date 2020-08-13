@@ -3,7 +3,8 @@
 *.tfstate.*.backup
 
 # Module directory
-.terraform/
+ethiopia/.terraform/
+playground/.terraform/
 
 # Variable files
 *.tfvars
