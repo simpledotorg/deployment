@@ -23,7 +23,7 @@ resource "aws_elasticache_cluster" "simple_elasticache_2" {
   num_cache_nodes      = 1
   parameter_group_name = var.redis_subnet_group_name
   engine_version       = "5.0.3"
-  port                 = 16379
+  port                 = 6379
   security_group_ids   = aws_security_group.sg_simple_redis.*.id
   subnet_group_name    = var.redis_subnet_group_name
 
