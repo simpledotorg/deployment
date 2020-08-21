@@ -11,13 +11,13 @@ resource "aws_elasticache_cluster" "simple_elasticache" {
   subnet_group_name    = var.redis_subnet_group_name
 
   tags = {
-    Name = "simple-elasticache-sandbox"
+    Name = "simple-elasticache"
   }
 }
 
-resource "aws_elasticache_cluster" "simple_redis_sidekiq" {
+resource "aws_elasticache_cluster" "simple_elasticache_2" {
   count                = var.create_redis_sidekiq_instance ? 1 : 0
-  cluster_id           = "${var.deployment_name}-sidekiq-elasticache"
+  cluster_id           = "${var.deployment_name}-elasticache-2"
   engine               = "redis"
   node_type            = "cache.t2.small"
   num_cache_nodes      = 1
@@ -28,7 +28,7 @@ resource "aws_elasticache_cluster" "simple_redis_sidekiq" {
   subnet_group_name    = var.redis_subnet_group_name
 
   tags = {
-    Name = "simple-elasticache-sandbox"
+    Name = "simple-elasticache"
   }
 }
 
