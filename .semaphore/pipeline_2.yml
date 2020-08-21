@@ -9,6 +9,8 @@ blocks:
             - checkout
             - cd ansible
             - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -v --vault-id ~/.ansible/password_file conf-update.yml -i hosts.bangladesh-demo
+      secrets:
+        - name: ansible
 agent:
   machine:
     type: e1-standard-2
