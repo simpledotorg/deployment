@@ -11,7 +11,7 @@ resource "aws_elasticache_cluster" "simple_elasticache" {
   subnet_group_name    = var.redis_subnet_group_name
 
   tags = {
-    Name = "simple-elasticache-sandbox"
+    Name = "simple-elasticache"
   }
 }
 
@@ -28,7 +28,7 @@ resource "aws_elasticache_cluster" "simple_elasticache_2" {
   subnet_group_name    = var.redis_subnet_group_name
 
   tags = {
-    Name = "simple-elasticache-sandbox"
+    Name = "simple-elasticache"
   }
 }
 
