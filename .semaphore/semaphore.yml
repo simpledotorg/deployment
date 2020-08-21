@@ -12,5 +12,17 @@ blocks:
           commands:
             - checkout
 promotions:
+  - name: Update QA config
+    pipeline_file: update_qa_config.yml
+  - name: Update Sandbox config
+    pipeline_file: update_sandbox_config.yml
+  - name: Update India Demo config
+    pipeline_file: update_india_demo_config.yml
   - name: Update Bangladesh Demo config
-    pipeline_file: pipeline_2.yml
+    pipeline_file: update_bangladesh_demo_config.yml
+  - name: Update Ethiopia Demo config
+    pipeline_file: update_ethiopia_demo_config.yml
+  - name: Update India Production config
+    pipeline_file: update_india_production_config.yml
+  - name: Update Bangladesh Production config
+    pipeline_file: update_bangladesh_production_config.yml
