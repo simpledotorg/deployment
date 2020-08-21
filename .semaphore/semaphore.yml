@@ -1,0 +1,16 @@
+version: v1.0
+name: Start
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Checkout
+    task:
+      jobs:
+        - name: Checkout
+          commands:
+            - checkout
+promotions:
+  - name: Update Bangladesh Demo config
+    pipeline_file: pipeline_2.yml
