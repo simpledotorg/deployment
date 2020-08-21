@@ -15,9 +15,9 @@ resource "aws_elasticache_cluster" "simple_elasticache" {
   }
 }
 
-resource "aws_elasticache_cluster" "simple_redis_sidekiq" {
+resource "aws_elasticache_cluster" "simple_elasticache_2" {
   count                = var.create_redis_sidekiq_instance ? 1 : 0
-  cluster_id           = "${var.deployment_name}-sidekiq-elasticache"
+  cluster_id           = "${var.deployment_name}-elasticache-2"
   engine               = "redis"
   node_type            = "cache.t2.small"
   num_cache_nodes      = 1
