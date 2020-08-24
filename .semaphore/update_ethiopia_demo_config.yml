@@ -9,7 +9,7 @@ blocks:
             - checkout
             - cd standalone
             - make init
-            - make update-app-config hosts=ethiopia/demo password_file=~/.ansible/password_file conf-update.yml
+            - make update-app-config hosts=ethiopia/demo password_file=~/.ansible/password_file
       secrets:
         - name: ansible
         - name: semaphore-deploy-key
