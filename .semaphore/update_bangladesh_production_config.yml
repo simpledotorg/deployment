@@ -1,5 +1,5 @@
 version: v1.0
-name: Update Bangladesh Demo config
+name: Update Bangladesh Production config
 blocks:
   - name: Ansible update
     task:
