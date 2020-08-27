@@ -8,7 +8,7 @@ blocks:
           commands:
             - checkout
             - cd ansible
-            - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -v --vault-id ~/.ansible/password_file conf-update.yml -i hosts.bangladesh-demo
+            - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -v --vault-id ~/.ansible/password_file conf-update.yml -i hosts.staging
       secrets:
         - name: ansible
         - name: semaphore-deploy-key
