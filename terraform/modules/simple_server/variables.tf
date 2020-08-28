@@ -14,6 +14,12 @@ variable "server_count" {
   default     = 1
 }
 
+variable "database_instance_type" {
+  description = "The type of instance for database servers"
+  type        = string
+  default     = "db.t2.medium"
+}
+
 variable "database_username" {
   description = "Database Username"
   type        = string

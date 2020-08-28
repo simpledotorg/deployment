@@ -138,6 +138,7 @@ module "simple_server_sandbox" {
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
   ec2_instance_type             = "t2.2xlarge"
+  database_instance_type        = "db.r4.xlarge"
   server_count                  = 1
   sidekiq_server_count          = 1
   database_username             = var.sandbox_database_username
