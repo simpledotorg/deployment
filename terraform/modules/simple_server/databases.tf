@@ -42,5 +42,6 @@ resource "aws_db_instance" "replica_simple_database" {
   replicate_source_db = aws_db_instance.simple-database[count.index].identifier
   instance_class      = "db.t2.medium"
   storage_encrypted   = true
-  final_snapshot_identifier = format("replica-simple-db-%s-%03d-final", replace(var.deployment_name, "_", "-"), count.index + 1)
+  skip_final_snapshot = true
+  final_snapshot_identifier = null
 }
