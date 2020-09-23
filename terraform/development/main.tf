@@ -151,7 +151,7 @@ module "simple_server_qa" {
   deployment_name               = "development-qa"
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
-  ec2_instance_type             = "t2.small"
+  ec2_instance_type             = "t2.large"
   database_username             = var.qa_database_username
   database_password             = var.qa_database_password
   instance_security_groups      = module.simple_networking.instance_security_groups
