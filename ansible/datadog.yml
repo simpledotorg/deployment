@@ -38,10 +38,11 @@
     datadog_api_key: "{{ datadog_api_key }}"
     datadog_enabled: "{{ dd_enabled | default(true) }}"
     datadog_config:
+      env: "{{ deploy_env }}"
       tags: "{{ tags | default(omit) }}"
       log_level: "{{ log_level | default('INFO') }}"
       apm_config:
-        enabled: "{{ apm_enabled | default(false) }}"
+        enabled: "{{ apm_enabled | default(true) }}"
         max_traces_per_second: 10
       logs_enabled: "{{ logs_enabled | default(true) }}"
     datadog_checks: "{{ dd_checks | default(omit) }}"
