@@ -30,7 +30,7 @@
           - name: syslog
             search_string: ["rsyslog"]
             cpu_check_interval: 0.2
-            exact_match: true
+            exact_match: false
             ignore_denied_access: true
 
     # Role variables
