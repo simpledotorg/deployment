@@ -1,0 +1,11 @@
+datadog_checks:
+  process:
+    init_config:
+    instances:
+      - name: ssh
+        search_string: ['ssh', 'sshd']
+      - name: syslog
+          search_string: ['rsyslog']
+          cpu_check_interval: 0.2
+          exact_match: true
+          ignore_denied_access: true

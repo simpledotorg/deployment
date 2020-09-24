@@ -1,0 +1,40 @@
+- hosts: rails
+  become: yes
+  roles:
+    - { role: Datadog.datadog, become: yes }
+
+  post_tasks:
+    - name: Restart Datadog-Agent
+      service:
+        name: datadog-agent
+        state: restarted
+
+  vars_files:
+    - "roles/datadog/vars/{{ deploy_env }}/secrets.yml"
+
+  vars:
+    dd_checks:
+      process:
+        init_config:
+        instances:
+        - name: ssh
+          search_string: ['ssh', 'sshd' ]
+        - name: syslog
+          search_string: ['rsyslog']
+          cpu_check_interval: 0.2
+          exact_match: true
+          ignore_denied_access: true
+
+    # Role variables
+    datadog_api_key: "{{ datadog_api_key }}"
+    datadog_enabled: "{{ dd_enabled | default(true) }}"
+    datadog_config:
+      tags: "{{ tags | default(omit) }}"
+      log_level: "{{ log_level | default('INFO') }}"
+      apm_config:
+        enabled: "{{ apm_enabled | default(false) }}"
+        max_traces_per_second: 10
+      logs_enabled: "{{ logs_enabled | default(true) }}"
+    datadog_checks: "{{ dd_checks | default(omit) }}"
+    system_probe_config:
+      enabled: "{{ system_probe_enabled | default(false )}}"
