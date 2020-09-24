@@ -7,3 +7,4 @@
     - { role: nodejs, tags: ['nodejs'] }
     - { role: passenger, tags: ['passenger'] }
     - { role: postgresql-client, tags: ['postgresql-client'] }
+    - { role: datadog, tags: ['datadog'] }
