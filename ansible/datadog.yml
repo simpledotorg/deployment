@@ -14,6 +14,15 @@
 
   vars:
     dd_checks:
+      ruby:
+        init_config:
+        instances:
+          logs:
+            - type: file
+              path: "/home/deploy/apps/{{app_name}}/shared/log/production.log"
+              service: ruby
+              source: ruby
+              sourcecategory: sourcecode
       process:
         init_config:
         instances:
