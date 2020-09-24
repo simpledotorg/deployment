@@ -1,0 +1,13 @@
+---
+- name: Include datadog specific vars"
+  include_vars:
+    file: "roles/datadog/vars/{{ deploy_env }}/secrets.yml"
+    name: secrets
+
+- name: Install datadog-agent
+  include_role:
+    name: "datadog.datadog"
+    apply:
+      become: true
+  vars:
+    datadog_api_key: "{{ secrets.datadog_api_key }}"
