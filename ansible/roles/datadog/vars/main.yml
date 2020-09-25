@@ -31,5 +31,7 @@ datadog_config:
 datadog_checks: "{{ dd_checks | default(omit) }}"
 cloud_provider_metadata:
   - "aws"
+process_config:
+  enabled: true
 system_probe_config:
   enabled: "{{ system_probe_enabled | default(false )}}"
