@@ -3,11 +3,6 @@
   become: true
   roles:
     - { role: datadog.datadog, become: true }
-  post_tasks:
-    - name: Restart Datadog-Agent
-      service:
-        name: datadog-agent
-        state: restarted
   vars_files:
     - roles/datadog/vars/vault.yml
     - roles/datadog/vars/main.yml
