@@ -29,5 +29,7 @@ datadog_config:
     max_traces_per_second: 10
   logs_enabled: "{{ logs_enabled | default(true) }}"
 datadog_checks: "{{ dd_checks | default(omit) }}"
+cloud_provider_metadata:
+  - "aws"
 system_probe_config:
   enabled: "{{ system_probe_enabled | default(false )}}"
