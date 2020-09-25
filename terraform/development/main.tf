@@ -192,7 +192,6 @@ module "simple_server_security" {
   host_urls                     = ["api-security.simple.org", "dashboard-security.simple.org"]
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
-  create_database_replica       = true
   server_count                  = 2
   sidekiq_server_count          = 1
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
