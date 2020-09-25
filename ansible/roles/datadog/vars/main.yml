@@ -1,5 +1,4 @@
 log_level: "DEBUG"
-dd_site: "datadoghq.eu"
 dd_checks:
   ruby:
     init_config:
