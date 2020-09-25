@@ -1,49 +1,13 @@
+---
 - hosts: rails
-  become: yes
+  become: true
   roles:
-    - { role: Datadog.datadog, become: yes }
+    - { role: datadog.datadog, become: true }
   post_tasks:
     - name: Restart Datadog-Agent
       service:
         name: datadog-agent
         state: restarted
   vars_files:
-    - "roles/datadog/vars/{{ deploy_env }}/secrets.yml"
-  vars:
-    log_level: "DEBUG"
-    dd_site: "datadoghq.eu"
-    dd_checks:
-      ruby:
-        init_config:
-        logs:
-          - type: file
-            path: "/home/deploy/apps/{{app_name}}/shared/log/production.log"
-            service: ruby
-            source: ruby
-            sourcecategory: sourcecode
-      process:
-        init_config:
-        instances:
-          - name: ssh
-            search_string: ["ssh", "sshd"]
-          - name: syslog
-            search_string: ["rsyslog"]
-            cpu_check_interval: 0.2
-            exact_match: false
-            ignore_denied_access: true
-
-    # Role variables
-    datadog_api_key: "{{ datadog_api_key }}"
-    datadog_enabled: "{{ dd_enabled | default(true) }}"
-    datadog_config:
-      site: "{{ dd_site | default('datadoghq.com') }}"
-      env: "{{ deploy_env }}"
-      tags: "{{ tags | default(omit) }}"
-      log_level: "{{ log_level | default('INFO') }}"
-      apm_config:
-        enabled: "{{ apm_enabled | default(true) }}"
-        max_traces_per_second: 10
-      logs_enabled: "{{ logs_enabled | default(true) }}"
-    datadog_checks: "{{ dd_checks | default(omit) }}"
-    system_probe_config:
-      enabled: "{{ system_probe_enabled | default(false )}}"
+    - "roles/datadog/vars/{{ deploy_env }}.yml"
+    - roles/datadog/vars/main.yml

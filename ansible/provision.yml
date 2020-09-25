@@ -1,6 +1,5 @@
 ---
 - hosts: rails
-- include: datadog.yml
   roles:
     - { role: common, tags: ['common'] }
     - { role: monit, tags: ['monit'] }
@@ -8,4 +7,4 @@
     - { role: nodejs, tags: ['nodejs'] }
     - { role: passenger, tags: ['passenger'] }
     - { role: postgresql-client, tags: ['postgresql-client'] }
-    - { role: datadog, tags: ['datadog'] }
+- import_playbook: datadog.yml
