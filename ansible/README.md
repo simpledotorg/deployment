@@ -12,6 +12,12 @@ You just need a few things installed locally.
 brew install ansible
 ```
 
+You then need to install any third party roles that we need - from this `ansible` directory:
+
+```
+ansible-galaxy install requirements.yml
+```
+
 ## Hosts
 
 These are the environments
