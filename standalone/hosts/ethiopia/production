@@ -10,45 +10,46 @@ postgres_primary
 postgres_secondary
 
 [postgres_primary]
-68.23.16.143 replication_role=primary
+197.156.66.181 replication_role=primary
 
 [postgres_secondary]
-# 68.23.16.143 ansible_port=20022 replication_role=replica
+197.156.66.178 replication_role=replica
 
 [servers:children]
 webservers
 sidekiq
 
 [webservers]
-68.23.16.143
-# 68.23.16.143 ansible_port=20022 replication_role=replica
+197.156.66.181
+197.156.66.178
 
 [sidekiq]
-68.23.16.143
-# 68.23.16.143 ansible_port=20022 replication_role=replica
+197.156.66.181
+197.156.66.178
 
 [redis:children]
 redis_primary
 redis_secondary
 
 [redis_primary]
-68.23.16.143
+197.156.66.181
 
 [redis_secondary]
-# 68.23.16.143 ansible_port=20022
+197.156.66.178
 
 [monitoring:children]
 prometheus
 grafana
 
 [prometheus]
-68.23.16.143
+197.156.66.181
 
 [grafana]
-68.23.16.143
+197.156.66.181
 
 [storage]
-68.23.16.143
+197.156.66.178
 
 [load_balancing]
-68.23.16.143
+197.156.66.181
+197.156.66.178
