@@ -1,5 +1,6 @@
 hosts = sample/playground
 password_file = ~/.vault_password
+branch = master
 export ANSIBLE_CONFIG = ansible/ansible.cfg
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
@@ -34,7 +35,7 @@ all: ##@Setup Install simple-server on hosts. Runs the all.yml playbook
 deploy: ship restart-passenger ##@Deploy Deploy simple-server/master on hosts.
 
 ship: ##@Deploy Ship simple-server/master to hosts. Runs an ansitrano deploy
-	ansible-playbook --vault-id $(password_file) ansible/deploy.yml -i hosts/$(hosts)
+	ansible-playbook --vault-id $(password_file) ansible/deploy.yml -i hosts/$(hosts) --extra-vars="ansistrano_git_branch=$(branch)"
 
 update-ssh-keys: ##@Utilities Update ssh keys on boxes. Add keys to `ansible/roles/ssh/` under the appropriate environment
 	ansible-playbook --vault-id $(password_file) ansible/setup.yml -i hosts/$(hosts) --tags ssh
