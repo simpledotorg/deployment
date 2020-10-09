@@ -1,5 +1,6 @@
 ---
 prometheus_web_listen_address: "0.0.0.0:{{ prometheus_port }}"
+prometheus_web_external_url: "https://{{ domain_name}}/prometheus"
 prometheus_targets:
   node:
     - targets: "{{ groups.all | map('regex_replace', '^(.*)$', '\\1:' ~ node_exporter_port) | list }}"

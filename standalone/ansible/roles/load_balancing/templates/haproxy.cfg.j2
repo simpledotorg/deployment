@@ -46,12 +46,18 @@ frontend {{ haproxy_frontend_name }}
     mode {{ haproxy_frontend_mode }}
 
     use_backend grafana if { path /grafana } or { path_beg /grafana/ }
+    use_backend prometheus if { path /prometheus } or { path_beg /prometheus/ }
     default_backend webservers
 
 backend grafana
     http-request set-path %[path,regsub(^/grafana/?,/)]
 {% for server in groups.grafana %}
     server grafana{{ loop.index }} {{ server }}:{{ grafana_port }}
+{% endfor %}
+
+backend prometheus
+{% for server in groups.prometheus %}
+    server prometheus{{ loop.index }} {{ server }}:{{ prometheus_port }}
 {% endfor %}
 
 backend webservers
