@@ -44,9 +44,17 @@ frontend {{ haproxy_frontend_name }}
 
     redirect scheme https code 301 if !{ ssl_fc }
     mode {{ haproxy_frontend_mode }}
-    default_backend {{ haproxy_backend_name }}
 
-backend {{ haproxy_backend_name }}
+    use_backend grafana if { path /grafana } or { path_beg /grafana/ }
+    default_backend webservers
+
+backend grafana
+    http-request set-path %[path,regsub(^/grafana/?,/)]
+{% for server in groups.grafana %}
+    server grafana{{ loop.index }} {{ server }}:{{ grafana_port }}
+{% endfor %}
+
+backend webservers
     mode {{ haproxy_backend_mode }}
     balance {{ haproxy_backend_balance_method }}
     option forwardfor
