@@ -38,6 +38,9 @@ defaults
   errorfile 504 /etc/haproxy/errors/504.http
 {% endif %}
 
+userlist Users
+  user admin insecure-password admin
+
 frontend {{ haproxy_frontend_name }}
     bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_http_port }}
     bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_https_port }} ssl crt-list {{ haproxy_crt_list }} no-sslv3 no-tlsv10 ciphers kEECDH+ECDSA+AES128:kEECDH+ECDSA+AES256:kEECDH+AES128:kEECDH+AES256:kEDH+AES128:kEDH+AES256:DES-CBC3-SHA:+SHA:!aNULL:!eNULL:!LOW:!kECDH:!DSS:!MD5:!RC4:!EXP:!PSK:!SRP:!CAMELLIA:!SEED
@@ -57,11 +60,13 @@ backend grafana
 {% endfor %}
 
 backend prometheus
+    http-request auth realm Authenticated if !{ http_auth(Users) }
 {% for server in groups.prometheus %}
     server prometheus{{ loop.index }} {{ server }}:{{ prometheus_port }}
 {% endfor %}
 
 backend alertmanager
+    http-request auth realm Authenticated if !{ http_auth(Users) }
 {% for server in groups.prometheus %}
     server alertmanager{{ loop.index }} {{ server }}:{{ alertmanager_web_port }}
 {% endfor %}
