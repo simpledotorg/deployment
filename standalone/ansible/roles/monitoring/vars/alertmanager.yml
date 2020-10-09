@@ -1,4 +1,5 @@
 ---
+alertmanager_web_external_url: "https://{{ domain_name }}/alertmanager"
 alertmanager_template_files: "roles/monitoring/files/alertmanager/templates/*.tmpl"
 alertmanager_receivers:
   - name: email

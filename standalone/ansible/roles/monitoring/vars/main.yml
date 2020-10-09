@@ -12,4 +12,3 @@ haproxy_exporter_port: 9113
 
 alertmanager_web_port: 9093
 alertmanager_web_listen_address: '0.0.0.0:{{ alertmanager_web_port }}'
-alertmanager_web_external_url: 'http://{{ groups.prometheus[0] }}:{{ alertmanager_web_port }}/'

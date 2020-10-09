@@ -47,6 +47,7 @@ frontend {{ haproxy_frontend_name }}
 
     use_backend grafana if { path /grafana } or { path_beg /grafana/ }
     use_backend prometheus if { path /prometheus } or { path_beg /prometheus/ }
+    use_backend alertmanager if { path /alertmanager } or { path_beg /alertmanager/ }
     default_backend webservers
 
 backend grafana
@@ -58,6 +59,11 @@ backend grafana
 backend prometheus
 {% for server in groups.prometheus %}
     server prometheus{{ loop.index }} {{ server }}:{{ prometheus_port }}
+{% endfor %}
+
+backend alertmanager
+{% for server in groups.prometheus %}
+    server alertmanager{{ loop.index }} {{ server }}:{{ alertmanager_web_port }}
 {% endfor %}
 
 backend webservers
