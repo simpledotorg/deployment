@@ -42,7 +42,8 @@ These instructions are to be followed in the [standalone](/standalone) directory
 
 ### Install local requirements
 ```bash
-brew install ansible@2.8.3 gnu-tar
+brew install ansible@2.8.3
+make init
 ```
 
 ### Setup remote user
@@ -85,7 +86,7 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 
 ### Run the ansible scripts
 
-- Run `make init hosts=sample/playground`
+- Run `make init`
 - Run `make all hosts=sample/playground` to setup simple-server on your servers.
 - Simple server should now be installed, running and accessible on your domain.
 
