@@ -30,7 +30,7 @@ haproxy_stats_enable: true
 haproxy_stats_port: 8282
 haproxy_stats_refresh: 10s
 haproxy_stats_username: admin
-haproxy_stats_password: admin
+haproxy_stats_password: "{{ monitoring_dashboard_password }}"
 haproxy_stats_uri: /
 
 haproxy_exporter_options:

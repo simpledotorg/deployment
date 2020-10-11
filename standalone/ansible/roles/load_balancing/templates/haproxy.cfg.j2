@@ -39,7 +39,7 @@ defaults
 {% endif %}
 
 userlist Users
-  user admin insecure-password admin
+  user admin insecure-password "{{ monitoring_dashboard_password }}"
 
 frontend {{ haproxy_frontend_name }}
     bind {{ haproxy_frontend_bind_address }}:{{ haproxy_frontend_http_port }}
