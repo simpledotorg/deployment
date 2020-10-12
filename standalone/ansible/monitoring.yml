@@ -44,17 +44,3 @@
   roles:
     - monitoring
     - cloudalchemy.grafana
-
-- name: allow monitoring ports through firewall
-  hosts: monitoring
-  become: true
-  tasks:
-  - name: allow all access to prometheus
-    ufw:
-      rule: allow
-      port: "{{ prometheus_port }}"
-
-  - name: allow all access to grafana
-    ufw:
-      rule: allow
-      port: "{{ grafana_port }}"
