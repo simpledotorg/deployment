@@ -81,8 +81,8 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
     - Set `domain_name` to your domain name `example.com`
     - Set `deploy_env` to the correct shortname (e.g. `ethiopia-demo`, `bangladesh-production`)
     - Set `app_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
-- To setup email alerts (optional), you will need to configure an SMTP host in `roles/monitoring/vars/alertmanager.yml > email_configs`.
-  You will also need to specify the `To` address here where emails will be sent.
+- To setup slack alerts (optional), you will need to add the webhook URL in `roles/monitoring/vars/<deploy_env>/secrets.yml`.
+  To setup the slack channel edit the config in `roles/monitoring/vars/alertmanager.yml`.
 
 ### Run the ansible scripts
 
