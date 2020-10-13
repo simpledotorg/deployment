@@ -9,6 +9,7 @@ Box 2: 197.156.66.178
 ```
 
 ![](ethiopia-server-topography.png)
+This diagram can be edited [here](https://docs.google.com/drawings/d/1iEGHXp1xEOsAVg8zKHnIB17sQHRZdeES9XDjacTSTFA/edit).
 
 #### Load balancing:
 - Both instances run an instance of HAProxy. `api.et.simple.org` currently points to `Box 1`. The second box's load balancer
