@@ -8,7 +8,7 @@ Box 1: 197.156.66.181
 Box 2: 197.156.66.178
 ```
 
-![](ethiopia-server-topography.png)
+![Ethiopia Server Topography](ethiopia-server-topography.png)
 This diagram can be edited [here](https://docs.google.com/drawings/d/1iEGHXp1xEOsAVg8zKHnIB17sQHRZdeES9XDjacTSTFA/edit).
 
 #### Load balancing:
