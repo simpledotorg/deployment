@@ -13,7 +13,7 @@ This diagram can be edited [here](https://docs.google.com/drawings/d/1iEGHXp1xEO
 
 #### Load balancing:
 - Both instances run an instance of HAProxy. `api.et.simple.org` currently points to `Box 1`. The second box's load balancer
-is for redundancy and is unused.
+is for redundancy and is not pointed to by a DNS. It is however configured to talk to the webservers already.
 
 #### Web server and sidekiq:
 - Both boxes run an instance of the Rails webserver and sidekiq (for background job processing). At all times, these services need to talk to:
