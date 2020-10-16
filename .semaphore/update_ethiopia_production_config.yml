@@ -1,5 +1,5 @@
 version: v1.0
-name: Update Ethiopia Demo config
+name: Update Ethiopia Production config
 blocks:
   - name: Ansible update
     task:
@@ -9,7 +9,7 @@ blocks:
             - checkout
             - cd standalone
             - make init
-            - make update-app-config hosts=ethiopia/demo password_file=~/.ansible/vault_password_et
+            - make update-app-config hosts=ethiopia/production password_file=~/.ansible/vault_password_et
       secrets:
         - name: ansible ethiopia
         - name: semaphore-deploy-key
