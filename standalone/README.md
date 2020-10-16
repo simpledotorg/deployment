@@ -42,7 +42,8 @@ These instructions are to be followed in the [standalone](/standalone) directory
 
 ### Install local requirements
 ```bash
-brew install ansible@2.8.3 gnu-tar
+brew install ansible@2.8.3
+make init
 ```
 
 ### Setup remote user
@@ -80,12 +81,12 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
     - Set `domain_name` to your domain name `example.com`
     - Set `deploy_env` to the correct shortname (e.g. `ethiopia-demo`, `bangladesh-production`)
     - Set `app_env` to your desired environment name (eg. `demo`, `production`, `sandbox`)
-- To setup email alerts (optional), you will need to configure an SMTP host in `roles/monitoring/vars/alertmanager.yml > email_configs`.
-  You will also need to specify the `To` address here where emails will be sent.
+- To setup slack alerts (optional), you will need to add the webhook URL in `roles/monitoring/vars/<deploy_env>/secrets.yml`.
+  To setup the slack channel edit the config in `roles/monitoring/vars/alertmanager.yml`.
 
 ### Run the ansible scripts
 
-- Run `make init hosts=sample/playground`
+- Run `make init`
 - Run `make all hosts=sample/playground` to setup simple-server on your servers.
 - Simple server should now be installed, running and accessible on your domain.
 

@@ -21,9 +21,11 @@ sidekiq
 
 [webservers]
 167.71.226.153
+157.245.99.197
 
 [sidekiq]
 167.71.226.153
+157.245.99.197
 
 [redis:children]
 redis_primary
@@ -33,6 +35,7 @@ redis_secondary
 167.71.226.153
 
 [redis_secondary]
+157.245.99.197
 
 [monitoring:children]
 prometheus
@@ -49,3 +52,4 @@ grafana
 
 [load_balancing]
 167.71.226.153
+157.245.99.197

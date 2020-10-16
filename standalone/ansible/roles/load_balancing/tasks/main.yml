@@ -1,5 +1,9 @@
 # load balancing tasks
 ---
+- name: include monitoring variables (ports and secrets)
+  include_vars:
+    dir: ../../monitoring/vars/
+
 - name: install HAProxy
   apt:
     pkg: "haproxy={{ haproxy_version }}"
