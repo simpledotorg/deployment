@@ -44,3 +44,5 @@ promotions:
     pipeline_file: update_india_production_config.yml
   - name: 9. Production Bangladesh - Update config
     pipeline_file: update_bangladesh_production_config.yml
+  - name: 9. Production Ethiopia - Update config
+    pipeline_file: update_ethiopia_production_config.yml
