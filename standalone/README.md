@@ -95,10 +95,9 @@ This document makes liberal use of a generic `~/.vault_password` file. But keep 
 
 As of now, there are 2 vault passwords:
 
-- vault_password
-- vault_password_et
+- `vault_password`
+- `vault_password_et`
 
-|----------------|----------------|----------------|-------------------|----------------|
 | Env            | Deployment     |                |                   |                |
 |----------------|----------------|----------------|-------------------|----------------|
 |                | India          | Bangladesh     | Ethiopia          | Dev            |
@@ -107,7 +106,6 @@ As of now, there are 2 vault passwords:
 | QA             | -              | -              | -                 | vault_password |
 | Security       |                |                | -                 | vault_password |
 | Sandbox        | -              | -              | -                 | vault_password |
-|----------------|----------------|----------------|-------------------|----------------|
 
 ## Helpful Commands
 
