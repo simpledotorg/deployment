@@ -98,7 +98,7 @@ As of now, there are 2 vault passwords:
 - `vault_password`
 - `vault_password_et`
 
-| Env            | Deployment     |                |                   |                |
+| Env            | Deployment                                                           |
 |----------------|----------------|----------------|-------------------|----------------|
 |                | India          | Bangladesh     | Ethiopia          | Dev            |
 | Production     | vault_password | vault_password | vault_password_et | -              |
