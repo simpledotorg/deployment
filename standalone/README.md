@@ -89,6 +89,26 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 - Run `make all hosts=sample/playground` to setup simple-server on your servers.
 - Simple server should now be installed, running and accessible on your domain.
 
+### Vault password
+
+This document makes liberal use of a generic `~/.vault_password` file. But keep in mind, that different environments might be signed with different private keys.
+
+As of now, there are 2 vault passwords:
+
+- vault_password
+- vault_password_et
+
+|----------------|----------------|----------------|-------------------|----------------|
+| Env            | Deployment     |                |                   |                |
+|----------------|----------------|----------------|-------------------|----------------|
+|                | India          | Bangladesh     | Ethiopia          | Dev            |
+| Production     | vault_password | vault_password | vault_password_et | -              |
+| Demo / Staging | vault_password | vault_password | vault_password_et | -              |
+| QA             | -              | -              | -                 | vault_password |
+| Security       |                |                | -                 | vault_password |
+| Sandbox        | -              | -              | -                 | vault_password |
+|----------------|----------------|----------------|-------------------|----------------|
+
 ## Helpful Commands
 
 ### Editing vault files
@@ -208,4 +228,3 @@ ERROR! A worker was found in a dead state
 ```
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 ```
-
