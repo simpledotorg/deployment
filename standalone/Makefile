@@ -1,5 +1,5 @@
 hosts = sample/playground
-password_file = ~/.vault_password
+password_file = ~/.vault_password_et
 branch = master
 export ANSIBLE_CONFIG = ansible/ansible.cfg
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
