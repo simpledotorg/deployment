@@ -28,7 +28,6 @@ help: ##@Miscellaneous Show this help.
 
 init: ##@Setup Install ansible plugins and dependencies
 	ansible-galaxy install -r ansible/requirements.yml
-	brew install gnu-tar
 	pip install jmespath
 
 all: ##@Setup Install simple-server on hosts. Runs the all.yml playbook

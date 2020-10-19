@@ -42,7 +42,7 @@ These instructions are to be followed in the [standalone](/standalone) directory
 
 ### Install local requirements
 ```bash
-brew install ansible@2.8.3
+brew install ansible@2.8.3 gnu-tar
 make init
 ```
 
