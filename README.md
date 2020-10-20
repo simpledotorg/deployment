@@ -30,3 +30,9 @@ export ANSIBLE_VAULT_PASSWORD_FILE=.vault_password
 
 Now you can use git diff to view any changes locally on `.env` files.
 
+# How to add an SSH key to view SBX data in your local
+1. Create a new file in `ansible/roles/common/files/ssh_keys/sandbox` with your name as the file name in lowercase
+2. In your terminal run `pbcopy < ~/.ssh/id_rsa.pub` to copy your SSH key
+3. Paste the SSH key in the new file you created
+4. Create a new branch and submit a PR
+5. Wait for the PR to be reviewed, merged, and deployed to Sandbox
