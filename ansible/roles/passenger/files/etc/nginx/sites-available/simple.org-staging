@@ -33,6 +33,7 @@ server {
   passenger_enabled on;
   rails_env production;
   passenger_start_timeout 300;
+  passenger_set_header X-Forwarded-Host $http_host;
 
   gzip on;
   gzip_types text/html text/plain application/json;
