@@ -1,0 +1,36 @@
+dd_checks:
+  ruby:
+    init_config:
+    logs:
+      - type: file
+        path: "/home/{{deploy_user}}/apps/{{app_name}}/shared/log/production.log"
+        service: ruby
+        source: ruby
+        sourcecategory: sourcecode
+  process:
+    init_config:
+    instances:
+      - name: ssh
+        search_string: ["ssh", "sshd"]
+      - name: syslog
+        search_string: ["rsyslog"]
+        cpu_check_interval: 0.2
+        exact_match: false
+        ignore_denied_access: true
+
+datadog_enabled: "{{ dd_enabled | default(true) }}"
+datadog_config:
+  env: "{{ deploy_env }}"
+  site: "{{ dd_site | default('datadoghq.com') }}"
+  tags:
+    - "country:{{ default_country }}"
+  log_level: "{{ log_level | default('INFO') }}"
+  logs_enabled: "{{ logs_enabled | default(true) }}"
+  apm_config:
+    enabled: "{{ apm_enabled | default(true) }}"
+    max_traces_per_second: 10
+  process_config:
+    enabled: true
+datadog_checks: "{{ dd_checks | default(omit) }}"
+system_probe_config:
+  enabled: "{{ system_probe_enabled | default(false )}}"

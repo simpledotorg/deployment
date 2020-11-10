@@ -13,3 +13,4 @@
   name: prometheus_redis_exporter
 - src: bdellegrazie.haproxy_exporter
 - src: bdellegrazie.nginx_exporter
+- src: datadog.datadog
