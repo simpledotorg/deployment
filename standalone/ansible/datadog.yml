@@ -6,4 +6,3 @@
   vars_files:
     - roles/datadog/vars/vault.yml
     - roles/datadog/vars/main.yml
-  remote_user: "{{ deploy_user }}"

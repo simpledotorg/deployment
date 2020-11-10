@@ -10,7 +10,7 @@
     - { role: rbenv, tags: ['rbenv'] }
     - { role: nodejs, tags: ['nodejs'] }
     - { role: monit, tags: ['monit'] }
-    - { role: datadog, tags: ['datadog'] }
 - hosts: webservers
   roles:
     - { role: passenger, tags: ['passenger'] }
+- import_playbook: datadog.yml
