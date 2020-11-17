@@ -13,3 +13,4 @@
 - hosts: webservers
   roles:
     - { role: passenger, tags: ['passenger'] }
+- import_playbook: datadog.yml

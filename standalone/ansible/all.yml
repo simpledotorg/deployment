@@ -7,3 +7,4 @@
 - import_playbook: load_balancing.yml
 - import_playbook: monitoring.yml
 - import_playbook: logshipping.yml
+- import_playbook: datadog.yml
