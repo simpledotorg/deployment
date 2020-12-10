@@ -43,16 +43,6 @@ variable "qa_database_password" {
   type        = string
 }
 
-variable "security_database_username" {
-  description = "Database Username"
-  type        = string
-}
-
-variable "security_database_password" {
-  description = "Database Password"
-  type        = string
-}
-
 #
 # certficate stuff
 #
@@ -175,26 +165,6 @@ module "simple_server_qa" {
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
   enable_cloudwatch_alerts      = true
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
-}
-
-module "simple_server_security" {
-  source                        = "../modules/simple_server"
-  deployment_name               = "development-security"
-  database_vpc_id               = module.simple_networking.database_vpc_id
-  database_subnet_group_name    = module.simple_networking.database_subnet_group_name
-  ec2_instance_type             = "t2.medium"
-  database_username             = var.security_database_username
-  database_password             = var.security_database_password
-  instance_security_groups      = module.simple_networking.instance_security_groups
-  aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
-  server_vpc_id                 = module.simple_networking.server_vpc_id
-  https_listener_arn            = module.simple_networking.https_listener_arn
-  host_urls                     = ["api-security.simple.org", "dashboard-security.simple.org"]
-  create_redis_cache_instance   = true
-  create_redis_sidekiq_instance = true
-  server_count                  = 2
-  sidekiq_server_count          = 1
-  redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
 }
 
 /* This sets up a bunch of ec2 servers for the standalone setup
