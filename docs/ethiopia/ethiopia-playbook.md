@@ -22,10 +22,26 @@ This is deployed on the bare-metal Dell servers in Ethiopia datacenters.
 When something goes wrong on the self-managed standalone Ethiopia production servers.
 
 #### Notes on configuration:
+
+##### IP Addresses
+
+The two Ethiopia production servers are accessible through public IP addresses as well as internal IP addresses if you
+are in the network.
+
 ```
-Box 1: 197.156.66.181
-Box 2: 197.156.66.178
+Box 1:
+  Public IP:   197.156.66.181
+  Internal IP: 172.19.0.241
+Box 2:
+  Public IP:   197.156.66.178
+  Internal IP: 172.19.0.240
 ```
+
+When managing the production servers from outside the internal network, the [`production`](../standalone/hosts/ethiopia/production)
+hosts file should be used with `make`/`ansible` commands.
+
+When managing the production servers from inside the internal network, the [`production-internal`](../standalone/hosts/ethiopia/production-internal)
+hosts file can be used with `make`/`ansible` commands.
 
 ![Ethiopia Server Topography](ethiopia-server-topography.png)
 This diagram can be edited [here](https://docs.google.com/drawings/d/1iEGHXp1xEOsAVg8zKHnIB17sQHRZdeES9XDjacTSTFA/edit).
