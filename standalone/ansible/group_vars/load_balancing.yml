@@ -12,7 +12,7 @@ haproxy_frontend_http_port: 80
 haproxy_frontend_https_port: 443
 haproxy_frontend_mode: 'http'
 haproxy_cert_names:
-  - /etc/ssl/et.simple.org
+  - /etc/ssl/simple-demo.moh.gov.et
 haproxy_crt_list: '/etc/ssl/crt-list.txt'
 
 # Backend settings.
