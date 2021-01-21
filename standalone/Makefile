@@ -44,6 +44,9 @@ update-ssh-keys: ##@Utilities Update ssh keys on boxes. Add keys to `ansible/rol
 update-app-config: ##@Utilities Update app config .env file
 	ansible-playbook --vault-id $(password_file) ansible/deploy.yml -i hosts/$(hosts) --tags update-app-config
 
+update-ssl-certs: ##@Utilities Update the SSL certs. Add the appropriate certs under the encrypted ssl-vault.yml
+	ansible-playbook --vault-id $(password_file) ansible/load_balancing.yml -i hosts/$(hosts) --tags load_balancing
+
 restart-passenger: ##@Utilities Restart passenger
 	ansible-playbook --vault-id $(password_file) ansible/setup.yml -i hosts/$(hosts) -l webservers --tags restart-passenger
 
