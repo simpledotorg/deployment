@@ -92,5 +92,5 @@ Open a pull request in Github with your changes. The Simple team will accept you
 In the meantime, you don't have to wait. You can immediately install the new certificate on Simple Server from the deployment repository.
 
 ```bash
-make all hosts=ethiopia/demo
+make update-ssl-certs hosts=ethiopia/demo
 ```
