@@ -4,7 +4,6 @@ app_env=production
 default_country=ET
 deploy_env=ethiopia-production
 domain_name=simple.moh.gov.et
-mailers_from=help@simple.moh.gov.et
 
 [postgres:children]
 postgres_primary

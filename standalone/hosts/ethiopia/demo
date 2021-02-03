@@ -4,7 +4,6 @@ app_env=demo
 default_country=ET
 deploy_env=ethiopia-demo
 domain_name=simple-demo.moh.gov.et
-mailers_from=help@simple-demo.moh.gov.et
 
 [postgres:children]
 postgres_primary
