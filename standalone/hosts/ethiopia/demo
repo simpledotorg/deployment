@@ -1,9 +1,10 @@
 [all:vars]
-deploy_env=ethiopia-demo
-app_env=demo
-domain_name=simple-demo.moh.gov.et
-default_country=ET
 analytics_dashboard_cache_ttl=60
+app_env=demo
+default_country=ET
+deploy_env=ethiopia-demo
+domain_name=simple-demo.moh.gov.et
+mailers_from=help@simple-demo.moh.gov.et
 
 [postgres:children]
 postgres_primary

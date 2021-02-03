@@ -1,9 +1,10 @@
 [all:vars]
-deploy_env=ethiopia-production
-app_env=production
-domain_name=simple.moh.gov.et
-default_country=ET
 analytics_dashboard_cache_ttl=86400
+app_env=production
+default_country=ET
+deploy_env=ethiopia-production
+domain_name=simple.moh.gov.et
+mailers_from=help@simple.moh.gov.et
 
 [postgres:children]
 postgres_primary
