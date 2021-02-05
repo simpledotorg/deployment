@@ -39,7 +39,13 @@ promotions:
       when: branch = 'master' AND result = 'passed'
   - name: 7. Production India - Update config
     pipeline_file: update_india_production_config.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
   - name: 8. Production Bangladesh - Update config
     pipeline_file: update_bangladesh_production_config.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
   - name: 9. Production Ethiopia - Update config
     pipeline_file: update_ethiopia_production_config.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
