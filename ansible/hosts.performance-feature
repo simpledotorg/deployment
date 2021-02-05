@@ -1,8 +1,0 @@
-[simple]
-13.127.222.112
-
-[rails:children]
-simple
-
-[performance-feature:children]
-simple
