@@ -210,12 +210,12 @@ This will provision the necessary servers for an instance of simple-server on di
 
 Depending on your system, you may run into the following known issues:
 
-### Errors with cloudalchemy.node-exporter
+### Errors with cloudalchemy.node_exporter
 
 If you see output like this, it's likely due to [this issue](https://github.com/cloudalchemy/ansible-node-exporter/issues/54).
 
 ```
-TASK [cloudalchemy.node-exporter : Get checksum list from github] *******************************************************************************************************************************************************
+TASK [cloudalchemy.node_exporter : Get checksum list from github] *******************************************************************************************************************************************************
 objc[5848]: +[__NSCFConstantString initialize] may have been in progress in another thread when fork() was called.
 objc[5848]: +[__NSCFConstantString initialize] may have been in progress in another thread when fork() was called. We cannot safely call it or ignore it in the fork() child process. Crashing instead. Set a breakpoint on objc_initializeAfterForkError to debug.
 ERROR! A worker was found in a dead state
