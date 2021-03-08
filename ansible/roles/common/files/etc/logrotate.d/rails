@@ -1,7 +1,7 @@
 /home/deploy/apps/*/current/log/*.log {
   su deploy deploy
   daily
-  rotate 14
+  rotate 3
   missingok
   notifempty
   compress
