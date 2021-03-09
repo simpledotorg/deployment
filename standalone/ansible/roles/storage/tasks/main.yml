@@ -11,13 +11,13 @@
 - name: fetch remote user ssh keys to be added to storage server
   fetch:
     src: "~/.ssh/id_rsa.pub"
-    dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
+    dest: "/tmp/keys/{{ inventory_hostname }}-remote-user-id_rsa.pub"
     flat: yes
 
 - name: fetch root user ssh keys to be added to storage server
   fetch:
     src: "~/.ssh/id_rsa.pub"
-    dest: "/tmp/keys/{{ inventory_hostname }}-id_rsa.pub"
+    dest: "/tmp/keys/{{ inventory_hostname }}-root-user-id_rsa.pub"
     flat: yes
   become: true
 
