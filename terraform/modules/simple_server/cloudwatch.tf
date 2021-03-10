@@ -5,7 +5,7 @@ resource "aws_cloudwatch_metric_alarm" "average_webserver_cpu" {
   evaluation_periods        = "1"
   metric_name               = "CPUUtilization"
   namespace                 = "AWS/EC2"
-  period                    = "60"
+  period                    = "300"
   statistic                 = "Average"
   threshold                 = "65"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
@@ -65,7 +65,7 @@ resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
   evaluation_periods        = "1"
   metric_name               = "CPUUtilization"
   namespace                 = "AWS/RDS"
-  period                    = "60"
+  period                    = "300"
   statistic                 = "Average"
   threshold                 = "30"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
