@@ -38,7 +38,7 @@ for more details.
 ## Hosts
 
 These are the environments managed by this Ansible repository. See the
-[Simple Server Handbook](https://docs.google.com/document/d/1VTVBr8HcLWK6Nrg4gQkuQKb3H8EtiqQA-zGWTu3ddHc/edit#heading=h.gh0xebw6sceg)
+[Simple Server Handbook](https://docs.google.com/document/d/1VTVBr8HcLWK6Nrg4gQkuQKb3H8EtiqQA-zGWTu3ddHc/edit)
 for information on what each of these environments are for.
 
 - bangladesh-demo
@@ -84,6 +84,10 @@ Run a deployment with
 ```
 ansible-playbook -v --vault-id /path/to/password_file deploy.yml -i hosts.<env_name>
 ```
+
+### 4. Document
+
+Add the new environment to the list of environments in the [Simple Server Handbook](https://docs.google.com/document/d/1VTVBr8HcLWK6Nrg4gQkuQKb3H8EtiqQA-zGWTu3ddHc/edit).
 
 ## Changing secrets
 
