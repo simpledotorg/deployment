@@ -15,6 +15,9 @@ go to [Getting Started](#getting-started).
 
 ### 1. Add the master AWS SSH key to your machine
 
+This is the SSH key that will be placed on all provisioned instances for initial access. The key is read off of your
+local machine and copied to AWS by terraform.
+
 * Create a blank SSH keypair in your SSH directory
 
 ```bash
@@ -65,15 +68,33 @@ may have changed since you last decrypted them.
 
 ### 3. Navigate to the AWS environment that you wish to work on.
 
+Each AWS account has a separate subdirectory in the repository. Navigate to the one you wish to work on.
+
 ```bash
 $ cd bangladesh
 ```
 
 ### 4. Add AWS credentials to your machine
 
-Add the credentials for the AWS account to your `~/.aws/credentials` file. Include them in a profile whose name matches
-the profile declared in your terraform configuration's `main.tf` file. For example, for `bangladesh` your credentials
-file should look like this.
+Add the credentials for the AWS account to your `~/.aws/credentials` file. The credentials can be for an IAM user in the
+AWS account that has the following permissions.
+
+```
+ AmazonEC2FullAccess
+ AmazonElastiCacheFullAccess
+ AmazonRDSFullAccess
+ AmazonS3FullAccess
+ AmazonSNSFullAccess
+ AmazonDynamoDBFullAccess
+ AmazonVPCFullAccess
+ AWSCertificateManagerFullAccess
+ CloudWatchLogsFullAccess
+ IAMFullAccess
+```
+
+Include the AWS credentials (access key ID and secret access key) in the profile whose name matches the profile declared
+in your terraform configuration's `main.tf` file. For example, for `bangladesh` your credentials file should look like
+this.
 
 ```
 [bangladesh]
@@ -110,6 +131,24 @@ expectations without making any changes to real resources.
 $ terraform plan
 ```
 
+:warning: If you're setting up a new deployment, you may encounter an error that looks like the following:
+```
+Error: Invalid count argument
+
+  on ../modules/simple_server/cloudwatch.tf line 82, in resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts":
+  82:   count               = var.load_balancer_arn_suffix != "" && var.enable_cloudwatch_alerts ? 1 : 0
+
+The "count" value depends on resource attributes that cannot be determined
+until apply, so Terraform cannot predict how many instances will be created.
+To work around this, use the -target argument to first apply only the
+resources that the count depends on.
+```
+To work around this problem,
+* Go to the problematic line of code in the repository
+* Replace the conditional count with a hard-coded value for now - `count = 1`
+* Proceed with the rest of this guide
+* After a successful `terraform apply`, undo your temporary changes
+
 ### 8. Apply
 
 Once you are confident with the execution plan, run `terraform apply` to apply your changes to the AWS environment.
@@ -124,24 +163,31 @@ If you are setting up a new AWS account to be managed by terraform (eg. a Simple
 follow these instructions. This setup needs to be run only once per AWS account.
 
 - Create an AWS account.
-- The repo contains a separate directory for each AWS account. For setting this up with a new account,
-  we recommend creating a directory similar to `development/` with the appropriate profile set in its `main.tf`.
-  See [managing environments](#managing-environments) to customize your infra.
-- Create a new group called `Provisioners` with the following policies (`My Security Credentials` > `Groups` > `Create new group`)
- ```
-  AmazonRDSFullAccess
-  AmazonEC2FullAccess
-  AmazonElastiCacheFullAccess
-  AmazonS3FullAccess
-  AmazonDynamoDBFullAccess
-  AmazonVPCFullAccess
- ```
-- Create a user with API only access and add it to the `Provisioners` group.
-- Add the user's access id and secret key to AWS credentials file under the appropriate profile.
+- Create an IAM user group in the new AWS account called `Provisioners` with the following policies (`My Security Credentials` > `Groups` > `Create new group`)
+```
+ AmazonEC2FullAccess
+ AmazonElastiCacheFullAccess
+ AmazonRDSFullAccess
+ AmazonS3FullAccess
+ AmazonSNSFullAccess
+ AmazonDynamoDBFullAccess
+ AmazonVPCFullAccess
+ AWSCertificateManagerFullAccess
+ CloudWatchLogsFullAccess
+ IAMFullAccess
+```
+- Create a user with API-only access and add it to the `Provisioners` group. Keep a note of the user's AWS access ID and secret key
+- Choose a profile name for the new AWS account. (eg. `kerala`, `ihci`, `bangladesh`)
+- Add the user's access ID and secret key to your local AWS credentials file under the chosen AWS profile.
  See [using AWS credential files.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 - Create an s3 bucket. Add the bucket's name to `main.tf` > `terraform` > `backend` > `bucket`
 - Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
   called `terraform-lock` with `LockID` as primary key.
+- Create a directory in this repository similar to `development/` with the name of the chosen AWS profile set in its `main.tf`.
+  See [managing environments](#managing-environments) to customize your infrastructure.
+
+Your AWS account and deployment repository are now ready for use. Go back to [Getting Started](#getting-started) to
+provision your infrastructure.
 
 ## Managing environments
 
