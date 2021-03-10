@@ -32,12 +32,14 @@ ansible-galaxy install requirements.yml
 
 The Ansible vault password files are used to decrypt all Ansible vault files in this directory. Obtain the password file
 from 1Password, and place it in a convenient location on your local machine, like `~/.vault_password`. You will need
-this password file for most Ansible operations described below. See [Ansible Vault documentation](https://docs.ansible.com/ansible/2.8/user_guide/vault.html) 
+this password file for most Ansible operations described below. See [Ansible Vault documentation](https://docs.ansible.com/ansible/2.8/user_guide/vault.html)
 for more details.
 
 ## Hosts
 
-These are the environments
+These are the environments managed by this Ansible repository. See the
+[Simple Server Handbook](https://docs.google.com/document/d/1VTVBr8HcLWK6Nrg4gQkuQKb3H8EtiqQA-zGWTu3ddHc/edit#heading=h.gh0xebw6sceg)
+for information on what each of these environments are for.
 
 - bangladesh-demo
 - bangladesh-production
