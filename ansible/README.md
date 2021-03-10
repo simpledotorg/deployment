@@ -2,15 +2,24 @@
 
 We use [Ansible](http://docs.ansible.com/) to manage our deployment.
 
+* [Setup](#setup)
+* [Hosts](#hosts)
+* [New Deployment](#new-deployment)
+* [Changing Secrets](#changing-secrets)
+* [Updating Configs](#updating-configs)
+* [Deploying](#deploying)
+
 ## Setup
 
 You just need a few things installed locally.
 
-#### Install Ansible with homebrew:
+### Install Ansible with Homebrew
 
 ```
 brew install ansible
 ```
+
+### Install third-party roles
 
 You then need to install any third party roles that we need via [ansible-galaxy](https://galaxy.ansible.com/docs/).
 Run the below from the `ansible` directory:
@@ -19,16 +28,66 @@ Run the below from the `ansible` directory:
 ansible-galaxy install requirements.yml
 ```
 
+### Obtain the Ansible vault password file
+
+The Ansible vault password files are used to decrypt all Ansible vault files in this directory. Obtain the password file
+from 1Password, and place it in a convenient location on your local machine, like `~/.vault_password`. You will need
+this password file for most Ansible operations described below. See [Ansible Vault documentation](https://docs.ansible.com/ansible/2.8/user_guide/vault.html)
+for more details.
+
 ## Hosts
 
-These are the environments
+These are the environments managed by this Ansible repository. See the
+[Simple Server Handbook](https://docs.google.com/document/d/1VTVBr8HcLWK6Nrg4gQkuQKb3H8EtiqQA-zGWTu3ddHc/edit)
+for information on what each of these environments are for.
 
+- bangladesh-demo
+- bangladesh-production
+- performance-primary
 - sandbox
 - qa
 - staging
 - production
 
-Each environment has it's own `hosts.<env_name>` ([root](/) directory) file and `.env.<env_name>` ([roles/simple-server/files](roles/simple-server/files))
+Each environment has its own copies of the following files or folders inside the `ansible/` directory
+
+* `hosts.<env_name>` - Host file containing IP addresses of servers
+* `roles/simple-server/files/.env.<env_name>` - Encrypted file containing environment variables and application secrets
+* `roles/common/ssh_keys/<env_name>/` - Directory containing SSH keys to be placed in the environment for developer access
+* `roles/passenger/files/etc/nginx/sites-available/simple.org-<env_name>` - Nginx configuration file for the Nginx web
+  servers placed on each EC2 instance
+
+## New Deployment
+
+To set up the required Ansible scripts for a new deployment of Simple, follow these steps
+
+### 1. Create the following files for the new environment
+  * `hosts.<env_name>` - Host file containing IP addresses of servers
+  * `roles/simple-server/files/.env.<env_name>` - Encrypted file containing environment variables and application secrets
+  * `roles/common/ssh_keys/<env_name>/` - Directory containing SSH keys to be placed in the environment for developer access
+  * `roles/passenger/files/etc/nginx/sites-available/simple.org-<env_name>` - Nginx configuration file for the Nginx web
+    servers placed on each EC2 instance
+
+### 2. Configure the new environment
+
+Populate the new files you've created with appropriate configurations. Use any of the existing files as a reference to
+get started, and then customize for your new environment. Notably, be sure to update the following parameters:
+* IP addresses in the `hosts` file
+* Domain names in the `.env` and `simple.org-` Nginx files
+* SSH keys in the `ssh_keys` directory
+* Environment variables in the `.env` file
+
+### 3. Deploy
+
+Run a deployment with
+
+```
+ansible-playbook -v --vault-id /path/to/password_file deploy.yml -i hosts.<env_name>
+```
+
+### 4. Document
+
+Add the new environment to the list of environments in the [Simple Server Handbook](https://docs.google.com/document/d/1VTVBr8HcLWK6Nrg4gQkuQKb3H8EtiqQA-zGWTu3ddHc/edit).
 
 ## Changing secrets
 
@@ -42,7 +101,7 @@ This will decrypt and open the appropriate config file in a temporary buffer for
 save and close the file. The ansible encrypted config file will now be updated. You can then commit these changes.
 
 
-## Updating configs
+## Updating Configs
 
 To update the appropriate environments with any new config changes merged to `master`, run the following command.
 
