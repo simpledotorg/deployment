@@ -15,7 +15,7 @@ if ! pg_dump -U {{ secrets.postgres.username }} {{ postgres.database_name }} | g
 else
     mv "$FILENAME".sql.gz.in_progress "$FILENAME".sql.gz
   {% for server in groups.storage %}
-    rsync -a "$BACKUP_DIR"*.gz {{ deploy_user }}@{{ server }}:{{ backups_destination_dir }}/$HOSTNAME/
+    rsync -a "$BACKUP_DIR"* {{ deploy_user }}@{{ server }}:{{ backups_destination_dir }}/$HOSTNAME/ --log-file="$FILENAME"-rsync.log
   {% endfor %}
 fi
 
