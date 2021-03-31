@@ -3,7 +3,7 @@ analytics_dashboard_cache_ttl=60
 app_env=demo
 default_country=ET
 deploy_env=ethiopia-demo
-domain_name=simple-demo.moh.gov.et
+domain_name=api-demo.et.simple.org
 
 [postgres:children]
 postgres_primary
