@@ -1,0 +1,13 @@
+- name: add ssh keys for ubuntu
+  become: true
+  authorized_key:
+    key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
+    user: ubuntu
+    exclusive: yes
+
+- name: add ssh keys for the deploy user
+  become: true
+  authorized_key:
+    key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
+    user: deploy
+    exclusive: yes
