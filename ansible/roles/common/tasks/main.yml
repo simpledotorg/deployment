@@ -71,13 +71,6 @@
   local_action: wait_for host={{ inventory_hostname }} port=22 delay=1 timeout=300
   when: restart_system.changed
 
-- name: add ssh keys for ubuntu
-  become: true
-  authorized_key:
-    key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
-    user: ubuntu
-    exclusive: yes
-
 - name: ensure fail2ban is running
   become: true
   action: service name=fail2ban state=restarted enabled=yes
@@ -115,13 +108,6 @@
     group: deploy
     shell: /bin/bash
   become: true
-
-- name: add ssh keys for the deploy user
-  become: true
-  authorized_key:
-    key: "{% for key in query('fileglob', 'ssh_keys/{{ deploy_env }}/*') %}{{ lookup('file', key) ~ '\n'}}{% endfor %}"
-    user: deploy
-    exclusive: yes
 
 - name: enable systemctl services for deploy user
   become: true

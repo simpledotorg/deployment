@@ -1,4 +1,5 @@
 ---
 - hosts: rails
   roles:
+    - { role: ssh, tags: ['ssh'] }
     - { role: simple-server, tags: ['simple-server'] }
