@@ -23,5 +23,5 @@ rsync_destination_dir: "/home/{{ deploy_user }}/logs/postgres"
 prometheus_postgres_dbname: "{{ postgres.database_name }}"
 backups_dir: "backups/"
 backups_destination_dir: "/home/{{ deploy_user }}/backups/postgres"
-backups_days_to_keep: 30
+backups_days_to_keep: 14
 
