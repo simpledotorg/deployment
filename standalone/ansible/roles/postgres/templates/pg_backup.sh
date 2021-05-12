@@ -19,4 +19,4 @@ else
   {% endfor %}
 fi
 
-find $BACKUP_DIR -maxdepth 0 -mtime +$DAYS_TO_KEEP -exec rm -rf '{}' ';'
+find $BACKUP_DIR -maxdepth 1 -mtime +$DAYS_TO_KEEP -exec rm -rf '{}' ';'
