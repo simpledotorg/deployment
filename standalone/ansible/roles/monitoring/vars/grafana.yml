@@ -6,7 +6,10 @@ grafana_datasources:
   - name: prometheus
     type: prometheus
     access: proxy
-    url: "http://{{ groups.prometheus.0 }}:{{ prometheus_port }}"
+    url: "http://{{ domain_name}}/prometheus"
+    basicAuth: true
+    basicAuthUser: admin
+    basicAuthPassword: "{{ monitoring_dashboard_password }}"
 grafana_dashboards:
   - dashboard_id: 11074 # Node exporter
     revision_id: 2
