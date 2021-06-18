@@ -2,3 +2,4 @@
 nginx_sites:
   - "simple.org-{{ deploy_env }}"
 app_name: "simple-server"
+bundler_version: "1.17.3"
