@@ -57,6 +57,10 @@ server {
     expires    max;
     add_header Cache-Control public;
   }
+
+  location /api/ {
+    client_max_body_size 5M;
+  }
 }
 
 server {
@@ -98,5 +102,9 @@ server {
   location = /favicon.ico {
     expires    max;
     add_header Cache-Control public;
+  }
+
+  location /api/ {
+    client_max_body_size 5M;
   }
 }
