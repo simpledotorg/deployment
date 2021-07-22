@@ -5,7 +5,7 @@ This project contains deployment scripts for running [simple-server](https://git
 We use [terraform](https://www.terraform.io/) for provisioning servers and [ansible](http://docs.ansible.com/) for orchestration.
 
 - [`terraform/`](/terraform)-  Scripts for provisioning infrastructure on AWS.
-- [`ansible/`](/ansible) - Scripts for setting up simple-server on AWS infrastructure.
+- [`ansible/`](/ansible) - Scripts for managing dependencies required to run simple-server on AWS infrastructure.
 - [`standalone/`](/standalone) - Scripts for setting up simple-server on bare-metal servers or vanilla VMs. It sets up simple-server with the required peripherals (load balancing, monitoring etc.) and aims to be independent of third party applications as far as possible.
 - [`docs/`](/docs) - Miscellaneous docs.
 
@@ -14,7 +14,7 @@ We use [terraform](https://www.terraform.io/) for provisioning servers and [ansi
 To set up a new deployment of Simple on AWS, follow these steps:
 
 1. Use the [`terraform/`](/terraform) documentation to provision the necessary infrastructure on AWS
-1. Use the [`ansible/`](/ansible) documentation to configure your AWS infrastructure
+1. Use the [`ansible/`](/ansible) documentation to install dependencies required to run `simple-server` on AWS infrastructure
 1. Use the [`Simple Server Deployment`](https://github.com/simpledotorg/simple-server#deployment) documentation to install and run the simple-server application
 
 ## New Standalone Deployment
