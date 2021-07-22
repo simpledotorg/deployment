@@ -1,0 +1,15 @@
+#! /bin/bash
+
+DIR="${2:-**}"
+
+for f in ${DIR}/*.pem
+do
+  echo "Encrypting $f to $f.vault"
+  cat $f | ansible-vault encrypt --vault-id $1 --output $f.vault
+done
+
+for f in ${DIR}/*.tfvars
+do
+  echo "Encrypting $f to $f.vault"
+  cat $f | ansible-vault encrypt --vault-id $1 --output $f.vault
+done
