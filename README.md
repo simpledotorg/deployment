@@ -14,7 +14,7 @@ We use [terraform](https://www.terraform.io/) for provisioning servers and [ansi
 To set up a new deployment of Simple on AWS, follow these steps:
 
 1. Use the [`terraform/`](/terraform) documentation to provision the necessary infrastructure on AWS
-1. Use the [`ansible/`](/ansible) documentation to set up simple-server on the AWS infrastructure
+1. Use the [`ansible/`](/ansible) documentation to configure your AWS infrastructure
 1. Use the [`Simple Server Deployment`](https://github.com/simpledotorg/simple-server#deployment) documentation to install and run the simple-server application
 
 ## New Standalone Deployment
