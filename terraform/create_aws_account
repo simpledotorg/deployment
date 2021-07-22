@@ -1,0 +1,21 @@
+#! /bin/bash
+
+if [[ -z "$1" ]]; then
+  echo "Usage: ./encrypt [account name]" 1>&2
+  exit 1
+fi
+
+if [[ -d "$1" ]]; then
+  echo "Account name already exists. Please choose a different account name."
+  exit 1
+fi
+
+echo "Creating $1 directory"
+mkdir $1
+
+for f in example/*.example
+do
+  destination="$1/`basename $f | sed -e 's/\.example$//'`"
+  echo "Copying $f to $destination"
+  cp $f $destination
+done

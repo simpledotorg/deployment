@@ -1,0 +1,13 @@
+demo_database_username = "simple_db_master_user"
+demo_database_password =
+
+production_database_username = "simple_db_master_user"
+production_database_password =
+
+certificate_body_file = "./certificate.pem"
+certificate_chain_file = "./certificate.chain.pem"
+certificate_private_key_file = "./certificate.private_key.pem"
+
+slack_webhook_url = "https://hooks.slack.com/services/<your Slack webhook URL>"
+slack_channel = "#alerts"
+slack_username = "Cloudwatch Notifications"
