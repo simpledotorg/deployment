@@ -209,7 +209,7 @@ follow these instructions. This setup needs to be run only once per AWS account.
  IAMFullAccess
 ```
 - Create a user with API-only access and add it to the `Provisioners` group. Keep a note of the user's AWS access ID and secret key
-- Choose a profile name for the new AWS account. (eg. `kerala`, `ihci`, `bangladesh`)
+- Choose a profile name for the new AWS account. (eg. `ihci`, `bangladesh`)
 - Add the user's access ID and secret key to your local AWS credentials file under the chosen AWS profile.
  See [using AWS credential files.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 - Create an s3 bucket. Add the bucket's name to `main.tf` > `terraform` > `backend` > `bucket`
@@ -219,14 +219,14 @@ follow these instructions. This setup needs to be run only once per AWS account.
 ### 2. Add the new environment to the repository
 
 Run the following script from the `terraform/` directory to create a directory for your new environment. If your new
-environment's name is `kerala`:
+environment's name is `bangladesh`:
 
 ```bash
 $ cd terraform
-$ ./create_aws_account kerala
+$ ./create_aws_account bangladesh
 ```
 
-This will create a `kerala/` directory with several files.
+This will create a `bangladesh/` directory with several files.
 
 * `main.tf`
 * `terraform.tfvars`
