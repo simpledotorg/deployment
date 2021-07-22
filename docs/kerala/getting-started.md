@@ -71,9 +71,11 @@ aws_secret_access_key=<Add Secret Key from previous step here>
 
 ### 2. Add the new environment to the repository
 
-Run the following script from the `terraform/` directory to create a directory for your new environment.
+Run the following script from the `terraform/` directory of the `deployment` repository to create a directory for your
+new environment.
 
 ```bash
+$ cd deployment
 $ cd terraform
 $ ./create_aws_account kerala
 ```
@@ -91,7 +93,8 @@ This will create a `bangladesh/` directory with several files.
 
 You will have to edit these files as follows:
 
-* `main.tf`: Update the `profile` value throughout this file from `sample` to `kerala`
+* `main.tf`: Update the `profile` value throughout this file from `sample` to `kerala`. Remove the
+  `module "simple_server_sample_demo"` block if you do not wish to set up a demo environment.
 * `terraform.tfvars`: Choose any username and password for your databases and enter them into this file.
 * `certificate.pem`: Place your SSL certificate in this file.
 * `certificate.chain.pem`: Place your SSL certificate chain in this file.
@@ -193,4 +196,47 @@ This will provision all the necessary infrastructure for one demo and one produc
 
 ## Install required dependencies on AWS infrastructure
 
-### 1. Navigate to the
+### 1. Navigate to the Ansible directory
+
+Navigate to the `ansible` directory in the `deployment` repository
+
+```bash
+$ cd ansible
+```
+
+### 2. Initialize Ansible
+
+```bash
+$ ansible-galaxy install requirements.yml
+```
+
+### 3. Create the following files for your new environment
+
+* `group_vars/kerala-production` - File containing some environment-specific Ansible variables
+* `hosts.kerala-production` - Host file containing IP addresses of servers
+* `roles/simple-server/files/.env.kerala-production` - Encrypted file containing environment variables and application secrets
+* `roles/common/ssh_keys/kerala-production/` - Directory containing SSH keys to be placed in the environment for developer access
+* `roles/passenger/files/etc/nginx/sites-available/simple.org-kerala-production` - Nginx configuration file for the Nginx web
+  servers placed on each EC2 instance
+
+### 4. Configure the new environment
+
+Populate the new files you've created with appropriate configurations. Use any of the existing files as a reference to
+get started, and then customize for your new environment. Notably, be sure to update the following parameters:
+
+* Set the environment name in the `group_vars` file to  `kerala-production`
+* Add the IP addresses of your EC2 instances (created in the steps above) to the `hosts` file
+* Choose what domain you'd like Simple to be hosted at. Add the domain to the `.env` and `simple.org-` Nginx files
+* Add SSH keys for all authorized technical staff to the `ssh_keys/kerala-production` directory
+* Configure the environment variables in the `.env.kerala-production` file. Contact the Simple team
+  for support on how to configure this file.
+
+### 5. Deploy the configuration
+
+Run a deployment with
+
+```
+ansible-playbook -v --vault-id /path/to/password_file deploy.yml -i hosts.kerala-production
+```
+
+This will configure your EC2 instances with all the necessary dependencies to run Simple.
