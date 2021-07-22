@@ -51,6 +51,7 @@ for information on what each of these environments are for.
 
 Each environment has its own copies of the following files or folders inside the `ansible/` directory
 
+* `group_vars/<env_name>` - File containing some environment-specific Ansible variables
 * `hosts.<env_name>` - Host file containing IP addresses of servers
 * `roles/simple-server/files/.env.<env_name>` - Encrypted file containing environment variables and application secrets
 * `roles/common/ssh_keys/<env_name>/` - Directory containing SSH keys to be placed in the environment for developer access
@@ -62,6 +63,7 @@ Each environment has its own copies of the following files or folders inside the
 To set up the required Ansible scripts for a new deployment of Simple, follow these steps
 
 ### 1. Create the following files for the new environment
+  * `group_vars/<env_name>` - File containing some environment-specific Ansible variables
   * `hosts.<env_name>` - Host file containing IP addresses of servers
   * `roles/simple-server/files/.env.<env_name>` - Encrypted file containing environment variables and application secrets
   * `roles/common/ssh_keys/<env_name>/` - Directory containing SSH keys to be placed in the environment for developer access
