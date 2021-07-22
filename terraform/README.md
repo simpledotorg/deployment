@@ -136,18 +136,7 @@ information how to store your AWS credentials on your machine.
 $ terraform init
 ```
 
-### 6. Encrypt any changed secrets
-
-If you modify a decrypted file during development, update the encrypted file and check it into the repository. For
-example, if you've modified `terraform.tfvars`,
-
-```bash
-$ cat terraform.tfvars | ansible-vault encrypt --vault-id ~/.vault_password --output terraform.tfvars.vault
-$ git add terraform.tfvars.vault
-$ git commit -m 'Update Bangladesh terraform secrets'
-```
-
-### 7. Verify your changes
+### 6. Verify your changes
 
 After development, run `terraform plan` to check whether the execution plan for your set of changes matches your
 expectations without making any changes to real resources.
@@ -173,6 +162,21 @@ To work around this problem,
 * Replace the conditional count with a hard-coded value for now - `count = 1`
 * Proceed with the rest of this guide
 * After a successful `terraform apply`, undo your temporary changes
+
+### 7. Encrypt any changed secrets
+
+If you modify a decrypted file during development, re-encrypt all files and check them into the codebase. You can use
+the `encrypt` script, which works like the `decrypt` script from Step 2.
+
+```bash
+$ cd ..
+$ ./encrypt ~/.vault_password bangladesh
+$ git add **/*.vault
+$ git commit -m 'Update Bangladesh terraform secrets'
+```
+
+Note that the `encrypt` script will update _all_ vault files, even if you didn't change anything inside. This is
+expected, as ansible-vault encryption [is not idempotent](https://github.com/ansible/ansible/issues/10595).
 
 ### 8. Apply
 
