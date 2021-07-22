@@ -80,7 +80,7 @@ $ cd terraform
 $ ./create_aws_account kerala
 ```
 
-This will create a `bangladesh/` directory with several files.
+This will create a `kerala/` directory with several files.
 
 * `main.tf`: The main file containing a starting terraform configuration. It includes a demo and production Simple
   environment for your new account.
