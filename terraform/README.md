@@ -85,6 +85,12 @@ Decrypting development/terraform.tfvars.vault to development/terraform.tfvars
 Even if you've already decrypted these files, it's a good idea to do this again, as the contents of the encrypted files
 may have changed since you last decrypted them.
 
+#### Deploying your own instance of Simple?
+
+If you are using not a part of the Simple engineering team, and you are deploying your own instance of
+Simple, you should create your own ansible-vault password. See [ansible-vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html)
+documentation for more details on how to do this.
+
 ### 3. Navigate to the AWS environment that you wish to work on.
 
 Each AWS account has a separate subdirectory in the repository. Navigate to the one you wish to work on.
