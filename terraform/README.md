@@ -30,6 +30,25 @@ $ touch ~/.ssh/simple_aws_key ~/.ssh/simple_aws_key.pub
 
 * Add the contents of the "Public key" to `simple_aws_key.pub`
 
+#### Deploying your own instance of Simple?
+
+If you are using not a part of the Simple engineering team, and you are deploying your own instance of
+Simple, you should create your own SSH keypair.
+
+* Create a keypair. You can use [any resource](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for more information on how to generate an SSH keypair.
+
+```bash
+$ ssh-keygen -t ed25519-sk -C "your_email@example.com"
+```
+
+* When prompted, enter `simple_aws_key` as the name of the new keypair.
+
+* Add the new key to your SSH agent
+
+```bash
+$ ssh-add simple_aws_key
+```
+
 ### 2. Decrypt all encrypted terraform files
 
 Sensitive terraform configuration is stored and checked into Github as encrypted files using
