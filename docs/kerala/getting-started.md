@@ -227,7 +227,7 @@ get started, and then customize for your new environment. Notably, be sure to up
 * Set the environment name in the `group_vars` file to  `kerala-production`
 * Add the IP addresses of your EC2 instances (created in the steps above) to the `hosts` file
 * Choose what domain you'd like Simple to be hosted at. Add the domain to the `.env` and `simple.org-` Nginx files
-* Add SSH keys for all authorized technical staff to the `ssh_keys/kerala-production` directory
+* Add SSH keys for all authorized technical staff to the `ssh_keys/kerala-production` directory. Be sure to add your own SSH key as well.
 * Configure the environment variables in the `.env.kerala-production` file. Contact the Simple team
   for support on how to configure this file.
 
@@ -240,3 +240,75 @@ ansible-playbook -v --vault-id /path/to/password_file deploy.yml -i hosts.kerala
 ```
 
 This will configure your EC2 instances with all the necessary dependencies to run Simple.
+
+## Install and launch Simple
+
+### 1. Navigate to the Simple Server repository
+
+```bash
+$ cd simple-server
+```
+
+### 2. Install required ruby dependencies
+
+```bash
+$ bundle install
+```
+
+### 3. Create a config file
+
+Create a new file in `config/deploy/kerala/production.rb` for the new environment. Populate the new config file with relevant IP address info. Use an existing file for reference. For example,
+the configuration for a deployment with two EC2 instances may look like:
+```
+server "ec2-12-111-34-45.ap-south-1.compute.amazonaws.com", user: "deploy", roles: %w[web app db cron whitelist_phone_numbers seed_data]
+server "ec2-12-222-67-89.ap-south-1.compute.amazonaws.com", user: "deploy", roles: %w[web sidekiq]
+```
+
+The first server runs the web application and cron tasks, the second server runs Sidekiq to process background jobs. Use
+the URLs of your EC2 instances from the first steps in this guide to populate this file.
+
+### 4. Install Sidekiq
+
+A one-time installation of Sidekiq is required in new environments. Run the following command:
+
+```bash
+bundle exec cap kerala:production sidekiq:install
+```
+
+### 5. Deploy
+
+Install and run Simple Server on your servers by running the following command.
+
+```bash
+bundle exec cap kerala:production deploy
+```
+
+This may take a long time for the first deployment, since several dependencies (like Ruby) need to be installed.
+Subsequent deployments will be much faster.
+
+### 6. Set up the Simple database
+
+Run the following commands to set up the Simple database.
+
+```bash
+$ bundle exec cap kerala:production deploy:rake task="db:schema:load"
+```
+
+### 7. Create a power user account
+
+Create a power user (administrator) account for yourself to log into the Simple Server dashboard
+
+```bash
+$ bundle exec cap kerala:production deploy:rake task="create_admin_user[<your name>,<your email address>,<your password>]"
+```
+
+### 8. Configure DNS
+
+Find the URL of your AWS Load Balancer on the [AWS Console](https://ap-south-1.console.aws.amazon.com/ec2/v2/home#LoadBalancers:sort=loadBalancerName).
+
+Create a `CNAME` record on your DNS provider that points your chosen domain (eg. simple.kerala.gov.in) to the AWS Load Balancer URL.
+
+### 9. Verify
+
+Visit your chosen domain in a web browser. You should be directed to the Simple Dashboard. Log in with your
+power user account and you should be signed into the Simple dashboard.
