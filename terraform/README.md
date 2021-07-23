@@ -7,6 +7,7 @@ it supports:
 * [`development`](/development) - The Simple AWS Dev account, managing Sandbox, QA, and Security environments
 * [`bangladesh`](/bangladesh) - The Simple Bangladesh account, managing Bangladesh Demo and Bangaldesh Production
   environments
+* [`example`](/example) - A sample directory used as a template for creating new AWS accounts
 
 If you want to set up a new AWS account, go to [Setting Up A New AWS Account](#setting-up-a-new-aws-account). Otherwise
 go to [Getting Started](#getting-started).
@@ -29,6 +30,25 @@ $ touch ~/.ssh/simple_aws_key ~/.ssh/simple_aws_key.pub
 * Add the contents of the "Private key" to `simple_aws_key`
 
 * Add the contents of the "Public key" to `simple_aws_key.pub`
+
+#### Deploying your own instance of Simple?
+
+If you are using not a part of the Simple engineering team, and you are deploying your own instance of
+Simple, you should create your own SSH keypair.
+
+* Create a keypair. You can use [any resource](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for more information on how to generate an SSH keypair.
+
+```bash
+$ ssh-keygen -t ed25519-sk -C "your_email@example.com"
+```
+
+* When prompted, enter `simple_aws_key` as the name of the new keypair.
+
+* Add the new key to your SSH agent
+
+```bash
+$ ssh-add simple_aws_key
+```
 
 ### 2. Decrypt all encrypted terraform files
 
@@ -65,6 +85,12 @@ Decrypting development/terraform.tfvars.vault to development/terraform.tfvars
 
 Even if you've already decrypted these files, it's a good idea to do this again, as the contents of the encrypted files
 may have changed since you last decrypted them.
+
+#### Deploying your own instance of Simple?
+
+If you are using not a part of the Simple engineering team, and you are deploying your own instance of
+Simple, you should create your own ansible-vault password. See [ansible-vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html)
+documentation for more details on how to do this.
 
 ### 3. Navigate to the AWS environment that you wish to work on.
 
@@ -111,18 +137,7 @@ information how to store your AWS credentials on your machine.
 $ terraform init
 ```
 
-### 6. Encrypt any changed secrets
-
-If you modify a decrypted file during development, update the encrypted file and check it into the repository. For
-example, if you've modified `terraform.tfvars`,
-
-```bash
-$ cat terraform.tfvars | ansible-vault encrypt --vault-id ~/.vault_password --output terraform.tfvars.vault
-$ git add terraform.tfvars.vault
-$ git commit -m 'Update Bangladesh terraform secrets'
-```
-
-### 7. Verify your changes
+### 6. Verify your changes
 
 After development, run `terraform plan` to check whether the execution plan for your set of changes matches your
 expectations without making any changes to real resources.
@@ -149,6 +164,21 @@ To work around this problem,
 * Proceed with the rest of this guide
 * After a successful `terraform apply`, undo your temporary changes
 
+### 7. Encrypt any changed secrets
+
+If you modify a decrypted file during development, re-encrypt all files and check them into the codebase. You can use
+the `encrypt` script, which works like the `decrypt` script from Step 2.
+
+```bash
+$ cd ..
+$ ./encrypt ~/.vault_password bangladesh
+$ git add **/*.vault
+$ git commit -m 'Update Bangladesh terraform secrets'
+```
+
+Note that the `encrypt` script will update _all_ vault files, even if you didn't change anything inside. This is
+expected, as ansible-vault encryption [is not idempotent](https://github.com/ansible/ansible/issues/10595).
+
 ### 8. Apply
 
 Once you are confident with the execution plan, run `terraform apply` to apply your changes to the AWS environment.
@@ -161,6 +191,8 @@ $ terraform apply
 
 If you are setting up a new AWS account to be managed by terraform (eg. a Simple Server instance in a new country),
 follow these instructions. This setup needs to be run only once per AWS account.
+
+### 1. Set up your AWS account
 
 - Create an AWS account.
 - Create an IAM user group in the new AWS account called `Provisioners` with the following policies (`My Security Credentials` > `Groups` > `Create new group`)
@@ -177,14 +209,56 @@ follow these instructions. This setup needs to be run only once per AWS account.
  IAMFullAccess
 ```
 - Create a user with API-only access and add it to the `Provisioners` group. Keep a note of the user's AWS access ID and secret key
-- Choose a profile name for the new AWS account. (eg. `kerala`, `ihci`, `bangladesh`)
+- Choose a profile name for the new AWS account. (eg. `ihci`, `bangladesh`)
 - Add the user's access ID and secret key to your local AWS credentials file under the chosen AWS profile.
  See [using AWS credential files.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
 - Create an s3 bucket. Add the bucket's name to `main.tf` > `terraform` > `backend` > `bucket`
 - Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
   called `terraform-lock` with `LockID` as primary key.
-- Create a directory in this repository similar to `development/` with the name of the chosen AWS profile set in its `main.tf`.
-  See [managing environments](#managing-environments) to customize your infrastructure.
+
+### 2. Add the new environment to the repository
+
+Run the following script from the `terraform/` directory to create a directory for your new environment. If your new
+environment's name is `bangladesh`:
+
+```bash
+$ cd terraform
+$ ./create_aws_account bangladesh
+```
+
+This will create a `bangladesh/` directory with several files.
+
+* `main.tf`
+* `terraform.tfvars`
+* `certificate.pem`
+* `certificate.chain.pem`
+* `certificate.private_key.pem`
+
+### 3. Configure the new environment
+
+You will have to edit these files as follows:
+
+* `main.tf`: The main file containing a starting terraform configuration. It includes a demo and production Simple
+  environment for your new account. Tweak your infrastructure's configuration here. See [Terraform documentation](https://learn.hashicorp.com/collections/terraform/aws-get-started) for more details on how to configure this file.
+* `terraform.tfvars`: A git-ignored file where database credentials and other sensitive information is stored. Choose
+  any username and password for your databases and enter them into this file.
+* `certificate.pem`: Place your SSL certificate in this file.
+* `certificate.chain.pem`: Place your SSL certificate chain in this file.
+* `certificate.private_key.pem`: Place your SSL certificate private key in this file.
+
+### 4. Encrypt secrets
+
+Choose an [Ansible vault password](#vault-password) and store it somewhere on your machine (eg. `~/.vault_password`).
+
+Run the following script from the `terraform` directory to encrypt the sensitive `tfvars` and `pem` files so they can
+safely be checked into the repository.
+
+```bash
+$ cd terraform
+$ ./encrypt ~/.vault_password kerala
+```
+
+### Complete!
 
 Your AWS account and deployment repository are now ready for use. Go back to [Getting Started](#getting-started) to
 provision your infrastructure.
@@ -195,7 +269,19 @@ provision your infrastructure.
 - To setup a new env, you can start with duplicating one of the modules and tweak it to your needs.
 - To delete an env, simply remove the module from `main.tf`.
 
-## Helpful commands
+## Helpful commands and information
+
+### Vault password
+
+Sensitive terraform configuration is stored and checked into Github as encrypted files using
+[ansible-vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). These files are decrypted locally and
+git-ignored for local development. In order to decrypt and re-encrypt these files, you will need to use the correct
+vault password file.
+
+* For environments managed by the Simple team, the vault password can be found in 1Password.
+* Deploying your own instance of Simple? Choose your own vault password when you get started, and save it somewhere
+  securely, so it can be re-used to manage your instance of Simple.
+  See [Ansible documentation](https://docs.ansible.com/ansible/latest/user_guide/vault.html) for more information on how to create and manage vault passwords.
 
 ### Viewing/Editing vault files
 

@@ -5,7 +5,7 @@ This project contains deployment scripts for running [simple-server](https://git
 We use [terraform](https://www.terraform.io/) for provisioning servers and [ansible](http://docs.ansible.com/) for orchestration.
 
 - [`terraform/`](/terraform)-  Scripts for provisioning infrastructure on AWS.
-- [`ansible/`](/ansible) - Scripts for setting up simple-server on AWS infrastructure.
+- [`ansible/`](/ansible) - Scripts for managing dependencies required to run simple-server on AWS infrastructure.
 - [`standalone/`](/standalone) - Scripts for setting up simple-server on bare-metal servers or vanilla VMs. It sets up simple-server with the required peripherals (load balancing, monitoring etc.) and aims to be independent of third party applications as far as possible.
 - [`docs/`](/docs) - Miscellaneous docs.
 
@@ -14,7 +14,7 @@ We use [terraform](https://www.terraform.io/) for provisioning servers and [ansi
 To set up a new deployment of Simple on AWS, follow these steps:
 
 1. Use the [`terraform/`](/terraform) documentation to provision the necessary infrastructure on AWS
-1. Use the [`ansible/`](/ansible) documentation to set up simple-server on the AWS infrastructure
+1. Use the [`ansible/`](/ansible) documentation to install dependencies required to run `simple-server` on AWS infrastructure
 1. Use the [`Simple Server Deployment`](https://github.com/simpledotorg/simple-server#deployment) documentation to install and run the simple-server application
 
 ## New Standalone Deployment
@@ -31,7 +31,7 @@ The `terraform/` setup is not fully utilized for all running environments yet. W
 ## Setting up Ansible Vault
 
 We use [ansible vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) to manage encrypted secrets. The recommended way to set things up is below, which will allow you to use `ansible-vault` to view / edit encryptes files without having to
-contsantly type in the password. This setup will also allow you to use `git diff` locally on encrypted files and make sense of them. Otherwise you are just diff'ing binary blobs.
+constantly type in the password. This setup will also allow you to use `git diff` locally on encrypted files and make sense of them. Otherwise you are just diff'ing binary blobs.
 
 1. Place the vault password in the repository root in a file named `.vault_password`. This file is gitignored and should never be checked in.
 2. Run the following to configure the diff driver
