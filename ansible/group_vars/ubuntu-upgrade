@@ -1,0 +1,3 @@
+---
+deploy_env: ubuntu-upgrade
+default_country: IN

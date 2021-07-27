@@ -1,0 +1,8 @@
+[simple]
+ec2-65-0-108-61.ap-south-1.compute.amazonaws.com
+
+[rails:children]
+simple
+
+[ubuntu-upgrade:children]
+simple
