@@ -7,20 +7,18 @@
     - dirmngr
     - gnupg
 
-- name: add passenger PGP key
-  apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7 state=present
-  become: true
-
-- name: add passenger apt repo
-  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main' state=present
-  become: true
-  register: passenger_repo
-
-- name: apt-get update
-  apt:
-    update_cache: yes
-  become: true
-  when: passenger_repo.changed
+- name: abcd
+  raw: sudo apt-get install nginx <<< y
+- name: abcde
+  raw: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+- name: abcde-3
+  raw: sudo apt-get install -y apt-transport-https ca-certificates
+- name: abcde-4
+  raw: sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main > /etc/apt/sources.list.d/passenger.list'
+- name: abcde-5
+  raw: sudo apt-get update
+- name: abcde-6
+  raw: sudo apt-get install -y libnginx-mod-http-passenger
 
 - name: install nginx and passenger packages
   apt: pkg={{ item }} state=latest
@@ -29,7 +27,6 @@
     - apt-transport-https
     - ca-certificates
     - nginx-extras
-    - passenger
   notify: restart nginx
 
 - name: re-configure nginx
