@@ -1,25 +1,25 @@
 # Pre-start passenger so the first request isn't slow
-passenger_pre_start http://api-qa.simple.org/;
+passenger_pre_start http://api-ubuntu-upgrade.simple.org/;
 
 server {
   listen 80;
-  server_name api-qa.simple.org;
+  server_name api-ubuntu-upgrade.simple.org;
 
   # Send all traffic to HTTPS
-  return 301 https://api-qa.simple.org$request_uri;
+  return 301 https://api-ubuntu-upgrade.simple.org$request_uri;
 }
 
 server {
   listen 80;
-  server_name api-qa.in.simple.org;
+  server_name api-ubuntu-upgrade.in.simple.org;
 
   # Send all traffic to HTTPS
-  return 301 https://api-qa.in.simple.org$request_uri;
+  return 301 https://api-ubuntu-upgrade.in.simple.org$request_uri;
 }
 
 server {
   listen 443;
-  server_name api-qa.simple.org;
+  server_name api-ubuntu-upgrade.simple.org;
 
   ssl on;
   ssl_certificate /etc/ssl/simple.org.crt;
@@ -65,7 +65,7 @@ server {
 
 server {
   listen 443 default_server;
-  server_name api-qa.in.simple.org;
+  server_name api-ubuntu-upgrade.in.simple.org;
 
   ssl on;
   ssl_certificate /etc/ssl/in.simple.org.crt;
