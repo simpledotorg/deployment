@@ -7,20 +7,37 @@
     - dirmngr
     - gnupg
 
-- name: abcd
-  raw: sudo apt-get install -y nginx
-- name: abcde
-  raw: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
-- name: abcde-3
-  raw: sudo apt-get install -y apt-transport-https ca-certificates
-- name: abcde-4
-  raw: sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger focal main > /etc/apt/sources.list.d/passenger.list'
-- name: abcde-5
-  raw: sudo apt-get update
-- name: abcde-6
-  raw: sudo apt-get install -y libnginx-mod-http-passenger
+- name: add passenger PGP key
+  apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7 state=present
+  become: true
 
-- name: install nginx and passenger packages
+- name: add passenger apt repo
+  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ansible_distribution_release }} main' state=present
+  become: true
+  register: passenger_repo
+
+- name: apt-get update
+  apt:
+    update_cache: yes
+  become: true
+  when: passenger_repo.changed
+
+- name: install nginx for 20.04
+  apt: pkg=nginx state=latest
+  become: true
+  when: ansible_facts['ansible_distribution_version'] == "20.04"
+
+- name: install passenger module for 16.04
+  apt: pkg=passenger state=latest
+  become: true
+  when: ansible_facts['ansible_distribution_version'] == "16.04"
+
+- name: install passenger module for 20.04
+  apt: pkg=libnginx-mod-http-passenger state=latest
+  become: true
+  when: ansible_facts['ansible_distribution_version'] == "20.04"
+
+- name: install passenger dependencies
   apt: pkg={{ item }} state=latest
   become: true
   with_items:
