@@ -25,17 +25,17 @@
 - name: install nginx for 20.04
   apt: pkg=nginx state=latest
   become: true
-  when: ansible_facts['ansible_distribution_version'] == "20.04"
+  when: ansible_distribution_version == "20.04"
 
 - name: install passenger module for 16.04
   apt: pkg=passenger state=latest
   become: true
-  when: ansible_facts['ansible_distribution_version'] == "16.04"
+  when: ansible_distribution_version == "16.04"
 
 - name: install passenger module for 20.04
   apt: pkg=libnginx-mod-http-passenger state=latest
   become: true
-  when: ansible_facts['ansible_distribution_version'] == "20.04"
+  when: ansible_distribution_version == "20.04"
 
 - name: install passenger dependencies
   apt: pkg={{ item }} state=latest
