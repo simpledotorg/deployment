@@ -26,6 +26,7 @@
   with_items:
     - apt-transport-https
     - ca-certificates
+    - nginx-extras
   notify: restart nginx
 
 - name: re-configure nginx
