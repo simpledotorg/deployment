@@ -15,6 +15,7 @@
   apt: pkg={{ item }} state=latest
   become: true
   with_items:
+    - acl
     - apache2-utils
     - awscli
     - build-essential

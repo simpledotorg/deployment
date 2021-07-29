@@ -12,7 +12,7 @@
   become: true
 
 - name: add passenger apt repo
-  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main' state=present
+  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ansible_distribution_release }} main' state=present
   become: true
   register: passenger_repo
 
@@ -22,18 +22,33 @@
   become: true
   when: passenger_repo.changed
 
-- name: install nginx and passenger packages
+- name: install passenger dependencies
   apt: pkg={{ item }} state=latest
   become: true
   with_items:
     - apt-transport-https
     - ca-certificates
     - nginx-extras
-    - passenger
-  notify: restart nginx
+
+- name: install nginx and passenger for Ubuntu 20.04
+  apt: pkg={{ item }} state=latest
+  become: true
+  with_items:
+    - nginx
+    - libnginx-mod-http-passenger
+  when: ansible_distribution_version == "20.04"
+
+- name: install passenger module for Ubuntu 16.04 # This should be removed when we stop supporting Ubuntu 16.04
+  apt: pkg=passenger state=latest
+  become: true
+  when: ansible_distribution_version == "16.04"
 
 - name: re-configure nginx
   copy: src=etc/nginx/nginx.conf dest=/etc/nginx/nginx.conf
+  become: true
+
+- name: set passenger module config
+  copy: src=etc/nginx/conf.d/mod-http-passenger.conf dest=/etc/nginx/conf.d/mod-http-passenger.conf
   become: true
   notify: restart nginx
 

@@ -133,6 +133,7 @@ module "simple_server_bangladesh_production" {
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
   ec2_instance_type             = "t2.medium"
+  ec2_ubuntu_version            = "16.04"
   database_username             = var.bangladesh_database_username
   database_password             = var.bangladesh_database_password
   instance_security_groups      = module.simple_networking.instance_security_groups
@@ -157,6 +158,7 @@ module "simple_server_bangladesh_staging" {
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
   ec2_instance_type             = "t2.medium"
+  ec2_ubuntu_version            = "16.04"
   database_username             = var.bangladesh_staging_database_username
   database_password             = var.bangladesh_staging_database_password
   instance_security_groups      = module.simple_networking.instance_security_groups
