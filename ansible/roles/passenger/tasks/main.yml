@@ -30,7 +30,7 @@
     - ca-certificates
     - nginx-extras
 
-- name: install nginx and passenger for 20.04
+- name: install nginx and passenger for Ubuntu 20.04
   apt: pkg={{ item }} state=latest
   become: true
   with_items:
@@ -38,7 +38,7 @@
     - libnginx-mod-http-passenger
   when: ansible_distribution_version == "20.04"
 
-- name: install passenger module for 16.04 # This should be removed when we stop supporting 16.04
+- name: install passenger module for Ubuntu 16.04 # This should be removed when we stop supporting Ubuntu 16.04
   apt: pkg=passenger state=latest
   become: true
   when: ansible_distribution_version == "16.04"
