@@ -22,21 +22,6 @@
   become: true
   when: passenger_repo.changed
 
-- name: install nginx for 20.04
-  apt: pkg=nginx state=latest
-  become: true
-  when: ansible_distribution_version == "20.04"
-
-- name: install passenger module for 16.04
-  apt: pkg=passenger state=latest
-  become: true
-  when: ansible_distribution_version == "16.04"
-
-- name: install passenger module for 20.04
-  apt: pkg=libnginx-mod-http-passenger state=latest
-  become: true
-  when: ansible_distribution_version == "20.04"
-
 - name: install passenger dependencies
   apt: pkg={{ item }} state=latest
   become: true
@@ -44,7 +29,19 @@
     - apt-transport-https
     - ca-certificates
     - nginx-extras
-  notify: restart nginx
+
+- name: install nginx and passenger for 20.04
+  apt: pkg={{ item }} state=latest
+  become: true
+  with_items:
+    - nginx
+    - libnginx-mod-http-passenger
+  when: ansible_distribution_version == "20.04"
+
+- name: install passenger module for 16.04 # This should be removed when we stop supporting 16.04
+  apt: pkg=passenger state=latest
+  become: true
+  when: ansible_distribution_version == "16.04"
 
 - name: re-configure nginx
   copy: src=etc/nginx/nginx.conf dest=/etc/nginx/nginx.conf
