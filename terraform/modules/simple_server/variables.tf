@@ -8,6 +8,11 @@ variable "ec2_instance_type" {
   type        = string
 }
 
+variable "ec2_ubuntu_version" {
+  description = "The ubuntu version to be installed on the ec2 servers"
+  type        = string
+}
+
 variable "server_count" {
   description = "The number of instance for ec2 servers"
   type        = number
