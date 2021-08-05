@@ -5,5 +5,5 @@ ec2-15-206-194-112.ap-south-1.compute.amazonaws.com
 [rails:children]
 simple
 
-[bangladesh-demo:children]
+[sri-lanka-demo:children]
 simple

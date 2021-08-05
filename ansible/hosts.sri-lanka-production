@@ -6,5 +6,5 @@ ec2-3-7-252-193.ap-south-1.compute.amazonaws.com
 [rails:children]
 simple
 
-[bangladesh-production:children]
+[sri-lanka-production:children]
 simple
