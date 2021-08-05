@@ -1,0 +1,9 @@
+[simple]
+ec2-15-206-165-200.ap-south-1.compute.amazonaws.com
+ec2-15-206-194-112.ap-south-1.compute.amazonaws.com
+
+[rails:children]
+simple
+
+[bangladesh-demo:children]
+simple
