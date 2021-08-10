@@ -63,7 +63,7 @@ Each environment has its own copies of the following files or folders inside the
 * `group_vars/<env_name>` - File containing some environment-specific Ansible variables
 * `hosts.<env_name>` - Host file containing IP addresses of servers
 * `roles/simple-server/files/.env.<env_name>` - Encrypted file containing environment variables and application secrets
-* `roles/ssh/ssh_keys/<env_name>/` - Directory containing SSH keys to be placed in the environment for developer access
+* `roles/ssh/files/ssh_keys/<env_name>/` - Directory containing SSH keys to be placed in the environment for developer access
 * `roles/passenger/files/etc/nginx/sites-available/simple.org-<env_name>` - Nginx configuration file for the Nginx web
   servers placed on each EC2 instance
 
