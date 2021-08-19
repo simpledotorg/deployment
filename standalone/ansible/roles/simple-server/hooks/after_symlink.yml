@@ -15,7 +15,7 @@
     chdir: "{{ ansistrano_release_path.stdout }}"
 
 - name: migrate the db
-  command: "{{ bundle_path }} exec rake db:migrate"
+  command: "{{ bundle_path }} exec rake db:migrate:with_data"
   run_once: true
   args:
     chdir: "{{ ansistrano_release_path.stdout }}"
