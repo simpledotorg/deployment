@@ -40,7 +40,6 @@
   copy:
     content: "{{ haproxy_cert_names | map('regex_replace', '^(.*)$', '\\1.pem') | join('\n') }}"
     dest: "{{ haproxy_crt_list }}"
-  notify: restart haproxy
   become: true
 
 - name: update HAProxy config
@@ -48,7 +47,6 @@
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
     backup: yes
-  notify: restart haproxy
   become: true
 
 - name: allow all tcp access to port 80
@@ -71,6 +69,11 @@
     port: "{{ haproxy_stats_port }}"
     proto: tcp
   become: true
+
+- name: restart haproxy
+  service:
+    name: haproxy
+    state: restarted
 
 - name: restart rsyslog to begin logging
   service:
