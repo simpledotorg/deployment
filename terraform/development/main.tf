@@ -108,8 +108,7 @@ module "simple_networking" {
 # slack alerts lambda
 #
 module "notify_slack" {
-  source  = "terraform-aws-modules/notify-slack/aws"
-  version = "2.15.0"
+  source = "github.com/terraform-aws-modules/terraform-aws-notify-slack.git?ref=v2.4.0"
 
   sns_topic_name       = "cloudwatch-to-slack"
   slack_webhook_url    = var.slack_webhook_url
