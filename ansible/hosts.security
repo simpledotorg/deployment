@@ -4,5 +4,5 @@ ec2-3-110-27-164.ap-south-1.compute.amazonaws.com
 [rails:children]
 simple
 
-[qa:children]
+[security:children]
 simple
