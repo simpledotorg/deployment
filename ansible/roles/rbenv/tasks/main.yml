@@ -1,5 +1,9 @@
 # rbenv tasks
 ---
+- name: "Print ruby version info as a sanity check"
+  debug:
+    msg: "ruby_version: {{ ruby_version }} bundler_version: {{ bundler_version }}"
+
 - name: clone rbenv git repo
   git: >
     repo=git://github.com/sstephenson/rbenv.git
@@ -51,15 +55,15 @@
   become: true
   become_user: deploy
 
-- name: install ruby 2.6.6
-  shell: rbenv install -s 2.6.6
+- name: install ruby {{ ruby_version }}
+  shell: rbenv install -s {{ ruby_version }}
   environment:
     PATH: "/home/deploy/.rbenv/bin:/home/deploy/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
   become: true
   become_user: deploy
 
 - name: make ruby global
-  shell: rbenv global 2.6.6
+  shell: rbenv global {{ ruby_version }}
   environment:
     PATH: "/home/deploy/.rbenv/bin:/home/deploy/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
   become: true
@@ -83,6 +87,6 @@
   become_user: deploy
 
 - name: install bundler
-  shell: ~/.rbenv/shims/gem install bundler -v '1.17.3'
+  shell: ~/.rbenv/shims/gem install bundler -v {{bundler_version}}
   become: true
   become_user: deploy
