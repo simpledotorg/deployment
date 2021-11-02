@@ -1,7 +1,7 @@
 # rbenv tasks
 ---
 - name: clone rbenv git repo
-  git: >
+  git:
     repo: "https://github.com/sstephenson/rbenv.git"
     dest: "~/.rbenv"
     accept_hostkey: "yes"
