@@ -48,10 +48,10 @@
   become_user: deploy
 
 - name: clone rbenv-gem-rehash git repo
-  git: >
-    repo=https://github.com/sstephenson/rbenv-gem-rehash.git
-    dest=~/.rbenv/plugins/rbenv-gem-rehash
-    accept_hostkey=yes
+  git:
+    repo: "https://github.com/sstephenson/rbenv-gem-rehash.git"
+    dest: "~/.rbenv/plugins/rbenv-gem-rehash"
+    accept_hostkey: "yes"
   become: true
   become_user: deploy
 
