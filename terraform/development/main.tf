@@ -183,7 +183,7 @@ module "simple_server_security" {
   deployment_name               = "development-security"
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
-  ec2_instance_type             = "t2.small"
+  ec2_instance_type             = "t2.large"
   ec2_ubuntu_version            = "16.04"
   database_username             = var.security_database_username
   database_password             = var.security_database_password
