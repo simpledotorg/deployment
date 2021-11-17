@@ -75,7 +75,7 @@ backend webservers
     mode {{ haproxy_backend_mode }}
     balance {{ haproxy_backend_balance_method }}
     option forwardfor
-{% if haproxy_backend_httpchk != '' %}
+{% if haproxy_health_check_endpoint != '' %}
     option httpchk
     http-check send meth GET uri {{ haproxy_health_check_endpoint }}
 {% endif %}
