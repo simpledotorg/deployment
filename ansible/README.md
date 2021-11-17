@@ -28,7 +28,7 @@ You then need to install any third party roles that we need via [ansible-galaxy]
 Run the below from the `ansible` directory:
 
 ```
-ansible-galaxy install requirements.yml
+ansible-galaxy install -r requirements.yml
 ```
 
 ### Obtain the Ansible vault password file
