@@ -76,7 +76,8 @@ backend webservers
     balance {{ haproxy_backend_balance_method }}
     option forwardfor
 {% if haproxy_backend_httpchk != '' %}
-    option httpchk {{ haproxy_backend_httpchk }}
+    option httpchk
+    http-check send meth GET uri {{ haproxy_health_check_endpoint }}
 {% endif %}
     cookie SERVERID insert indirect
 {% for server in groups.webservers %}

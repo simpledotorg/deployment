@@ -20,7 +20,7 @@ haproxy_crt_list: '/etc/ssl/crt-list.txt'
 # Backend settings.
 haproxy_backend_mode: 'http'
 haproxy_backend_balance_method: 'roundrobin'
-haproxy_backend_httpchk: 'HEAD / HTTP/1.1\r\nHost:localhost'
+haproxy_health_check_endpoint: '/api/v3/ping'
 
 # Extra global vars (see README for example usage).
 haproxy_global_vars: []
