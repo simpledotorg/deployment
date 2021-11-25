@@ -4,14 +4,14 @@ app_env=demo
 default_country=ET
 deploy_env=ettest
 ; domain_name=simple-ettest.moh.gov.et
-domain_name=128.199.20.220
+domain_name=167.71.232.82
 
 [postgres:children]
 postgres_primary
 postgres_secondary
 
 [postgres_primary]
-128.199.20.220 replication_role=primary
+167.71.232.82 replication_role=primary
 
 [postgres_secondary]
 64.227.160.81 replication_role=replica
@@ -21,11 +21,11 @@ webservers
 sidekiq
 
 [webservers]
-128.199.20.220
+167.71.232.82
 64.227.160.81
 
 [sidekiq]
-128.199.20.220
+167.71.232.82
 64.227.160.81
 
 [redis:children]
@@ -33,7 +33,7 @@ redis_primary
 redis_secondary
 
 [redis_primary]
-128.199.20.220
+167.71.232.82
 
 [redis_secondary]
 64.227.160.81
@@ -43,14 +43,14 @@ prometheus
 grafana
 
 [prometheus]
-128.199.20.220
+167.71.232.82
 
 [grafana]
-128.199.20.220
+167.71.232.82
 
 [storage]
 64.227.160.81
 
 [load_balancing]
-128.199.20.220
+167.71.232.82
 64.227.160.81
