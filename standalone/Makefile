@@ -28,7 +28,7 @@ help: ##@Miscellaneous Show this help.
 
 init: ##@Setup Install ansible plugins and dependencies
 	ansible-galaxy install -r ansible/requirements.yml
-	pip install jmespath
+	pip3 install jmespath
 
 all: ##@Setup Install simple-server on hosts. Runs the all.yml playbook
 	ansible-playbook --vault-id $(password_file) ansible/$@.yml -i hosts/$(hosts)
