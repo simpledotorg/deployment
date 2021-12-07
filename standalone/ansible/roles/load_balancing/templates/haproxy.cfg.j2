@@ -80,7 +80,7 @@ backend webservers
 {% endif %}
     cookie SERVERID insert indirect
 {% for server in groups.webservers %}
-    server simple-server{{ loop.index }} {{ server }}:{{ nginx_port }} cookie simple-server{{ loop.index }} check
+    server simple-server{{ loop.index }} {{ server }}:{{ nginx_port }} cookie simple-server{{ loop.index }} check inter 15s
 {% endfor %}
     http-request set-header X-Forwarded-Port %[dst_port]
     http-request add-header X-Forwarded-Proto https if { ssl_fc }
