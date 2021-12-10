@@ -92,13 +92,13 @@ groups:
         description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
     - alert: HostSwapIsFillingUp
-      expr: (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes)) * 100 > 80
+      expr: (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes)) * 100 > 90
       for: 20m
       labels:
         severity: warning
       annotations:
         summary: "Host swap is filling up (instance {{ $labels.instance }})"
-        description: "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+        description: "Swap is filling up (>90%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
     - alert: HostSystemdServiceCrashed
       expr: node_systemd_unit_state{state="failed"} == 1
