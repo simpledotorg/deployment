@@ -1,6 +1,9 @@
 [simple]
 ec2-3-108-62-212.ap-south-1.compute.amazonaws.com
 
+[sidekiq]
+ec2-3-108-62-212.ap-south-1.compute.amazonaws.com
+
 [rails:children]
 simple
 
