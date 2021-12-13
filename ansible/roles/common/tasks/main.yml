@@ -69,7 +69,7 @@
   register: restart_system
 
 - name: Wait for server to restart
-  local_action: wait_for host={{ inventory_hostname }} port=22 delay=1 timeout=300
+  local_action: wait_for host={{ inventory_hostname }} port=22 delay=2 timeout=3000
   when: restart_system.changed
 
 - name: ensure fail2ban is running
