@@ -3,3 +3,6 @@
   roles:
     - { role: ssh, tags: ['ssh'] }
     - { role: simple-server, tags: ['simple-server'] }
+- hosts: sidekiq
+  roles:
+    - { role: sidekiq, tags: ['sidekiq'] }
