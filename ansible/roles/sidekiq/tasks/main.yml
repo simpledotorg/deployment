@@ -1,0 +1,28 @@
+---
+- name: ensure user level systemd dir exists
+  file:
+    path: /home/{{ deploy_user }}/.config/systemd/user/
+    state: directory
+
+- name: copy sidekiq parent process systemd file
+  template:
+    src: config/systemd/user/sidekiq.service
+    dest: /home/{{ deploy_user }}/.config/systemd/user/sidekiq.service
+
+- name: copy sidekiq systemd file
+  template:
+    src: config/systemd/user/sidekiq@.service
+    dest: /home/{{ deploy_user }}/.config/systemd/user/sidekiq@.service
+
+- name: enable sidekiq
+  systemd:
+    name: sidekiq.service
+    enabled: yes
+    scope: user
+
+- name: restart sidekiq
+  systemd:
+    name: sidekiq.service
+    state: restarted
+    scope: user
+  tags: restart-sidekiq
