@@ -1,5 +1,8 @@
 [simple]
-ec2-13-127-111-26.ap-south-1.compute.amazonaws.com
+ec2-3-110-48-223.ap-south-1.compute.amazonaws.com
+
+[sidekiq]
+ec2-3-110-48-223.ap-south-1.compute.amazonaws.com
 
 [sidekiq]
 ec2-13-127-111-26.ap-south-1.compute.amazonaws.com
