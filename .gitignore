@@ -1,3 +1,7 @@
 .DS_STORE
 .terraform.tfvars
 .vault_password
+
+# Ignore utility configuration files
+.idea/
+

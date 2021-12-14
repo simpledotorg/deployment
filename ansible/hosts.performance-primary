@@ -1,6 +1,9 @@
 [simple]
 13.234.136.191
 
+[sidekiq]
+13.234.136.191
+
 [rails:children]
 simple
 
