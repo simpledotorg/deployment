@@ -1,0 +1,16 @@
+[Unit]
+Description=Sidekiq workers
+After=syslog.target network.target
+{% for i in range(sidekiq_processes) %}
+Wants=sidekiq@{{ i }}.service
+{% endfor %}
+
+[Service]
+Type=oneshot
+ExecStart=/bin/true
+ExecReload=/bin/kill -TSTP $MAINPID
+ExecStop=/bin/kill -TERM $MAINPID
+RemainAfterExit=true
+
+[Install]
+WantedBy=default.target

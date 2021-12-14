@@ -86,7 +86,7 @@ Populate the new files you've created with appropriate configurations. Use any o
 get started, and then customize for your new environment. Notably, be sure to update the following parameters:
 
 * Environment name in the `group_vars` file
-* IP addresses in the `hosts` file
+* IP addresses in the `hosts` file. Sidekiq hosts should be added under the `[sidekiq]` group.
 * Domain names in the `.env` and `simple.org-` Nginx files
 * SSH keys in the `ssh_keys` directory
 * Environment variables in the `.env` file
