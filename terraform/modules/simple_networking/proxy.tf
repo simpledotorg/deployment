@@ -42,6 +42,12 @@ resource "aws_alb_listener" "simple_listener_https" {
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
   certificate_arn   = aws_acm_certificate.cert.arn
 
+  lifecycle {
+    // We've started using an amazon provided certificate, which is manually generated for now
+    // This is for terraform to ignore the outdated certificate.
+    ignore_changes = [certificate_arn]
+  }
+
   default_action {
     type = "fixed-response"
 
