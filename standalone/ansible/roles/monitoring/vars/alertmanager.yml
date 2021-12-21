@@ -8,6 +8,11 @@ alertmanager_receivers:
         channel: "#ethiopia-alerts"
         title: '{% raw %}{{ template "slack-message-title" . }}{% endraw %}'
         text: '{% raw %}{{ template "slack-message-description" . }}{% endraw %}'
+    slack_test_configs:
+      - send_resolved: true
+        channel: "#ethiopia-test-alerts"
+        title: '{% raw %}{{ template "slack-message-title" . }}{% endraw %}'
+        text: '{% raw %}{{ template "slack-message-description" . }}{% endraw %}'    
 
 alertmanager_route:
   receiver: "slack"
