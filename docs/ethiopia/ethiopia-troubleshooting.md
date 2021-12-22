@@ -59,8 +59,8 @@ cd /var/log/nginx
 sudo tail -f error.log access.log
 # view last 3000 lines of both logs to scan for errors
 sudo tail -f error.log access.log
-# search for the string `error` (case insensitive) in the error.log w/ 4 lines of context
-sudo grep -i ERROR error.log -C4
+# search for the string `error` (case insensitive) in the error.log w/ 4 lines of context around any match
+sudo grep -i error error.log -C4
 ```
 
 The above are just examples of some things to start with, there are lots of other ways to drill down as you search for things.  Check out `man tail` and `man grep` for more details on those commands.
