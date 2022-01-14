@@ -1,5 +1,7 @@
 # Ansistrano after symlink tasks
 ---
+- name: Fix bundler path for bootboot
+  command: sed -i "s#{{ ansistrano_releases_path }}/[0-9,Z]\+/#{{ ansistrano_shared_path }}/#g" {{ ansistrano_shared_path }}/.bundle/plugin/index
 - name: Install required gems
   bundler:
     chdir: "{{ ansistrano_release_path.stdout }}"
