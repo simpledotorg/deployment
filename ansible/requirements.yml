@@ -1,5 +1,6 @@
 roles:
   - src: datadog.datadog
+    version: 4.13.0
 
 collections:
   - jonellis.sudoers
