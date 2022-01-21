@@ -107,7 +107,7 @@
 - sudoers:
     name: allow deploy user to restart passenger
     user: deploy
-    command: passenger-config restart-app /home/deploy/apps/simple-server --ignore-app-not-running
+    command: /usr/bin/env passenger-config restart-app /home/deploy/apps/simple-server --ignore-app-not-running
 
 - name: enable systemctl services for deploy user
   become: true

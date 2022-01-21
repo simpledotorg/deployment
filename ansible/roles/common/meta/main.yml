@@ -1,5 +1,2 @@
-roles:
-  - src: datadog.datadog
-
 collections:
   - jonellis.sudoers
