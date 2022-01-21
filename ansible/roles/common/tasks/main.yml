@@ -105,7 +105,7 @@
   become: true
 
 - sudoers:
-    name: allow deploy user to restart passenger
+    name: 91-restart-passenger
     user: deploy
     command: /usr/bin/env passenger-config restart-app /home/deploy/apps/simple-server --ignore-app-not-running
 
