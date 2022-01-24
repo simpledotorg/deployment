@@ -74,7 +74,6 @@ Note: AWS ec2 instances already come with an `ubuntu` sudoer.
 - Configure app environment variables in `roles/simple-server/vars/<deploy_env>/`. `deploy_env` is the shortname you wish to give to
   a specific deployment (e.g. `ethiopia-demo`, `bangladesh-production`).
     - `secrets.yml` contains secret env vars. Make sure this file is encrypted.
-    - `feature_flags.yml` contains feature flags.
     - See `roles/simple-server/vars/sample/` for a sample. These vars are interpolated into `roles/simple-server/vars/templates/.env.j2` and shipped.
 - Add your ssh keys to `ssh/files/ssh_keys/<deploy_env>`. These keys are added to all the servers to access the remote user(`ubuntu`) and the `deploy` user.
 - Set the following in the inventory file
