@@ -1,16 +1,21 @@
 ---
-- src: ansistrano.deploy
-- src: ansistrano.rollback
-- src: cloudalchemy.prometheus
-- src: cloudalchemy.alertmanager
-- src: cloudalchemy.grafana
-- src: cloudalchemy.node_exporter
-- src: davidwittman.redis
-- src: ome.prometheus_postgres
-- src: http://github.com/idealista/prometheus_redis_exporter_role.git
-  scm: git
-  version: 2.0.0
-  name: prometheus_redis_exporter
-- src: bdellegrazie.haproxy_exporter
-- src: bdellegrazie.nginx_exporter
-- src: datadog.datadog
+roles:
+  - src: ansistrano.deploy
+  - src: ansistrano.rollback
+  - src: cloudalchemy.prometheus
+  - src: cloudalchemy.alertmanager
+  - src: cloudalchemy.grafana
+  - src: cloudalchemy.node_exporter
+  - src: davidwittman.redis
+  - src: ome.prometheus_postgres
+  - src: http://github.com/idealista/prometheus_redis_exporter_role.git
+    scm: git
+    version: 2.0.0
+    name: prometheus_redis_exporter
+  - src: bdellegrazie.haproxy_exporter
+  - src: bdellegrazie.nginx_exporter
+  - src: datadog.datadog
+    version: 4.13.0
+
+collections:
+  - jonellis.sudoers
