@@ -81,12 +81,6 @@
   become: true
   notify: restart ssh
 
-  # Note: This MUST be last, otherwise if something fails we can't SSH back in as root
-- name: disable root SSH access
-  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
-  become: true
-  notify: restart ssh
-
 - name: set up logrotate
   copy: src={{ item }} dest=/etc/logrotate.d/ owner=root
   with_fileglob:
@@ -110,6 +104,18 @@
     shell: /bin/bash
   become: true
 
+- sudoers:
+    name: 91-restart-passenger
+    user: deploy
+    command: /usr/bin/env passenger-config restart-app /home/deploy/apps/simple-server --ignore-app-not-running
+  become: true
+
 - name: enable systemctl services for deploy user
   become: true
   shell: loginctl enable-linger deploy
+
+  # Note: This MUST be last, otherwise if something fails we can't SSH back in as root
+- name: disable root SSH access
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  become: true
+  notify: restart ssh
