@@ -10,6 +10,7 @@
     - { role: rbenv, tags: ['rbenv'] }
     - { role: nodejs, tags: ['nodejs'] }
     - { role: monit, tags: ['monit'] }
+    - { role: wkhtmltopdf, tags: ['wkhtmltopdf'] }
 - hosts: webservers
   roles:
     - { role: passenger, tags: ['passenger'] }
