@@ -113,3 +113,7 @@
 - name: enable systemctl services for deploy user
   become: true
   shell: loginctl enable-linger deploy
+
+- name: Install wkhtmltopdf from the GitHub released version
+  apt:
+    deb: https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb
