@@ -21,4 +21,5 @@ This is deployed on the bare-metal Dell servers in Ethiopia datacenters.
 
 * [Infrastructure](ethiopia-infrastructure.md)
 * [Database Access](ethiopia-database-access.md)
+* [Troubleshooting](ethiopia-troubleshooting.md)
 * [Install/Update SSL Certificates](ethiopia-ssl-certificates.md)
