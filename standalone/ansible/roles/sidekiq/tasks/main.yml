@@ -1,4 +1,10 @@
 ---
+- name: install jemalloc
+  apt:
+    pkg: libjemalloc-dev=5.2.1-1ubuntu1
+    state: present
+  become: true
+
 - name: ensure user level systemd dir exists
   file:
     path: /home/{{ deploy_user }}/.config/systemd/user/
