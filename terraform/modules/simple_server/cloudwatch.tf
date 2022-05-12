@@ -67,7 +67,7 @@ resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
   namespace                 = "AWS/RDS"
   period                    = "300"
   statistic                 = "Average"
-  threshold                 = "30"
+  threshold                 = "70"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
   ok_actions                = [var.cloudwatch_alerts_sns_arn]
   insufficient_data_actions = [var.cloudwatch_alerts_sns_arn]

@@ -166,7 +166,7 @@ module "simple_server_sri_lanka_demo" {
   server_vpc_id                 = module.simple_networking.server_vpc_id
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
-  host_urls                     = ["api-demo.lk.simple.org", "dashboard-demo.lk.simple.org"]
+  host_urls                     = ["api-demo.lk.simple.org", "dashboard-demo.lk.simple.org", "api-staging.lk.simple.org", "dashboard-staging.lk.simple.org"]
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   create_database_replica       = true
