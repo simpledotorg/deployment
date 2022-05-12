@@ -26,6 +26,11 @@
   become: true
   become_user: deploy
 
+- name: force reload service file
+  systemd:
+    daemon_reload: yes
+    scope: user
+
 - name: enable sidekiq
   systemd:
     name: sidekiq.service
@@ -33,11 +38,6 @@
     scope: user
   become: true
   become_user: deploy
-
-- name: force reload service file
-  systemd:
-    daemon_reload: yes
-    scope: user
 
 - name: restart sidekiq
   systemd:
