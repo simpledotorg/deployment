@@ -1,2 +1,2 @@
 ---
-sidekiq_processes: 4
+sidekiq_processes: 2

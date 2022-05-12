@@ -1,7 +1,7 @@
 ---
 - name: install jemalloc
   apt:
-    pkg: libjemalloc-dev=5.2.1-1ubuntu1
+    pkg: libjemalloc-dev=3.6.0-9ubuntu1
     state: present
   become: true
 
@@ -9,22 +9,35 @@
   file:
     path: /home/{{ deploy_user }}/.config/systemd/user/
     state: directory
+  become: true
+  become_user: "{{ deploy_user }}"
 
 - name: copy sidekiq parent process systemd file
   template:
     src: config/systemd/user/sidekiq.service
     dest: /home/{{ deploy_user }}/.config/systemd/user/sidekiq.service
+  become: true
+  become_user: "{{ deploy_user }}"
 
 - name: copy sidekiq systemd file
   template:
     src: config/systemd/user/sidekiq@.service
     dest: /home/{{ deploy_user }}/.config/systemd/user/sidekiq@.service
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: force reload service file
+  systemd:
+    daemon_reload: yes
+    scope: user
 
 - name: enable sidekiq
   systemd:
     name: sidekiq.service
     enabled: yes
     scope: user
+  become: true
+  become_user: "{{ deploy_user }}"
 
 - name: restart sidekiq
   systemd:
@@ -32,3 +45,5 @@
     state: restarted
     scope: user
   tags: restart-sidekiq
+  become: true
+  become_user: "{{ deploy_user }}"
