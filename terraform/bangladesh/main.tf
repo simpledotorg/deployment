@@ -2,14 +2,9 @@ variable "aws_region" {
   default = "ap-south-1"
 }
 
-provider "aws" {
-  region  = var.aws_region
-  profile = "bangladesh"
-
-  version = "~> 2.7"
-}
-
 terraform {
+  required_version = "~> 1.1.0"
+
   backend "s3" {
     bucket         = "simple-server-bangladesh-terraform-state"
     key            = "terraform.tfstate"
@@ -18,6 +13,18 @@ terraform {
     dynamodb_table = "terraform-lock"
     profile        = "bangladesh"
   }
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 4.9.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+  profile = "bangladesh"
 }
 
 #
@@ -114,7 +121,7 @@ module "simple_redis_param_group" {
 #
 module "notify_slack" {
   source  = "terraform-aws-modules/notify-slack/aws"
-  version = "3.2"
+  version = "5.0.0"
 
   sns_topic_name       = "cloudwatch-to-slack"
   slack_webhook_url    = var.slack_webhook_url
