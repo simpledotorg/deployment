@@ -1,9 +1,9 @@
 resource "aws_db_instance" "simple-database" {
   storage_encrypted             = true
-  allocated_storage             = 100
+  allocated_storage             = var.database_allocated_storage
   auto_minor_version_upgrade    = false
   engine                        = "postgres"
-  engine_version                = "10.3"
+  engine_version                = "10.17"
   count                         = 1
   identifier                    = format("simple-db-%s-%03d", replace(var.deployment_name, "_", "-"), count.index + 1)
   instance_class                = var.database_instance_type
@@ -40,7 +40,7 @@ resource "aws_db_instance" "replica_simple_database" {
   count               = var.create_database_replica ? (length(aws_db_instance.simple-database)) : 0
   identifier          = format("replica-simple-db-%s-%03d", replace(var.deployment_name, "_", "-"), count.index + 1)
   replicate_source_db = aws_db_instance.simple-database[count.index].identifier
-  instance_class      = "db.t2.medium"
+  instance_class      = var.database_replica_instance_type
   storage_encrypted   = true
   skip_final_snapshot = true
   final_snapshot_identifier = null

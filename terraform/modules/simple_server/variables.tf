@@ -25,6 +25,18 @@ variable "database_instance_type" {
   default     = "db.t2.medium"
 }
 
+variable "database_replica_instance_type" {
+  description = "The type of instance for database replica servers"
+  type        = string
+  default     = "db.t2.medium"
+}
+
+variable "database_allocated_storage" {
+  description = "The storage allocated for database servers (in GB)"
+  type        = string
+  default     = "100"
+}
+
 variable "database_username" {
   description = "Database Username"
   type        = string
