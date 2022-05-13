@@ -2,13 +2,6 @@ variable "aws_region" {
   default = "ap-south-1"
 }
 
-provider "aws" {
-  region  = var.aws_region
-  profile = "development"
-
-  version = "~> 2.7"
-}
-
 terraform {
   backend "s3" {
     bucket         = "simple-server-development-terraform-state"
@@ -18,7 +11,20 @@ terraform {
     dynamodb_table = "terraform-lock"
     profile        = "development"
   }
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 4.9.0"
+    }
+  }
 }
+
+provider "aws" {
+  region  = var.aws_region
+  profile = "development"
+}
+
 
 #
 # database u/p vars
@@ -118,7 +124,8 @@ module "simple_networking" {
 # slack alerts lambda
 #
 module "notify_slack" {
-  source = "github.com/terraform-aws-modules/terraform-aws-notify-slack.git?ref=v2.4.0"
+  source  = "terraform-aws-modules/notify-slack/aws"
+  version = "5.0.0"
 
   sns_topic_name       = "cloudwatch-to-slack"
   slack_webhook_url    = var.slack_webhook_url
