@@ -7,7 +7,7 @@ resource "aws_db_instance" "simple-database" {
   count                         = 1
   identifier                    = format("simple-db-%s-%03d", replace(var.deployment_name, "_", "-"), count.index + 1)
   instance_class                = var.database_instance_type
-  db_name                          = format("simple_db_%s_%03d", replace(var.deployment_name, "-", "_"), count.index + 1)
+  db_name                       = format("simple_db_%s_%03d", replace(var.deployment_name, "-", "_"), count.index + 1)
   username                      = var.database_username
   final_snapshot_identifier     = format("simple-db-%s-%03d-final", replace(var.deployment_name, "_", "-"), count.index + 1)
   copy_tags_to_snapshot         = true
