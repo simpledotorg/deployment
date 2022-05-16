@@ -1,0 +1,16 @@
+[simple]
+ec2-43-204-139-117.ap-south-1.compute.amazonaws.com
+ec2-3-109-221-181.ap-south-1.compute.amazonaws.com
+ec2-3-108-255-140.ap-south-1.compute.amazonaws.com
+ec2-3-110-145-230.ap-south-1.compute.amazonaws.com
+ec2-15-206-204-82.ap-south-1.compute.amazonaws.com
+ec2-3-7-54-93.ap-south-1.compute.amazonaws.com
+
+[sidekiq]
+ec2-3-7-54-93.ap-south-1.compute.amazonaws.com
+
+[rails:children]
+simple
+
+[india-production:children]
+simple
