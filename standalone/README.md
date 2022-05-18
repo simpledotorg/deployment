@@ -178,9 +178,11 @@ You will need a digitalocean account and an AWS account (for storing tfstate to 
 
 ### Provision the test servers
 
-- Install terraform with homebrew
+- Install terraform with tfenv
 ```bash
-brew install terraform0.12.21
+brew install tfenv
+tfenv install 1.1.0
+tfenv use 1.1.0
 ```
 - Add aws credentials to `~/.aws/credentials`:
     ```
