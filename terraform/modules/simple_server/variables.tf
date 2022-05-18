@@ -52,6 +52,12 @@ variable "database_subnet_group_name" {
   type        = string
 }
 
+variable "replica_database_instance_type" {
+  description = "The type of instance for the replica database"
+  type        = string
+  default     = "db.t2.medium"
+}
+
 variable "instance_security_groups" {
   description = "Security groups assigned to instance"
   type        = list(string)
