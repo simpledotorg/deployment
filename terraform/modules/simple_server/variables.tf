@@ -32,6 +32,12 @@ variable "database_instance_type" {
   default     = "db.t2.medium"
 }
 
+variable "database_postgres_version" {
+  description = "The postgres version to be installed on RDS"
+  type        = string
+  default     = "10.3"
+}
+
 variable "database_replica_instance_type" {
   description = "The type of instance for database replica servers"
   type        = string

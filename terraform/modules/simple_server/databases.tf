@@ -3,7 +3,7 @@ resource "aws_db_instance" "simple-database" {
   allocated_storage             = var.database_allocated_storage
   auto_minor_version_upgrade    = false
   engine                        = "postgres"
-  engine_version                = "10.17"
+  engine_version                = var.database_postgres_version
   count                         = 1
   identifier                    = format("simple-db-%s-%03d", replace(var.deployment_name, "_", "-"), count.index + 1)
   instance_class                = var.database_instance_type
