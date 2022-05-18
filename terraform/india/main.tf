@@ -126,6 +126,7 @@ module "notify_slack" {
 module "simple_server_india_production" {
   source                        = "../modules/simple_server"
   deployment_name               = "india-production"
+  database_postgres_version     = "10.17"
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
   ec2_instance_type             = "t3.xlarge"
@@ -139,7 +140,7 @@ module "simple_server_india_production" {
   server_vpc_id                 = module.simple_networking.server_vpc_id
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
-  host_urls                     = ["in.simple.org", "api.in.simple.org", "dashboard.in.simple.org", "api.simple.org", "test-india.simple.org"]
+  host_urls                     = ["test-india.simple.org"]
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   create_database_replica       = true
