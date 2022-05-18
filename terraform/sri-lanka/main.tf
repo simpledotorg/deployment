@@ -159,6 +159,23 @@ module "simple_server_sri_lanka_production" {
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
+output "simple_server_sri_lanka_production_server_instance_ips" {
+  value = module.simple_server_sri_lanka_production.server_instance_ips
+}
+
+output "simple_server_sri_lanka_production_sidekiq_instance_ips" {
+  value = module.simple_server_sri_lanka_production.sidekiq_instance_ips
+}
+
+output "simple_server_sri_lanka_production_cache_redis_url" {
+  value = module.simple_server_sri_lanka_production.cache_redis_url
+}
+
+output "simple_server_sri_lanka_production_sidekiq_redis_url" {
+  value = module.simple_server_sri_lanka_production.sidekiq_redis_url
+}
+
+
 module "simple_server_sri_lanka_demo" {
   source                        = "../modules/simple_server"
   deployment_name               = "sri-lanka-demo"
@@ -182,4 +199,24 @@ module "simple_server_sri_lanka_demo" {
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
   enable_cloudwatch_alerts      = true
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
+}
+
+output "simple_server_sri_lanka_demo_server_instance_ips" {
+  value = module.simple_server_sri_lanka_demo.server_instance_ips
+}
+
+output "simple_server_sri_lanka_demo_sidekiq_instance_ips" {
+  value = module.simple_server_sri_lanka_demo.sidekiq_instance_ips
+}
+
+output "simple_server_sri_lanka_demo_database_url" {
+  value = module.simple_server_sri_lanka_demo.database_url
+}
+
+output "simple_server_sri_lanka_demo_cache_redis_url" {
+  value = module.simple_server_sri_lanka_demo.cache_redis_url
+}
+
+output "simple_server_sri_lanka_demo_sidekiq_redis_url" {
+  value = module.simple_server_sri_lanka_demo.sidekiq_redis_url
 }

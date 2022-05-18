@@ -150,3 +150,24 @@ module "simple_server_india_production" {
   enable_cloudwatch_alerts      = true
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
+
+output "simple_server_india_production_server_instance_ips" {
+  value = module.simple_server_india_production.server_instance_ips
+}
+
+output "simple_server_india_production_sidekiq_instance_ips" {
+  value = module.simple_server_india_production.sidekiq_instance_ips
+}
+
+output "simple_server_india_production_database_url" {
+  value = module.simple_server_india_production.database_url
+}
+
+output "simple_server_india_production_cache_redis_url" {
+  value = module.simple_server_india_production.cache_redis_url
+}
+
+output "simple_server_india_production_sidekiq_redis_url" {
+  value = module.simple_server_india_production.sidekiq_redis_url
+}
+

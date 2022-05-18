@@ -73,3 +73,11 @@ resource "aws_lb_listener_rule" "simple_server_listener_rule" {
     }
   }
 }
+
+output "server_instance_ips" {
+  value = aws_instance.ec2_simple_server.*.public_dns
+}
+
+output "sidekiq_instance_ips" {
+  value = aws_instance.ec2_sidekiq_server.*.public_dns
+}

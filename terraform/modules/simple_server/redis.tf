@@ -45,3 +45,11 @@ resource "aws_security_group" "sg_simple_redis" {
     security_groups = [aws_security_group.sg_simple_server.id]
   }
 }
+
+output "cache_redis_url" {
+  value = aws_elasticache_cluster.simple_elasticache[0].cache_nodes.0.address
+}
+
+output "sidekiq_redis_url" {
+  value = aws_elasticache_cluster.simple_elasticache[0].cache_nodes.0.address
+}

@@ -165,6 +165,27 @@ module "simple_server_sandbox" {
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
+output "simple_server_sandbox_server_instance_ips" {
+  value = module.simple_server_sandbox.server_instance_ips
+}
+
+output "simple_server_sandbox_sidekiq_instance_ips" {
+  value = module.simple_server_sandbox.sidekiq_instance_ips
+}
+
+output "simple_server_sandbox_database_url" {
+  value = module.simple_server_sandbox.database_url
+}
+
+output "simple_server_sandbox_cache_redis_url" {
+  value = module.simple_server_sandbox.cache_redis_url
+}
+
+output "simple_server_sandbox_sidekiq_redis_url" {
+  value = module.simple_server_sandbox.sidekiq_redis_url
+}
+
+
 module "simple_server_qa" {
   source                        = "../modules/simple_server"
   deployment_name               = "development-qa"
@@ -187,6 +208,27 @@ module "simple_server_qa" {
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
+output "simple_server_qa_server_instance_ips" {
+  value = module.simple_server_qa.server_instance_ips
+}
+
+output "simple_server_qa_sidekiq_instance_ips" {
+  value = module.simple_server_qa.sidekiq_instance_ips
+}
+
+output "simple_server_qa_database_url" {
+  value = module.simple_server_qa.database_url
+}
+
+output "simple_server_qa_cache_redis_url" {
+  value = module.simple_server_qa.cache_redis_url
+}
+
+output "simple_server_qa_sidekiq_redis_url" {
+  value = module.simple_server_qa.sidekiq_redis_url
+}
+
+
 module "simple_server_security" {
   source                        = "../modules/simple_server"
   deployment_name               = "development-security"
@@ -208,6 +250,27 @@ module "simple_server_security" {
   enable_cloudwatch_alerts      = false
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
+
+output "simple_server_security_server_instance_ips" {
+  value = module.simple_server_security.server_instance_ips
+}
+
+output "simple_server_security_sidekiq_instance_ips" {
+  value = module.simple_server_security.sidekiq_instance_ips
+}
+
+output "simple_server_security_database_url" {
+  value = module.simple_server_security.database_url
+}
+
+output "simple_server_security_cache_redis_url" {
+  value = module.simple_server_security.cache_redis_url
+}
+
+output "simple_server_security_sidekiq_redis_url" {
+  value = module.simple_server_security.sidekiq_redis_url
+}
+
 
 /* This sets up a bunch of ec2 servers for the standalone setup
    with the appropriate security groups.

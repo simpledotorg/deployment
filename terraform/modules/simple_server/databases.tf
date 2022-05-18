@@ -45,3 +45,8 @@ resource "aws_db_instance" "replica_simple_database" {
   skip_final_snapshot = true
   final_snapshot_identifier = null
 }
+
+output "database_url" {
+  value = aws_db_instance.simple-database[0].endpoint
+}
+
