@@ -11,6 +11,7 @@ variable "ec2_instance_type" {
 variable "ec2_ubuntu_version" {
   description = "The ubuntu version to be installed on the ec2 servers"
   type        = string
+  default     = "20.04"
 }
 
 variable "server_count" {
