@@ -145,25 +145,6 @@ expectations without making any changes to real resources.
 ```bash
 $ terraform plan
 ```
-
-:warning: If you're setting up a new deployment, you may encounter an error that looks like the following:
-```
-Error: Invalid count argument
-
-  on ../modules/simple_server/cloudwatch.tf line 82, in resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts":
-  82:   count               = var.load_balancer_arn_suffix != "" && var.enable_cloudwatch_alerts ? 1 : 0
-
-The "count" value depends on resource attributes that cannot be determined
-until apply, so Terraform cannot predict how many instances will be created.
-To work around this, use the -target argument to first apply only the
-resources that the count depends on.
-```
-To work around this problem,
-* Go to the problematic line of code in the repository
-* Replace the conditional count with a hard-coded value for now - `count = 1`
-* Proceed with the rest of this guide
-* After a successful `terraform apply`, undo your temporary changes
-
 ### 7. Encrypt any changed secrets
 
 If you modify a decrypted file during development, re-encrypt all files and check them into the codebase. You can use
