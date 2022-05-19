@@ -172,6 +172,10 @@ output "simple_server_sample_production_sidekiq_redis_url" {
   value = module.simple_server_sample_production.sidekiq_redis_url
 }
 
+output "simple_server_sample_production_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
+}
+
 module "simple_server_sample_demo" {
   source                        = "../modules/simple_server"
   deployment_name               = "sample-demo"
@@ -214,4 +218,8 @@ output "simple_server_sample_demo_cache_redis_url" {
 
 output "simple_server_sample_demo_sidekiq_redis_url" {
   value = module.simple_server_sample_demo.sidekiq_redis_url
+}
+
+output "simple_server_sample_demo_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
 }

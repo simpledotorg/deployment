@@ -173,3 +173,6 @@ output "simple_server_india_production_sidekiq_redis_url" {
   value = module.simple_server_india_production.sidekiq_redis_url
 }
 
+output "simple_server_india_staging_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
+}
