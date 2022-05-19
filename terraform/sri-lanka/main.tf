@@ -16,14 +16,14 @@ terraform {
 
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 4.9.0"
     }
   }
 }
 
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
   profile = "sri_lanka"
 }
 
@@ -74,18 +74,18 @@ variable "certificate_private_key_file" {
 # slack credentials for cloudwatch
 #
 variable "slack_webhook_url" {
-	description = "Slack webhook URL for creating AWS SNS topic"
-	type        = string
+  description = "Slack webhook URL for creating AWS SNS topic"
+  type        = string
 }
 
 variable "slack_channel" {
-	description = "Slack channel name to which notifications are sent"
-	type        = string
+  description = "Slack channel name to which notifications are sent"
+  type        = string
 }
 
 variable "slack_username" {
-	description = "Slack username to user for sending notifications"
-	type        = string
+  description = "Slack username to user for sending notifications"
+  type        = string
 }
 
 #
@@ -100,7 +100,7 @@ module "simple_aws_key_pair" {
 #
 
 module "simple_networking" {
-  source            = "../modules/simple_networking"
+  source = "../modules/simple_networking"
 
   deployment_name   = "sri_lanka"
   database_vpc_cidr = "172.32.0.0/16"
@@ -123,10 +123,10 @@ module "notify_slack" {
   source  = "terraform-aws-modules/notify-slack/aws"
   version = "5.0.0"
 
-  sns_topic_name       = "cloudwatch-to-slack"
-  slack_webhook_url    = var.slack_webhook_url
-  slack_channel        = var.slack_channel
-  slack_username       = var.slack_username
+  sns_topic_name    = "cloudwatch-to-slack"
+  slack_webhook_url = var.slack_webhook_url
+  slack_channel     = var.slack_channel
+  slack_username    = var.slack_username
 
   lambda_function_name = "cloudwatch-to-slack"
 }
@@ -175,6 +175,9 @@ output "simple_server_sri_lanka_production_sidekiq_redis_url" {
   value = module.simple_server_sri_lanka_production.sidekiq_redis_url
 }
 
+output "simple_server_sri_lanka_production_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
+}
 
 module "simple_server_sri_lanka_demo" {
   source                        = "../modules/simple_server"
@@ -220,3 +223,8 @@ output "simple_server_sri_lanka_demo_cache_redis_url" {
 output "simple_server_sri_lanka_demo_sidekiq_redis_url" {
   value = module.simple_server_sri_lanka_demo.sidekiq_redis_url
 }
+
+output "simple_server_sri_lanka_demo_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
+}
+

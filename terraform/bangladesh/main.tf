@@ -179,6 +179,9 @@ output "simple_server_bangladesh_production_sidekiq_redis_url" {
   value = module.simple_server_bangladesh_production.sidekiq_redis_url
 }
 
+output "simple_server_bangladesh_production_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
+}
 
 module "simple_server_bangladesh_staging" {
   source                        = "../modules/simple_server"
@@ -223,4 +226,8 @@ output "simple_server_bangladesh_staging_cache_redis_url" {
 
 output "simple_server_bangladesh_staging_sidekiq_redis_url" {
   value = module.simple_server_bangladesh_staging.sidekiq_redis_url
+}
+
+output "simple_server_bangladesh_staging_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
 }
