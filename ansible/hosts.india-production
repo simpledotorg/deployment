@@ -1,13 +1,13 @@
 [simple]
-ec2-65-0-65-220.ap-south-1.compute.amazonaws.com
-ec2-3-110-96-106.ap-south-1.compute.amazonaws.com
-ec2-13-235-63-14.ap-south-1.compute.amazonaws.com
-ec2-3-111-45-145.ap-south-1.compute.amazonaws.com
-ec2-65-1-185-130.ap-south-1.compute.amazonaws.com
-ec2-3-7-249-100.ap-south-1.compute.amazonaws.com
+ec2-3-108-10-226.ap-south-1.compute.amazonaws.com
+ec2-3-6-205-114.ap-south-1.compute.amazonaws.com
+ec2-3-110-66-211.ap-south-1.compute.amazonaws.com
+ec2-13-235-216-224.ap-south-1.compute.amazonaws.com
+ec2-65-1-13-160.ap-south-1.compute.amazonaws.com
+ec2-3-7-250-23.ap-south-1.compute.amazonaws.com
 
 [sidekiq]
-ec2-3-7-249-100.ap-south-1.compute.amazonaws.com
+ec2-3-7-250-23.ap-south-1.compute.amazonaws.com
 
 [rails:children]
 simple
