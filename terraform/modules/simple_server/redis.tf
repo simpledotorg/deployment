@@ -51,5 +51,5 @@ output "cache_redis_url" {
 }
 
 output "sidekiq_redis_url" {
-  value = aws_elasticache_cluster.simple_elasticache[0].cache_nodes.0.address
+  value = aws_elasticache_cluster.simple_elasticache_2[0].cache_nodes.0.address
 }
