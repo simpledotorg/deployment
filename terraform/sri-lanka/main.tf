@@ -2,14 +2,9 @@ variable "aws_region" {
   default = "ap-south-1"
 }
 
-provider "aws" {
-  region  = var.aws_region
-  profile = "sri_lanka"
-
-  version = "~> 2.7"
-}
-
 terraform {
+  required_version = "~> 1.1.0"
+
   backend "s3" {
     bucket         = "simple-server-sri-lanka-terraform-state"
     key            = "terraform.tfstate"
@@ -18,6 +13,18 @@ terraform {
     dynamodb_table = "terraform-lock"
     profile        = "sri_lanka"
   }
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 4.9.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+  profile = "sri_lanka"
 }
 
 #
@@ -114,7 +121,7 @@ module "simple_redis_param_group" {
 #
 module "notify_slack" {
   source  = "terraform-aws-modules/notify-slack/aws"
-  version = "3.2"
+  version = "5.0.0"
 
   sns_topic_name       = "cloudwatch-to-slack"
   slack_webhook_url    = var.slack_webhook_url
@@ -166,7 +173,7 @@ module "simple_server_sri_lanka_demo" {
   server_vpc_id                 = module.simple_networking.server_vpc_id
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
-  host_urls                     = ["api-demo.lk.simple.org", "dashboard-demo.lk.simple.org"]
+  host_urls                     = ["api-demo.lk.simple.org", "dashboard-demo.lk.simple.org", "api-staging.lk.simple.org", "dashboard-staging.lk.simple.org"]
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   create_database_replica       = true

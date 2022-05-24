@@ -11,6 +11,13 @@ variable "ec2_instance_type" {
 variable "ec2_ubuntu_version" {
   description = "The ubuntu version to be installed on the ec2 servers"
   type        = string
+  default     = "20.04"
+}
+
+variable "ec2_volume_size" {
+  description = "The disk size on the root block device for ec2 servers"
+  type        = string
+  default     = "30"
 }
 
 variable "server_count" {
@@ -43,6 +50,12 @@ variable "database_vpc_id" {
 variable "database_subnet_group_name" {
   description = "Database vpc-id"
   type        = string
+}
+
+variable "replica_database_instance_type" {
+  description = "The type of instance for the replica database"
+  type        = string
+  default     = "db.t2.medium"
 }
 
 variable "instance_security_groups" {
