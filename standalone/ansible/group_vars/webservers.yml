@@ -1,3 +1,0 @@
-nginx_stats_port: 8080
-nginx_exporter_options:
-  - "-nginx.scrape-uri=http://localhost:{{ nginx_stats_port }}/stub_status"
