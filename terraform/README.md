@@ -212,7 +212,7 @@ follow these instructions. This setup needs to be run only once per AWS account.
 - Choose a profile name for the new AWS account. (eg. `ihci`, `bangladesh`)
 - Add the user's access ID and secret key to your local AWS credentials file under the chosen AWS profile.
  See [using AWS credential files.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-- Create an s3 bucket. Add the bucket's name to `main.tf` > `terraform` > `backend` > `bucket`
+- Create an s3 bucket called `simple-server-<profile-name>-terraform-state`.
 - Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
   called `terraform-lock` with `LockID` as primary key.
 
@@ -239,9 +239,9 @@ This will create a `bangladesh/` directory with several files.
 You will have to edit these files as follows:
 
 * `main.tf`: The main file containing a starting terraform configuration. It includes a demo and production Simple
-  environment for your new account. Tweak your infrastructure's configuration here. See [Terraform documentation](https://learn.hashicorp.com/collections/terraform/aws-get-started) for more details on how to configure this file.
+  environment for your new account. Replace all instances of `sample` with your profile's name. See [Terraform documentation](https://learn.hashicorp.com/collections/terraform/aws-get-started) for more details on how to configure this file.
 * `terraform.tfvars`: A git-ignored file where database credentials and other sensitive information is stored. Choose
-  any username and password for your databases and enter them into this file.
+  any username and password for your databases and enter them into this file. Replace all instances of `sample` with your domain's name and change the certificate file names as well. 
 * `certificate.pem`: Place your SSL certificate in this file.
 * `certificate.chain.pem`: Place your SSL certificate chain in this file.
 * `certificate.private_key.pem`: Place your SSL certificate private key in this file.
