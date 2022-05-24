@@ -145,9 +145,10 @@ module "simple_server_sandbox" {
   deployment_name               = "development-sandbox"
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
+  database_postgres_version     = "14.2"
   ec2_instance_type             = "t2.2xlarge"
   ec2_ubuntu_version            = "20.04"
-  database_instance_type        = "db.r4.xlarge"
+  database_instance_type        = "db.r5.xlarge"
   server_count                  = 1
   sidekiq_server_count          = 1
   database_username             = var.sandbox_database_username
@@ -198,6 +199,8 @@ module "simple_server_qa" {
   ec2_ubuntu_version            = "20.04"
   database_username             = var.qa_database_username
   database_password             = var.qa_database_password
+  database_postgres_version     = "14.2"
+  database_instance_type        = "db.t3.medium"
   instance_security_groups      = module.simple_networking.instance_security_groups
   aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id                 = module.simple_networking.server_vpc_id
@@ -245,6 +248,8 @@ module "simple_server_security" {
   ec2_ubuntu_version            = "20.04"
   database_username             = var.security_database_username
   database_password             = var.security_database_password
+  database_instance_type        = "db.t3.medium"
+  database_postgres_version     = "14.2"
   instance_security_groups      = module.simple_networking.instance_security_groups
   aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id                 = module.simple_networking.server_vpc_id
