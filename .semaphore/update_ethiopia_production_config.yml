@@ -11,7 +11,7 @@ blocks:
             - make init
             - make update-app-config hosts=ethiopia/production password_file=~/.ansible/vault_password_et
       secrets:
-        - name: ansible ethiopia
+        - name: ansible-vault-passwords
         - name: semaphore-deploy-key
       prologue:
         commands:
