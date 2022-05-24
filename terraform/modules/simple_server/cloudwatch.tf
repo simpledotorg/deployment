@@ -79,7 +79,7 @@ resource "aws_cloudwatch_metric_alarm" "standby_database_cpu" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts" {
-  count               = var.load_balancer_arn_suffix != "" && var.enable_cloudwatch_alerts ? 1 : 0
+  count               = var.enable_cloudwatch_alerts ? 1 : 0
   alarm_name          = "High 5xx / timeouts on [${var.deployment_name}]"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
@@ -99,7 +99,7 @@ resource "aws_cloudwatch_metric_alarm" "elb_5xx_timeouts" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "elb_unhealthy_hosts" {
-  count               = var.load_balancer_arn_suffix != "" && var.enable_cloudwatch_alerts ? 1 : 0
+  count               = var.enable_cloudwatch_alerts ? 1 : 0
   alarm_name          = "Unhealthy hosts on [${var.deployment_name}]"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"

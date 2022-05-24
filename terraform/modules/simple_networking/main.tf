@@ -52,3 +52,7 @@ output "https_listener_arn" {
 output "load_balancer_arn_suffix" {
   value = aws_alb.simple_env_proxy.arn_suffix
 }
+
+output "load_balancer_public_dns" {
+  value = aws_alb.simple_env_proxy.dns_name
+}

@@ -159,6 +159,30 @@ module "simple_server_bangladesh_production" {
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
+output "simple_server_bangladesh_production_server_instance_ips" {
+  value = module.simple_server_bangladesh_production.server_instance_ips
+}
+
+output "simple_server_bangladesh_production_sidekiq_instance_ips" {
+  value = module.simple_server_bangladesh_production.sidekiq_instance_ips
+}
+
+output "simple_server_bangladesh_production_database_url" {
+  value = module.simple_server_bangladesh_production.database_url
+}
+
+output "simple_server_bangladesh_production_cache_redis_url" {
+  value = module.simple_server_bangladesh_production.cache_redis_url
+}
+
+output "simple_server_bangladesh_production_sidekiq_redis_url" {
+  value = module.simple_server_bangladesh_production.sidekiq_redis_url
+}
+
+output "simple_server_bangladesh_production_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
+}
+
 module "simple_server_bangladesh_staging" {
   source                        = "../modules/simple_server"
   deployment_name               = "bangladesh-staging"
@@ -182,4 +206,28 @@ module "simple_server_bangladesh_staging" {
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
   enable_cloudwatch_alerts      = true
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
+}
+
+output "simple_server_bangladesh_staging_server_instance_ips" {
+  value = module.simple_server_bangladesh_staging.server_instance_ips
+}
+
+output "simple_server_bangladesh_staging_sidekiq_instance_ips" {
+  value = module.simple_server_bangladesh_staging.sidekiq_instance_ips
+}
+
+output "simple_server_bangladesh_staging_database_url" {
+  value = module.simple_server_bangladesh_staging.database_url
+}
+
+output "simple_server_bangladesh_staging_cache_redis_url" {
+  value = module.simple_server_bangladesh_staging.cache_redis_url
+}
+
+output "simple_server_bangladesh_staging_sidekiq_redis_url" {
+  value = module.simple_server_bangladesh_staging.sidekiq_redis_url
+}
+
+output "simple_server_bangladesh_staging_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
 }

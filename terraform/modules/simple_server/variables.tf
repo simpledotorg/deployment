@@ -32,6 +32,24 @@ variable "database_instance_type" {
   default     = "db.t2.medium"
 }
 
+variable "database_postgres_version" {
+  description = "The postgres version to be installed on RDS"
+  type        = string
+  default     = "10.3"
+}
+
+variable "database_replica_instance_type" {
+  description = "The type of instance for database replica servers"
+  type        = string
+  default     = "db.t2.medium"
+}
+
+variable "database_allocated_storage" {
+  description = "The storage allocated for database servers (in GB)"
+  type        = string
+  default     = "100"
+}
+
 variable "database_username" {
   description = "Database Username"
   type        = string
@@ -50,12 +68,6 @@ variable "database_vpc_id" {
 variable "database_subnet_group_name" {
   description = "Database vpc-id"
   type        = string
-}
-
-variable "replica_database_instance_type" {
-  description = "The type of instance for the replica database"
-  type        = string
-  default     = "db.t2.medium"
 }
 
 variable "instance_security_groups" {
