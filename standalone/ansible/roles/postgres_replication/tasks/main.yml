@@ -1,8 +1,0 @@
----
-- include_tasks: "{{ replication_role }}.yml"
-
-- name: Restart postgresql
-  service:
-    name: "{{ postgresql_daemon }}"
-    state: restarted
-  become: true
