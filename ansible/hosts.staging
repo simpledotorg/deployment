@@ -1,8 +1,8 @@
 [simple]
-ec2-3-110-48-223.ap-south-1.compute.amazonaws.com
+ec2-3-6-210-241.ap-south-1.compute.amazonaws.com
 
 [sidekiq]
-ec2-3-110-48-223.ap-south-1.compute.amazonaws.com
+ec2-3-6-210-241.ap-south-1.compute.amazonaws.com
 
 [rails:children]
 simple
