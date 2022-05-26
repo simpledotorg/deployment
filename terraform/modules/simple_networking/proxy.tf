@@ -4,6 +4,13 @@ resource "aws_acm_certificate" "cert" {
   certificate_chain = var.certificate_chain
 }
 
+resource "aws_acm_certificate" "additional_certs" {
+  count             = length(var.additional_certificates)
+  private_key       = file(var.additional_certificates[count.index]["private_key_file"])
+  certificate_body  = file(var.additional_certificates[count.index]["body_file"])
+  certificate_chain = file(var.additional_certificates[count.index]["chain_file"])
+}
+
 resource "aws_alb" "simple_env_proxy" {
   name     = "simple-env-proxy"
   internal = false
@@ -58,4 +65,10 @@ resource "aws_alb_listener" "simple_listener_https" {
       status_code  = "404"
     }
   }
+}
+
+resource "aws_lb_listener_certificate" "additional_listener_certificates" {
+  count           = length(aws_acm_certificate.additional_certs)
+  listener_arn    = aws_alb_listener.simple_listener_https.arn
+  certificate_arn = aws_acm_certificate.additional_certs[count.index].arn
 }

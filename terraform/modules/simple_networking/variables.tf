@@ -29,3 +29,12 @@ variable "private_key" {
 	type        = string
 }
 
+variable "additional_certificates" {
+	description = "Additional certificates"
+	type = list(object({
+		body_file        = string
+		chain_file       = string
+		private_key_file = string
+	}))
+	default     = []
+}

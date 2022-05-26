@@ -87,6 +87,16 @@ variable "certificate_private_key_file" {
   type        = string
 }
 
+variable "additional_certificates" {
+  description = "Additional certificates"
+  type = list(object({
+    body_file        = string
+    chain_file       = string
+    private_key_file = string
+  }))
+  default     = []
+}
+
 #
 # slack credentials for cloudwatch
 #
@@ -130,6 +140,7 @@ module "simple_networking" {
   certificate_body  = file(var.certificate_body_file)
   certificate_chain = file(var.certificate_chain_file)
   private_key       = file(var.certificate_private_key_file)
+  additional_certificates = var.additional_certificates
 }
 
 #
