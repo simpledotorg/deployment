@@ -13,9 +13,17 @@ fi
 echo "Creating $1 directory"
 mkdir $1
 
-for f in example/*.example
+for f in example/**.example
 do
   destination="$1/`basename $f | sed -e 's/\.example$//'`"
+  echo "Copying $f to $destination"
+  cp $f $destination
+done
+
+mkdir $1/certs
+for f in example/certs/**.example
+do
+  destination="$1/certs/`basename $f | sed -e 's/\.example$//'`"
   echo "Copying $f to $destination"
   cp $f $destination
 done
