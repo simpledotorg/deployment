@@ -59,6 +59,16 @@ variable "certificate_private_key_file" {
   type        = string
 }
 
+variable "additional_certificates" {
+  description = "Additional certificates"
+  type = list(object({
+    body_file        = string
+    chain_file       = string
+    private_key_file = string
+  }))
+  default = []
+}
+
 #
 # slack credentials for cloudwatch
 #
@@ -126,7 +136,7 @@ module "notify_slack" {
 module "simple_server_india_production" {
   source                         = "../modules/simple_server"
   deployment_name                = "india-production"
-  database_postgres_version      = "10.17"
+  database_postgres_version      = "14.2"
   database_vpc_id                = module.simple_networking.database_vpc_id
   database_subnet_group_name     = module.simple_networking.database_subnet_group_name
   ec2_instance_type              = "t3.xlarge"
