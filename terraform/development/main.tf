@@ -87,6 +87,16 @@ variable "certificate_private_key_file" {
   type        = string
 }
 
+variable "additional_certificates" {
+  description = "Additional certificates"
+  type = list(object({
+    body_file        = string
+    chain_file       = string
+    private_key_file = string
+  }))
+  default = []
+}
+
 #
 # slack credentials for cloudwatch
 #
@@ -125,11 +135,12 @@ module "simple_redis_param_group" {
 module "simple_networking" {
   source = "../modules/simple_networking"
 
-  deployment_name   = "development"
-  database_vpc_cidr = "172.32.0.0/16"
-  certificate_body  = file(var.certificate_body_file)
-  certificate_chain = file(var.certificate_chain_file)
-  private_key       = file(var.certificate_private_key_file)
+  deployment_name         = "development"
+  database_vpc_cidr       = "172.32.0.0/16"
+  certificate_body        = file(var.certificate_body_file)
+  certificate_chain       = file(var.certificate_chain_file)
+  private_key             = file(var.certificate_private_key_file)
+  additional_certificates = var.additional_certificates
 }
 
 #
@@ -315,7 +326,7 @@ module "simple_server_demo" {
   server_vpc_id                 = module.simple_networking.server_vpc_id
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
-  host_urls                     = ["api-demo.simple.org", "dashboard-demo.simple.org","dashboard-demo.in.simple.org", "api-demo.in.simple.org"]
+  host_urls                     = ["api-demo.simple.org", "dashboard-demo.simple.org", "dashboard-demo.in.simple.org", "api-demo.in.simple.org"]
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
