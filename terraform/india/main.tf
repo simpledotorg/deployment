@@ -142,8 +142,8 @@ module "simple_server_india_production" {
   ec2_instance_type              = "t3.xlarge"
   ec2_ubuntu_version             = "20.04"
   ec2_volume_size                = "100"
-  database_instance_type         = "db.m4.4xlarge"
-  database_replica_instance_type = "db.m4.2xlarge"
+  database_instance_type         = "db.m5.4xlarge"
+  database_replica_instance_type = "db.m5.2xlarge"
   database_allocated_storage     = "500"
   database_username              = var.production_database_username
   database_password              = var.production_database_password
