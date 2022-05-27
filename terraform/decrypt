@@ -7,3 +7,9 @@ do
   echo "Decrypting $f to `echo $f | sed -e 's/\.vault$//'`"
   cat $f | ansible-vault decrypt --vault-id $1 --output `echo $f | sed -e 's/\.vault$//'`
 done
+
+for f in ${DIR}/certs/*.vault
+do
+  echo "Decrypting $f to `echo $f | sed -e 's/\.vault$//'`"
+  cat $f | ansible-vault decrypt --vault-id $1 --output `echo $f | sed -e 's/\.vault$//'`
+done
