@@ -106,6 +106,7 @@ module "simple_networking" {
   certificate_body  = file(var.certificate_body_file)
   certificate_chain = file(var.certificate_chain_file)
   private_key       = file(var.certificate_private_key_file)
+  additional_certificates = var.additional_certificates
 }
 
 #
@@ -152,7 +153,7 @@ module "simple_server_india_production" {
   server_vpc_id                  = module.simple_networking.server_vpc_id
   https_listener_arn             = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix       = module.simple_networking.load_balancer_arn_suffix
-  host_urls                      = ["in.simple.org", "api.in.simple.org", "dashboard.in.simple.org", "api.simple.org", "dashboard.simple.org"]
+  host_urls                      = ["api.in.simple.org", "dashboard.in.simple.org", "api.simple.org", "dashboard.simple.org"]
   create_redis_cache_instance    = true
   create_redis_sidekiq_instance  = true
   create_database_replica        = true
