@@ -152,7 +152,7 @@ module "simple_server_india_production" {
   server_vpc_id                  = module.simple_networking.server_vpc_id
   https_listener_arn             = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix       = module.simple_networking.load_balancer_arn_suffix
-  host_urls                      = ["test-india.simple.org"]
+  host_urls                      = ["in.simple.org", "api.in.simple.org", "dashboard.in.simple.org", "api.simple.org", "dashboard.simple.org"]
   create_redis_cache_instance    = true
   create_redis_sidekiq_instance  = true
   create_database_replica        = true
