@@ -156,6 +156,7 @@ module "simple_server_india_production" {
   host_urls                      = ["api.in.simple.org", "dashboard.in.simple.org", "api.simple.org", "dashboard.simple.org"]
   create_redis_cache_instance    = true
   create_redis_sidekiq_instance  = true
+  redis_node_type                = "cache.r5.large"
   create_database_replica        = true
   server_count                   = 5
   sidekiq_server_count           = 1
