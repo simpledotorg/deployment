@@ -158,7 +158,7 @@ module "simple_server_bangladesh_production" {
   server_count                  = 2
   sidekiq_server_count          = 1
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
-  enable_cloudwatch_alerts      = false
+  enable_cloudwatch_alerts      = true
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
