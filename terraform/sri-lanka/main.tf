@@ -140,6 +140,9 @@ module "simple_server_sri_lanka_production" {
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
   ec2_instance_type             = "t2.medium"
+  database_postgres_version     = "14.2"
+  database_instance_type        = "db.t3.medium"
+  database_replica_instance_type = "db.t3.medium"
   ec2_ubuntu_version            = "20.04"
   database_username             = var.production_database_username
   database_password             = var.production_database_password
