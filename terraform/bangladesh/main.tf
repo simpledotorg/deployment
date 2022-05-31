@@ -139,6 +139,9 @@ module "simple_server_bangladesh_production" {
   deployment_name               = "bangladesh-production"
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
+  database_postgres_version     = "14.2"
+  database_instance_type        = "db.t3.medium"
+  database_replica_instance_type = "db.t3.medium"
   ec2_instance_type             = "t3.xlarge"
   ec2_ubuntu_version            = "20.04"
   database_username             = var.bangladesh_database_username
@@ -155,7 +158,7 @@ module "simple_server_bangladesh_production" {
   server_count                  = 2
   sidekiq_server_count          = 1
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
-  enable_cloudwatch_alerts      = true
+  enable_cloudwatch_alerts      = false
   cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
 }
 
