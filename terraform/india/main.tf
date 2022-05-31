@@ -59,6 +59,16 @@ variable "certificate_private_key_file" {
   type        = string
 }
 
+variable "additional_certificates" {
+  description = "Additional certificates"
+  type = list(object({
+    body_file        = string
+    chain_file       = string
+    private_key_file = string
+  }))
+  default = []
+}
+
 #
 # slack credentials for cloudwatch
 #
@@ -96,6 +106,7 @@ module "simple_networking" {
   certificate_body  = file(var.certificate_body_file)
   certificate_chain = file(var.certificate_chain_file)
   private_key       = file(var.certificate_private_key_file)
+  additional_certificates = var.additional_certificates
 }
 
 #
@@ -126,14 +137,14 @@ module "notify_slack" {
 module "simple_server_india_production" {
   source                         = "../modules/simple_server"
   deployment_name                = "india-production"
-  database_postgres_version      = "10.17"
+  database_postgres_version      = "14.2"
   database_vpc_id                = module.simple_networking.database_vpc_id
   database_subnet_group_name     = module.simple_networking.database_subnet_group_name
   ec2_instance_type              = "t3.xlarge"
   ec2_ubuntu_version             = "20.04"
   ec2_volume_size                = "100"
-  database_instance_type         = "db.m4.4xlarge"
-  database_replica_instance_type = "db.m4.2xlarge"
+  database_instance_type         = "db.m5.4xlarge"
+  database_replica_instance_type = "db.m5.2xlarge"
   database_allocated_storage     = "500"
   database_username              = var.production_database_username
   database_password              = var.production_database_password
@@ -142,9 +153,10 @@ module "simple_server_india_production" {
   server_vpc_id                  = module.simple_networking.server_vpc_id
   https_listener_arn             = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix       = module.simple_networking.load_balancer_arn_suffix
-  host_urls                      = ["test-india.simple.org"]
+  host_urls                      = ["api.in.simple.org", "dashboard.in.simple.org", "api.simple.org", "dashboard.simple.org"]
   create_redis_cache_instance    = true
   create_redis_sidekiq_instance  = true
+  redis_node_type                = "cache.r5.large"
   create_database_replica        = true
   server_count                   = 5
   sidekiq_server_count           = 1

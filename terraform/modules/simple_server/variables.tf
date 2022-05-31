@@ -113,6 +113,12 @@ variable "create_redis_sidekiq_instance" {
   default     = false
 }
 
+variable "redis_node_type" {
+  description = "The type of instance for redis server"
+  default     = "cache.t2.small"
+  type        = string
+}
+
 variable "redis_subnet_group_name" {
   description = "Name of the redis subnet"
   type        = string
