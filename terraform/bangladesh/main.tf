@@ -149,7 +149,7 @@ output "s3_user_access_key_id" {
 }
 
 output "s3_user_secret_key" {
-  value = module.simple_s3.user_secret_key
+  value     = module.simple_s3.user_secret_key
   sensitive = true
 }
 

@@ -16,7 +16,7 @@ resource "aws_iam_user" "s3_user" {
 }
 
 resource "aws_iam_group_membership" "s3_user_membership" {
-  name = "s3-user-membership"
+  name  = "s3-user-membership"
   users = [aws_iam_user.s3_user.name]
   group = aws_iam_group.s3_users.name
 }
@@ -35,7 +35,7 @@ output "user_access_key_id" {
 }
 
 output "user_secret_key" {
-  value = aws_iam_access_key.s3_user_access_key.secret
+  value     = aws_iam_access_key.s3_user_access_key.secret
   sensitive = true
 }
 
