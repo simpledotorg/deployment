@@ -61,16 +61,6 @@ variable "qa_database_password" {
   type        = string
 }
 
-variable "security_database_username" {
-  description = "Database Username"
-  type        = string
-}
-
-variable "security_database_password" {
-  description = "Database Password"
-  type        = string
-}
-
 #
 # certficate stuff
 #
@@ -284,56 +274,6 @@ output "simple_server_qa_sidekiq_redis_url" {
 output "simple_server_qa_load_balancer_public_dns" {
   value = module.simple_networking.load_balancer_public_dns
 }
-
-
-module "simple_server_security" {
-  source                        = "../modules/simple_server"
-  deployment_name               = "development-security"
-  database_vpc_id               = module.simple_networking.database_vpc_id
-  database_subnet_group_name    = module.simple_networking.database_subnet_group_name
-  ec2_instance_type             = "t2.large"
-  ec2_ubuntu_version            = "20.04"
-  database_username             = var.security_database_username
-  database_password             = var.security_database_password
-  database_instance_type        = "db.t3.medium"
-  database_postgres_version     = "14.2"
-  instance_security_groups      = module.simple_networking.instance_security_groups
-  aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
-  server_vpc_id                 = module.simple_networking.server_vpc_id
-  https_listener_arn            = module.simple_networking.https_listener_arn
-  load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
-  host_urls                     = ["api-security.simple.org", "dashboard-security.simple.org"]
-  create_redis_cache_instance   = true
-  create_redis_sidekiq_instance = true
-  redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
-  enable_cloudwatch_alerts      = false
-  cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
-}
-
-output "simple_server_security_server_instance_ips" {
-  value = module.simple_server_security.server_instance_ips
-}
-
-output "simple_server_security_sidekiq_instance_ips" {
-  value = module.simple_server_security.sidekiq_instance_ips
-}
-
-output "simple_server_security_database_url" {
-  value = module.simple_server_security.database_url
-}
-
-output "simple_server_security_cache_redis_url" {
-  value = module.simple_server_security.cache_redis_url
-}
-
-output "simple_server_security_sidekiq_redis_url" {
-  value = module.simple_server_security.sidekiq_redis_url
-}
-
-output "simple_server_security_load_balancer_public_dns" {
-  value = module.simple_networking.load_balancer_public_dns
-}
-
 
 module "simple_server_demo" {
   source                        = "../modules/simple_server"
