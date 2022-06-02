@@ -82,13 +82,13 @@
   notify: restart ssh
 
 - name: set up logrotate
-  copy: src={{ item }} dest=/etc/logrotate.d/ owner=root
+  template: src={{ item }} dest=/etc/logrotate.d/ owner=root
   with_fileglob:
     - etc/logrotate.d/*
   become: true
 
 - name: set up s3cmd
-  copy: src=.s3cfg dest=/root/.s3cfg
+  template: src=.s3cfg dest=/root/.s3cfg
   become: true
 
 - name: Ensure group "deploy" exists
