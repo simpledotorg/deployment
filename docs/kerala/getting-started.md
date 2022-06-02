@@ -46,10 +46,8 @@ aws_access_key_id=<Add Access ID from previous step here>
 aws_secret_access_key=<Add Secret Key from previous step here>
 ```
 Refer to [using AWS credential files](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for more information.
-
-* Create an S3 bucket named `simple-server-terraform-state`.
-
-* Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
+- Create an S3 bucket named `simple-server-terraform-state`.
+- Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
   called `terraform-lock` with `LockID` as primary key.
 
 ### 2. Add the new environment to the repository
