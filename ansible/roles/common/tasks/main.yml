@@ -83,8 +83,9 @@
 
 - name: set up logrotate
   template: src={{ item }} dest=/etc/logrotate.d/ owner=root
-  with_fileglob:
-    - etc/logrotate.d/*
+  with_items:
+    - etc/logrotate.d/pry_history
+    - etc/logrotate.d/rails
   become: true
 
 - name: set up s3cmd
