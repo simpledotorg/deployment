@@ -161,7 +161,6 @@ module "notify_slack" {
 #
 # s3 for logs
 #
-
 variable "s3_logs_bucket_name" {
   type        = string
   description = "Name of s3 bucket to be used for storing logs"

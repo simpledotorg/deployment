@@ -132,6 +132,32 @@ module "notify_slack" {
 }
 
 #
+# s3 for logs
+#
+variable "s3_logs_bucket_name" {
+  type        = string
+  description = "Name of s3 bucket to be used for storing logs"
+}
+
+module "simple_s3" {
+  source      = "../modules/simple_s3"
+  bucket_name = var.s3_logs_bucket_name
+}
+
+output "s3_user_access_key_id" {
+  value = module.simple_s3.user_access_key_id
+}
+
+output "s3_user_secret_key" {
+  value = module.simple_s3.user_secret_key
+  sensitive = true
+}
+
+output "s3_logs_bucket_name" {
+  value = var.s3_logs_bucket_name
+}
+
+#
 # server configs
 #
 module "simple_server_india_production" {
