@@ -102,8 +102,8 @@ $ cd bangladesh
 
 ### 4. Add AWS credentials to your machine
 
-Add the credentials for your AWS account to your `~/.aws/credentials` file. The credentials can be for an IAM user on the
-AWS console.
+Add the credentials for your AWS account to your `~/.aws/credentials` file. The credentials for your IAM user can be found 
+[on the AWS console](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html).
 
 Include the AWS credentials (access key ID and secret access key) in the profile whose name matches the profile declared
 in your terraform configuration's `main.tf` file. For example, for `bangladesh` your credentials file should look like
@@ -257,3 +257,22 @@ ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-
 cat terraform.tfvars | ansible-vault encrypt --vault-id ../../password_file --output terraform.tfvars.vault
 ```
 - Check in the vault file.
+
+### Managing other users on your AWS account
+
+If you want to add other users to your AWS account for managing terraform operations with restricted access, they will 
+need this minimum set of permissions.
+```
+AmazonEC2FullAccess
+AmazonElastiCacheFullAccess
+AmazonRDSFullAccess
+AmazonS3FullAccess
+AmazonSNSFullAccess
+AmazonDynamoDBFullAccess
+AmazonVPCFullAccess
+AWSCertificateManagerFullAccess
+CloudWatchLogsFullAccess
+IAMFullAccess
+```
+You can create an IAM User Group called `Provisioners` with these policies
+(`My Security Credentials` > `Groups` > `Create new group`) and add the user to the User Group. 
