@@ -102,21 +102,8 @@ $ cd bangladesh
 
 ### 4. Add AWS credentials to your machine
 
-Add the credentials for the AWS account to your `~/.aws/credentials` file. The credentials can be for an IAM user in the
-AWS account that has the following permissions.
-
-```
- AmazonEC2FullAccess
- AmazonElastiCacheFullAccess
- AmazonRDSFullAccess
- AmazonS3FullAccess
- AmazonSNSFullAccess
- AmazonDynamoDBFullAccess
- AmazonVPCFullAccess
- AWSCertificateManagerFullAccess
- CloudWatchLogsFullAccess
- IAMFullAccess
-```
+Add the credentials for your AWS account to your `~/.aws/credentials` file. The credentials for your IAM user can be found 
+[on the AWS console](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html).
 
 Include the AWS credentials (access key ID and secret access key) in the profile whose name matches the profile declared
 in your terraform configuration's `main.tf` file. For example, for `bangladesh` your credentials file should look like
@@ -176,24 +163,16 @@ follow these instructions. This setup needs to be run only once per AWS account.
 ### 1. Set up your AWS account
 
 - Create an AWS account.
-- Create an IAM user group in the new AWS account called `Provisioners` with the following policies (`My Security Credentials` > `Groups` > `Create new group`)
-```
- AmazonEC2FullAccess
- AmazonElastiCacheFullAccess
- AmazonRDSFullAccess
- AmazonS3FullAccess
- AmazonSNSFullAccess
- AmazonDynamoDBFullAccess
- AmazonVPCFullAccess
- AWSCertificateManagerFullAccess
- CloudWatchLogsFullAccess
- IAMFullAccess
-```
-- Create a user with API-only access and add it to the `Provisioners` group. Keep a note of the user's AWS access ID and secret key
 - Choose a profile name for the new AWS account. (eg. `ihci`, `bangladesh`)
-- Add the user's access ID and secret key to your local AWS credentials file under the chosen AWS profile.
- See [using AWS credential files.](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-- Create an s3 bucket called `simple-server-<profile-name>-terraform-state`.
+- Make sure your IAM User has `Administrator` permissions. Get the `Access key ID` and `Secret Access key` for your account and
+  put it under `~/.aws/credentials` file on your developer environment. Create this file if doesn't already exist.
+```
+[profile_name]
+aws_access_key_id=<Add Access ID from previous step here>
+aws_secret_access_key=<Add Secret Key from previous step here>
+```
+Refer to [using AWS credential files](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for more information.
+- Create an s3 bucket called `simple-server-<profile_name>-terraform-state`.
 - Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
   called `terraform-lock` with `LockID` as primary key.
 
@@ -278,3 +257,22 @@ ansible-vault edit --vault-id ../../password_file roles/load-balancing/vars/ssl-
 cat terraform.tfvars | ansible-vault encrypt --vault-id ../../password_file --output terraform.tfvars.vault
 ```
 - Check in the vault file.
+
+### Managing other users on your AWS account
+
+If you want to add other users to your AWS account for managing terraform operations with restricted access, they will 
+need this minimum set of permissions.
+```
+AmazonEC2FullAccess
+AmazonElastiCacheFullAccess
+AmazonRDSFullAccess
+AmazonS3FullAccess
+AmazonSNSFullAccess
+AmazonDynamoDBFullAccess
+AmazonVPCFullAccess
+AWSCertificateManagerFullAccess
+CloudWatchLogsFullAccess
+IAMFullAccess
+```
+You can create an IAM User Group called `Provisioners` with these policies
+(`My Security Credentials` > `Groups` > `Create new group`) and add the user to the User Group. 

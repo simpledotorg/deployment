@@ -38,35 +38,16 @@ $ git clone git@github.com:simpledotorg/simple-server.git
 
 ### 1. Set up your AWS account
 
-- Create an IAM user group in the new AWS account called `Provisioners` with the following policies (`My Security Credentials` > `Groups` > `Create new group`)
-```
- AmazonEC2FullAccess
- AmazonElastiCacheFullAccess
- AmazonRDSFullAccess
- AmazonS3FullAccess
- AmazonSNSFullAccess
- AmazonDynamoDBFullAccess
- AmazonVPCFullAccess
- AWSCertificateManagerFullAccess
- CloudWatchLogsFullAccess
- IAMFullAccess
-```
-* Create a user with API-only access and add it to the `Provisioners` group. Keep a note of the user's AWS access ID and secret key
-
-* Add the following profile to the `~/.aws/credentials` file on your developer environment. Create
-this file if doesn't already exist.
-
+- Make sure your IAM User has `Administrator` permissions. Get the `Access key ID` and `Secret Access key` for your account and
+put it under `~/.aws/credentials` file on your developer environment. Create this file if doesn't already exist.
 ```
 [kerala]
 aws_access_key_id=<Add Access ID from previous step here>
 aws_secret_access_key=<Add Secret Key from previous step here>
 ```
-
- Refer to [using AWS credential files](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for more information.
-
-* Create an S3 bucket named `simple-server-terraform-state`.
-
-* Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
+Refer to [using AWS credential files](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for more information.
+- Create an S3 bucket named `simple-server-terraform-state`.
+- Create a [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) table
   called `terraform-lock` with `LockID` as primary key.
 
 ### 2. Add the new environment to the repository
