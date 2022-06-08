@@ -10,6 +10,6 @@
   dateext
   lastaction
     HOSTNAME=`hostname`
-    /usr/bin/s3cmd sync /home/deploy/apps/*/current/log/*.gz "s3://simple-server-archived-logs/$HOSTNAME/rails/"
+    /usr/bin/s3cmd sync /home/deploy/apps/*/current/log/*.gz "s3://{{s3_logs_bucket_name}}/{{deploy_env}}/$HOSTNAME/rails/"
   endscript
 }
