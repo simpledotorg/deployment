@@ -52,7 +52,6 @@ for information on what each of these environments are for.
 
 - bangladesh-demo
 - bangladesh-production
-- performance-primary
 - sandbox
 - qa
 - staging
