@@ -20,11 +20,6 @@ promotions:
     pipeline_file: update_sandbox_config.yml
     auto_promote:
       when: branch = 'master' AND result = 'passed'
-  - name: 03. Performance Primary - Update config
-    pipeline_file: update_performance_primary_config.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
-      when: branch = 'master' AND result = 'passed'
   - name: 04. Demo India - Update config
     pipeline_file: update_india_demo_config.yml
     auto_promote:
