@@ -1,9 +1,10 @@
 resource "aws_db_parameter_group" "simple-database-parameter-group" {
+  count = var.database_custom_param_group ? 1 : 0
   name   = "simple-db-${var.deployment_name}-parameter-group-pg14"
   family = "postgres14"
 
   parameter {
-    name  = "database_random_page_cost"
+    name  = "random_page_cost"
     value = var.database_random_page_cost
   }
 
@@ -13,7 +14,7 @@ resource "aws_db_parameter_group" "simple-database-parameter-group" {
   }
 
   parameter {
-    name  = "database_max_parallel_workers_per_gather"
+    name  = "max_parallel_workers_per_gather"
     value = var.database_max_parallel_workers_per_gather
   }
 }
@@ -37,7 +38,7 @@ resource "aws_db_instance" "simple-database" {
   password                      = var.database_password
   vpc_security_group_ids        = [aws_security_group.sg_simple_database.id]
   performance_insights_enabled  = true
-  parameter_group_name          = "simple-db-${var.deployment_name}-parameter-group-pg14"
+  parameter_group_name          = var.database_custom_param_group ? "simple-db-${var.deployment_name}-parameter-group-pg14" : null
   apply_immediately             = true
 
   tags = {
@@ -65,6 +66,7 @@ resource "aws_db_instance" "replica_simple_database" {
   instance_class      = var.database_replica_instance_type
   storage_encrypted   = true
   skip_final_snapshot = true
+  parameter_group_name = var.database_custom_param_group ? "simple-db-${var.deployment_name}-parameter-group-pg14" : null
   final_snapshot_identifier = null
 }
 
