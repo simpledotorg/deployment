@@ -70,6 +70,30 @@ variable "database_subnet_group_name" {
   type        = string
 }
 
+variable "database_custom_param_group" {
+  description = "Boolean to control whether or not to apply custom pg params"
+  type        = bool
+  default     = false
+}
+
+variable "database_random_page_cost" {
+  description = "RDS variable value for random_page_cost"
+  type        = string
+  default     = 4
+}
+
+variable "database_work_mem" {
+  description = "RDS variable value for work_mem"
+  type        = string
+  default     = 4000
+}
+
+variable "database_max_parallel_workers_per_gather" {
+  description = "RDS variable value for max_parallel_workers_per_gather"
+  type        = string
+  default     = 2
+}
+
 variable "instance_security_groups" {
   description = "Security groups assigned to instance"
   type        = list(string)
