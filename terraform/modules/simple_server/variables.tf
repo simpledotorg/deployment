@@ -20,6 +20,12 @@ variable "ec2_volume_size" {
   default     = "30"
 }
 
+variable "ec2_sidekiq_volume_size" {
+  description = "The disk size on the root block device for sidekiq servers"
+  type        = string
+  default     = "100"
+}
+
 variable "server_count" {
   description = "The number of instance for ec2 servers"
   type        = number
