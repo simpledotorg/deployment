@@ -17,6 +17,16 @@ resource "aws_db_parameter_group" "simple-database-parameter-group" {
     name  = "max_parallel_workers_per_gather"
     value = var.database_max_parallel_workers_per_gather
   }
+
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "100"
+  }
+
+  parameter {
+    name  = "rds.log_retention_period"
+    value = "4320"
+  }
 }
 
 resource "aws_db_instance" "simple-database" {
