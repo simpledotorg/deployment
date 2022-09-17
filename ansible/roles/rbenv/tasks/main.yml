@@ -51,13 +51,6 @@
   become: true
   become_user: deploy
 
-- name: install ruby {{ ruby_version }}
-  shell: rbenv install -s {{ ruby_version }}
-  environment:
-    PATH: "/home/deploy/.rbenv/bin:/home/deploy/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
-  become: true
-  become_user: deploy
-
 - name: install ruby 2.7.4
   shell: rbenv install -s 2.7.4
   environment:
@@ -66,7 +59,7 @@
   become_user: deploy
 
 - name: make ruby global
-  shell: rbenv global {{ ruby_version }}
+  shell: rbenv global 2.7.4
   environment:
     PATH: "/home/deploy/.rbenv/bin:/home/deploy/.rbenv/plugins/ruby-builds/bin:{{ ansible_env.PATH }}"
   become: true
@@ -91,5 +84,10 @@
 
 - name: install bundler
   shell: ~/.rbenv/shims/gem install bundler -v {{bundler_version}}
+  become: true
+  become_user: deploy
+
+- name: update system gems
+  shell: ~/.rbenv/shims/gem update --system
   become: true
   become_user: deploy
