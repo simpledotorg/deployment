@@ -7,7 +7,7 @@ resource "aws_cloudwatch_metric_alarm" "average_webserver_cpu" {
   namespace                 = "AWS/EC2"
   period                    = "300"
   statistic                 = "Average"
-  threshold                 = "65"
+  threshold                 = "75"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
   ok_actions                = [var.cloudwatch_alerts_sns_arn]
   insufficient_data_actions = [var.cloudwatch_alerts_sns_arn]
@@ -27,7 +27,7 @@ resource "aws_cloudwatch_metric_alarm" "sidekiq_cpu" {
   namespace                 = "AWS/EC2"
   period                    = "60"
   statistic                 = "Average"
-  threshold                 = "65"
+  threshold                 = "75"
   alarm_actions             = [var.cloudwatch_alerts_sns_arn]
   ok_actions                = [var.cloudwatch_alerts_sns_arn]
   insufficient_data_actions = [var.cloudwatch_alerts_sns_arn]
