@@ -1,0 +1,4 @@
+---
+- hosts: sidekiq
+  roles:
+    - { role: cphc-migration, tags: ['cphc-migration'] }
