@@ -27,6 +27,11 @@ resource "aws_db_parameter_group" "simple-database-parameter-group" {
     name  = "rds.log_retention_period"
     value = "4320"
   }
+
+  parameter {
+    name         = "hot_standby_feedback"
+    value        = "1"
+  }
 }
 
 resource "aws_db_instance" "simple-database" {
