@@ -14,7 +14,8 @@
 
 - name: Unarchive sslvpn-plus install script
   unarchive:
-    src: linux_phat_client.tgz
+    remote_src: yes
+    src: {{ cphc_vpn.installer_url }}
     dest: /home/deploy
     creates: /home/deploy/linux_phat_client
 
@@ -33,31 +34,25 @@
   become: true
   become_user: deploy
 
-# - name: copy vpn connection systemd file
-#   template:
-#     src: config/systemd/user/cphc_vpn.service
-#     dest: /home/deploy/.config/systemd/user/cphc_vpn.service
-#   become: true
-#   become_user: deploy
+- name: copy vpn connection systemd file
+  template:
+    src: config/systemd/user/cphc_vpn.service
+    dest: /home/deploy/.config/systemd/user/cphc_vpn.service
+  become: true
+  become_user: deploy
 
-# - name: force reload service file
-#   systemd:
-#     daemon_reload: yes
-#     scope: user
+- name: force reload service file
+  systemd:
+    daemon_reload: yes
+    scope: user
+  become: true
+  become_user: deploy
 
-# - name: enable sidekiq
-#   systemd:
-#     name: cphc_vpn.service
-#     enabled: yes
-#     scope: user
-#   become: true
-#   become_user: deploy
-
-# - name: restart cphc vpn connection
-#   systemd:
-#     name: cphc_vpn.service
-#     state: restarted
-#     scope: user
-#   tags: restart-cphc-vpn
-#   become: true
-#   become_user: deploy
+- name: restart cphc vpn connection
+  systemd:
+    name: cphc_vpn.service
+    state: restarted
+    scope: user
+  tags: restart-cphc-vpn
+  become: true
+  become_user: deploy
