@@ -6,6 +6,4 @@
 - hosts: sidekiq
   roles:
     - { role: sidekiq, tags: ['sidekiq'] }
-- hosts: cphc_migration
-  roles:
-    - { role: cphc_migration, tags: ['cphc_migration'] }
+
