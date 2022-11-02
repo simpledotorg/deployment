@@ -1,0 +1,12 @@
+[Unit]
+Description=CPHC VPN for simple-server {{ deploy_env }}
+After=syslog.target network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=naclient login -profile {{ cphc_vpn.profile }} -user {{ cphc_vpn.username }} -password '{{ cphc_vpn.password }}' <<< y
+ExecStop=naclient logout -profile NCD_Stage
+
+[Install]
+WantedBy=default.target
