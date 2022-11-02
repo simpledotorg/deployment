@@ -61,6 +61,7 @@
   file:
     path: /opt/sslvpn-plus
     state: directory
+  become: true
 
 - name: Unarchive sslvpn-plus install script
   unarchive:
@@ -68,6 +69,8 @@
     src: "{{ cphc_vpn.installer_url }}"
     dest: /home/deploy
     creates: /home/deploy/linux_phat_client
+  become: true
+  become_user: deploy
 
 - name: Install sslvpn-plus client
   expect:
