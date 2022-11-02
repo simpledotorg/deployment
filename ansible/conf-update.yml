@@ -6,4 +6,3 @@
 - hosts: sidekiq
   roles:
     - { role: sidekiq, tags: ['sidekiq'] }
-
