@@ -197,7 +197,7 @@ module "simple_server_sandbox" {
   ec2_ubuntu_version            = "20.04"
   database_instance_type        = "db.r5.xlarge"
   server_count                  = 1
-  sidekiq_server_count          = 1
+  sidekiq_server_count          = 2
   database_username             = var.sandbox_database_username
   database_password             = var.sandbox_database_password
   instance_security_groups      = module.simple_networking.instance_security_groups

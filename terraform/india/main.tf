@@ -189,7 +189,7 @@ module "simple_server_india_production" {
   redis_node_type                          = "cache.r5.large"
   create_database_replica                  = true
   server_count                             = 5
-  sidekiq_server_count                     = 1
+  sidekiq_server_count                     = 2
   redis_param_group_name                   = module.simple_redis_param_group.redis_param_group_name
   enable_cloudwatch_alerts                 = true
   cloudwatch_alerts_sns_arn                = module.notify_slack.this_slack_topic_arn

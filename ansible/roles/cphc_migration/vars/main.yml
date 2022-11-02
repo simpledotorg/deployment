@@ -1,0 +1,3 @@
+---
+sidekiq_processes: 4
+cphc_sidekiq_queue: cphc_migration
