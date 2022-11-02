@@ -76,36 +76,42 @@
   expect:
     chdir: /home/deploy/linux_phat_client
     command: ./install_linux_phat_client.sh
+    creates: /opt/sslvpn-plus/naclient/naclient.conf
     responses:
       Do you want to continue: y
   become: true
 
-- name: ensure user level systemd dir exists
-  file:
-    path: /home/deploy/.config/systemd/user/
-    state: directory
+- name: Stop existing CPHC connections
+  shell:
+    cmd: naclient logout
   become: true
   become_user: deploy
+  ignore_errors: true
 
-- name: copy vpn connection systemd file
+- name: Start CPHC VPN Connection
+  expect:
+    command: naclient login -profile {{ cphc_vpn.profile }} -user {{ cphc_vpn.username }} -password '{{ cphc_vpn.password }}'
+    responses:
+      continue?: y
+  become: true
+  become_user: deploy
+  register: cphc_connection_status
+  failed_when: cphc_connection_status.rc != 1
+
+- name: Copy cron file
   template:
-    src: config/systemd/user/cphc_vpn.service
-    dest: /home/deploy/.config/systemd/user/cphc_vpn.service
+    src: cphc_connection_check.sh
+    dest: /home/deploy/cphc_connection_check.sh
+    mode: u=rwx,g=rx,o=rx
   become: true
   become_user: deploy
 
-- name: force reload service file
-  systemd:
-    daemon_reload: yes
-    scope: user
+- name: Setup cron to restart connection
+  cron:
+    cron_file: cphc_vpn_check
+    name: Check CPHC VPN connection
+    user: deploy
+    minute: '*'
+    job: /home/deploy/cphc_connection_check.sh
+    state: absent
   become: true
-  become_user: deploy
-
-- name: restart cphc vpn connection
-  systemd:
-    name: cphc_vpn.service
-    state: restarted
-    scope: user
-  tags: restart-cphc-vpn
-  become: true
-  become_user: deploy
