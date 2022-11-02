@@ -1,4 +1,0 @@
----
-- hosts: sidekiq:cphc_vpn
-  roles:
-    - { role: cphc-migration, tags: ['cphc-migration'] }
