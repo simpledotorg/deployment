@@ -107,7 +107,6 @@
   become_user: deploy
 
 - name: Run VPN connection script with logs
-- name: Copy script to check VPN connection and alert
   template:
     src: keep_vpn_alive.sh
     dest: /home/deploy/keep_vpn_alive.sh
