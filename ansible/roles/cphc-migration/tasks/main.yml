@@ -98,7 +98,7 @@
   register: cphc_connection_status
   failed_when: cphc_connection_status.rc != 1
 
-- name: Copy cron file
+- name: Copy script to check VPN connection and alert
   template:
     src: cphc_connection_check.sh
     dest: /home/deploy/cphc_connection_check.sh
@@ -106,12 +106,11 @@
   become: true
   become_user: deploy
 
-- name: Setup cron to restart connection
-  cron:
-    cron_file: cphc_vpn_check
-    name: Check CPHC VPN connection
-    user: deploy
-    minute: '*'
-    job: /home/deploy/cphc_connection_check.sh
-    state: absent
+- name: Run VPN connection script with logs
+- name: Copy script to check VPN connection and alert
+  template:
+    src: keep_vpn_alive.sh
+    dest: /home/deploy/keep_vpn_alive.sh
+    mode: u=rwx,g=rx,o=rx
   become: true
+  become_user: deploy
