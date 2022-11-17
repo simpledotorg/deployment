@@ -33,8 +33,7 @@ while true; do
       CONSECUTIVE_FAILURES=0
       LAST_ALERT_TIME=0
     elif [ $CONSECUTIVE_FAILURES -gt $MIN_FAILURES_FOR_ALERT ] && [ $(($(date +%s) - $LAST_ALERT_TIME)) -ge $(( ALERT_FREQUENCY_MINUTES * 60 )) ]; then
-      echo_with_time $ALERT_MESSAGE
-      slack_alert $ALERT_MESSAGE
+      echo_with_time $ALERT_MESSAGE && slack_alert $ALERT_MESSAGE
       LAST_ALERT_TIME=$(date +%s)
     fi
   fi
