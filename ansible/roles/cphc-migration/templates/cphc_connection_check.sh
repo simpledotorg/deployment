@@ -1,10 +1,8 @@
 #! /usr/bin/bash
-# alerts configuration
-MIN_FAILURES_FOR_ALERT=2
-ALERT_FREQUENCY_MINUTES=5
-STATUS_CHECK_FREQUENCY_SECONDS=5
+ALERT_MIN_FAILURES=2
+ALERT_FREQUENCY_SECONDS=300
+ALERT_STATUS_POLLING_INTERVAL=5
 ALERT_MESSAGE="Unable to connect CPHC VPN"
-# end alerts configuration
 
 CONSECUTIVE_FAILURES=0
 LAST_ALERT_TIME=0
@@ -32,11 +30,11 @@ while true; do
       echo_with_time "Successfully connected to VPN"
       CONSECUTIVE_FAILURES=0
       LAST_ALERT_TIME=0
-    elif [ $CONSECUTIVE_FAILURES -gt $MIN_FAILURES_FOR_ALERT ] && [ $(($(date +%s) - $LAST_ALERT_TIME)) -ge $(( ALERT_FREQUENCY_MINUTES * 60 )) ]; then
+    elif [ $CONSECUTIVE_FAILURES -gt $ALERT_MIN_FAILURES ] && [ $(($(date +%s) - $LAST_ALERT_TIME)) -ge $((ALERT_FREQUENCY_SECONDS)) ]; then
       echo_with_time $ALERT_MESSAGE && slack_alert $ALERT_MESSAGE
       LAST_ALERT_TIME=$(date +%s)
     fi
   fi
-  sleep $STATUS_CHECK_FREQUENCY_SECONDS
+  sleep $ALERT_STATUS_POLLING_INTERVAL
 done
 
