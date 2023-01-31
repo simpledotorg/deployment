@@ -192,7 +192,7 @@ module "simple_server_sandbox" {
   deployment_name               = "development-sandbox"
   database_vpc_id               = module.simple_networking.database_vpc_id
   database_subnet_group_name    = module.simple_networking.database_subnet_group_name
-  database_postgres_version     = "14.2"
+  database_postgres_version     = "14.6"
   ec2_instance_type             = "t2.2xlarge"
   ec2_ubuntu_version            = "20.04"
   database_instance_type        = "db.r5.xlarge"
