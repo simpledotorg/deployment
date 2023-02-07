@@ -297,7 +297,7 @@ module "simple_server_demo" {
   database_username             = var.demo_database_username
   database_password             = var.demo_database_password
   database_instance_type        = "db.t3.medium"
-  database_postgres_version     = "14.2"
+  database_postgres_version     = "14.6"
   instance_security_groups      = module.simple_networking.instance_security_groups
   aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id                 = module.simple_networking.server_vpc_id
