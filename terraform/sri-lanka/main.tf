@@ -215,7 +215,7 @@ module "simple_server_sri_lanka_demo" {
   database_subnet_group_name     = module.simple_networking.database_subnet_group_name
   database_instance_type         = "db.t3.medium"
   database_replica_instance_type = "db.t3.medium"
-  database_postgres_version      = "14.2"
+  database_postgres_version      = "14.6"
   ec2_instance_type              = "t2.medium"
   ec2_ubuntu_version             = "20.04"
   database_username              = var.demo_database_username
