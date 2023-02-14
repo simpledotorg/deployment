@@ -165,7 +165,7 @@ module "simple_server_bangladesh_production" {
   deployment_name                = "bangladesh-production"
   database_vpc_id                = module.simple_networking.database_vpc_id
   database_subnet_group_name     = module.simple_networking.database_subnet_group_name
-  database_postgres_version      = "14.2"
+  database_postgres_version      = "14.6"
   database_instance_type         = "db.t3.medium"
   database_replica_instance_type = "db.t3.medium"
   ec2_instance_type              = "t3.xlarge"
