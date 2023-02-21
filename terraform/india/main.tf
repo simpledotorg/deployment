@@ -163,7 +163,7 @@ output "s3_logs_bucket_name" {
 module "simple_server_india_production" {
   source                                   = "../modules/simple_server"
   deployment_name                          = "india-production"
-  database_postgres_version                = "14.2"
+  database_postgres_version                = "14.6"
   database_custom_param_group              = true
   database_max_parallel_workers_per_gather = 4
   database_random_page_cost                = 1
