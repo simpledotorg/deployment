@@ -12,10 +12,6 @@ blocks:
           commands:
             - checkout
 promotions:
-  - name: 01. QA - Update config
-    pipeline_file: update_qa_config.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
   - name: 02. Sandbox - Update config
     pipeline_file: update_sandbox_config.yml
     auto_promote:
