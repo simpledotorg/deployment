@@ -32,6 +32,11 @@ resource "aws_db_parameter_group" "simple-database-parameter-group" {
     name         = "hot_standby_feedback"
     value        = "1"
   }
+
+  parameter {
+    name  = "statement_timeout"
+    value = "86400000"
+  }
 }
 
 resource "aws_db_instance" "simple-database" {
