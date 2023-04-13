@@ -71,6 +71,16 @@ variable "security_database_password" {
   type        = string
 }
 
+variable "profiling_database_username" {
+  description = "Database Username"
+  type        = string
+}
+
+variable "profiling_database_password" {
+  description = "Database Password"
+  type        = string
+}
+
 #
 # certficate stuff
 #
@@ -335,6 +345,65 @@ output "simple_server_demo_load_balancer_public_dns" {
   value = module.simple_networking.load_balancer_public_dns
 }
 
+module "simple_server_profiling" {
+  source                                   = "../modules/simple_server"
+  deployment_name                          = "profiling"
+  database_postgres_version                = "14.6"
+  database_custom_param_group              = true
+  database_max_parallel_workers_per_gather = 4
+  database_random_page_cost                = 1
+  database_work_mem                        = 30000
+  database_vpc_id                          = module.simple_networking.database_vpc_id
+  database_subnet_group_name               = module.simple_networking.database_subnet_group_name
+  ec2_instance_type                        = "t3.xlarge"
+  ec2_ubuntu_version                       = "20.04"
+  ec2_volume_size                          = "100"
+  database_instance_type                   = "db.m5.4xlarge"
+  database_replica_instance_type           = "db.m5.xlarge"
+  database_allocated_storage               = "500"
+  database_username                        = var.profiling_database_username
+  database_password                        = var.profiling_database_password
+  instance_security_groups                 = module.simple_networking.instance_security_groups
+  aws_key_name                             = module.simple_aws_key_pair.simple_aws_key_name
+  server_vpc_id                            = module.simple_networking.server_vpc_id
+  https_listener_arn                       = module.simple_networking.https_listener_arn
+  load_balancer_arn_suffix                 = module.simple_networking.load_balancer_arn_suffix
+  host_urls                                = ["api-profiling.simple.org", "dashboard-profiling.simple.org"]
+  create_redis_cache_instance              = true
+  create_redis_sidekiq_instance            = true
+  redis_node_type                          = "cache.r5.large"
+  create_database_replica                  = false
+  server_count                             = 1
+  sidekiq_server_count                     = 0
+  redis_param_group_name                   = module.simple_redis_param_group.redis_param_group_name
+  enable_cloudwatch_alerts                 = false
+  cloudwatch_alerts_sns_arn                = module.notify_slack.this_slack_topic_arn
+}
+
+output "simple_server_profiling_server_instance_ips" {
+  value = module.simple_server_profiling.server_instance_ips
+}
+
+output "simple_server_profiling_sidekiq_instance_ips" {
+  value = module.simple_server_profiling.sidekiq_instance_ips
+}
+
+output "simple_server_profiling_database_url" {
+  value = module.simple_server_profiling.database_url
+}
+
+output "simple_server_profiling_cache_redis_url" {
+  value = module.simple_server_profiling.cache_redis_url
+}
+
+output "simple_server_profiling_sidekiq_redis_url" {
+  value = module.simple_server_profiling.sidekiq_redis_url
+}
+
+output "simple_server_profiling_load_balancer_public_dns" {
+  value = module.simple_networking.load_balancer_public_dns
+}
+
 /* This sets up a bunch of ec2 servers for the standalone setup
    with the appropriate security groups.
 
@@ -354,3 +423,5 @@ module "simple_server_playground" {
   monitoring_server_count    = 1
   storage_server_count       = 1
 } */
+
+
