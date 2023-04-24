@@ -14,6 +14,11 @@ go to [Getting Started](#getting-started).
 
 ## Getting Started
 
+### 0. Install Terraform
+
+1. Install [tfenv](https://github.com/tfutils/tfenv) to manage Terraform versions locally
+2. Simple uses terraform v1.1.0 to provision infrastructure. Install that via `tfenv install 1.1.0`, `tfenv use 1.1.0`
+
 ### 1. Add the master AWS SSH key to your machine
 
 This is the SSH key that will be placed on all provisioned instances for initial access. The key is read off of your
