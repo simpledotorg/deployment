@@ -14,6 +14,10 @@ resource "aws_instance" "ec2_simple_server" {
   tags = {
     Name = format("simple-server-%s-%03d", var.deployment_name, count.index + 1)
   }
+
+  lifecycle {
+    ignore_changes = [ami]
+  }
 }
 
 resource "aws_instance" "ec2_sidekiq_server" {
@@ -32,6 +36,10 @@ resource "aws_instance" "ec2_sidekiq_server" {
   tags = {
     Name = format("simple-server-sidekiq-%s-%03d", var.deployment_name, count.index + 1)
   }
+
+  lifecycle {
+    ignore_changes = [ami]
+  }
 }
 
 resource "aws_security_group" "sg_simple_server" {
@@ -48,8 +56,8 @@ resource "aws_lb_target_group" "simple_server_target_group" {
   health_check {
     port     = 443
     protocol = "HTTPS"
-    path    = "/api/v3/ping"
-    matcher = "200"
+    path     = "/api/v3/ping"
+    matcher  = "200"
   }
 }
 
