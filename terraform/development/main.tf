@@ -206,6 +206,7 @@ module "simple_server_sandbox" {
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
   host_urls                     = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
+  redis_version                 = "5.0.6"
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
@@ -254,6 +255,7 @@ module "simple_server_security" {
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
   host_urls                     = ["api-security.simple.org", "dashboard-security.simple.org"]
+  redis_version                 = "5.0.6"
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
@@ -304,6 +306,7 @@ module "simple_server_demo" {
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
   host_urls                     = ["api-demo.simple.org", "dashboard-demo.simple.org", "dashboard-demo.in.simple.org", "api-demo.in.simple.org"]
+  redis_version                 = "5.0.6"
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
