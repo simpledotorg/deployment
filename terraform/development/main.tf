@@ -31,15 +31,6 @@ provider "aws" {
 #
 # database u/p vars
 #
-variable "sandbox_database_username" {
-  description = "Database Username"
-  type        = string
-}
-
-variable "sandbox_database_password" {
-  description = "Database Password"
-  type        = string
-}
 
 variable "demo_database_username" {
   description = "Database Username"
@@ -47,16 +38,6 @@ variable "demo_database_username" {
 }
 
 variable "demo_database_password" {
-  description = "Database Password"
-  type        = string
-}
-
-variable "qa_database_username" {
-  description = "Database Username"
-  type        = string
-}
-
-variable "qa_database_password" {
   description = "Database Password"
   type        = string
 }
