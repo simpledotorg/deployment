@@ -101,11 +101,11 @@ module "simple_aws_key_pair" {
 module "simple_networking" {
   source = "../modules/simple_networking"
 
-  deployment_name   = "india"
-  database_vpc_cidr = "172.32.0.0/16"
-  certificate_body  = file(var.certificate_body_file)
-  certificate_chain = file(var.certificate_chain_file)
-  private_key       = file(var.certificate_private_key_file)
+  deployment_name         = "india"
+  database_vpc_cidr       = "172.32.0.0/16"
+  certificate_body        = file(var.certificate_body_file)
+  certificate_chain       = file(var.certificate_chain_file)
+  private_key             = file(var.certificate_private_key_file)
   additional_certificates = var.additional_certificates
 }
 
@@ -175,7 +175,7 @@ module "simple_server_india_production" {
   ec2_volume_size                          = "100"
   database_instance_type                   = "db.m5.4xlarge"
   database_replica_instance_type           = "db.m5.2xlarge"
-  database_allocated_storage               = "500"
+  database_allocated_storage               = "1000"
   database_username                        = var.production_database_username
   database_password                        = var.production_database_password
   instance_security_groups                 = module.simple_networking.instance_security_groups
