@@ -28,28 +28,6 @@ provider "aws" {
 }
 
 #
-# AWS key pair
-#
-module "simple_aws_key_pair" {
-  source = "../modules/simple_aws_key_pair"
-}
-
-#
-# Networking
-#
-
-module "simple_networking" {
-  source = "../modules/simple_networking"
-
-  deployment_name   = "bangladesh"
-  database_vpc_cidr = "172.32.0.0/16"
-  create_alb        = false
-  certificate_body  = ""
-  certificate_chain = ""
-  private_key       = ""
-}
-
-#
 # s3 for logs
 #
 variable "s3_logs_bucket_name" {
