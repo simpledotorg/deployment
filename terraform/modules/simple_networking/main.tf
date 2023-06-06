@@ -46,13 +46,13 @@ output "standalone_instance_security_groups" {
 }
 
 output "https_listener_arn" {
-  value = var.create_alb ? aws_alb_listener.simple_listener_https[0].arn : null
+  value = aws_alb_listener.simple_listener_https.arn
 }
 
 output "load_balancer_arn_suffix" {
-  value = var.create_alb ? aws_alb.simple_env_proxy[0].arn_suffix : null
+  value = aws_alb.simple_env_proxy.arn_suffix
 }
 
 output "load_balancer_public_dns" {
-  value = var.create_alb ? aws_alb.simple_env_proxy[0].dns_name : null
+  value = aws_alb.simple_env_proxy.dns_name
 }
