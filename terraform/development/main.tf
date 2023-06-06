@@ -31,15 +31,6 @@ provider "aws" {
 #
 # database u/p vars
 #
-variable "sandbox_database_username" {
-  description = "Database Username"
-  type        = string
-}
-
-variable "sandbox_database_password" {
-  description = "Database Password"
-  type        = string
-}
 
 variable "demo_database_username" {
   description = "Database Username"
@@ -47,16 +38,6 @@ variable "demo_database_username" {
 }
 
 variable "demo_database_password" {
-  description = "Database Password"
-  type        = string
-}
-
-variable "qa_database_username" {
-  description = "Database Username"
-  type        = string
-}
-
-variable "qa_database_password" {
   description = "Database Password"
   type        = string
 }
@@ -187,55 +168,6 @@ output "s3_logs_bucket_name" {
 #
 # server configs
 #
-module "simple_server_sandbox" {
-  source                        = "../modules/simple_server"
-  deployment_name               = "development-sandbox"
-  database_vpc_id               = module.simple_networking.database_vpc_id
-  database_subnet_group_name    = module.simple_networking.database_subnet_group_name
-  database_postgres_version     = "14.6"
-  ec2_instance_type             = "t2.2xlarge"
-  ec2_ubuntu_version            = "20.04"
-  database_instance_type        = "db.r5.xlarge"
-  server_count                  = 1
-  sidekiq_server_count          = 2
-  database_username             = var.sandbox_database_username
-  database_password             = var.sandbox_database_password
-  instance_security_groups      = module.simple_networking.instance_security_groups
-  aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
-  server_vpc_id                 = module.simple_networking.server_vpc_id
-  https_listener_arn            = module.simple_networking.https_listener_arn
-  load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
-  host_urls                     = ["api-sandbox.simple.org", "dashboard-sandbox.simple.org"]
-  create_redis_cache_instance   = true
-  create_redis_sidekiq_instance = true
-  redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
-  enable_cloudwatch_alerts      = true
-  cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
-}
-
-output "simple_server_sandbox_server_instance_ips" {
-  value = module.simple_server_sandbox.server_instance_ips
-}
-
-output "simple_server_sandbox_sidekiq_instance_ips" {
-  value = module.simple_server_sandbox.sidekiq_instance_ips
-}
-
-output "simple_server_sandbox_database_url" {
-  value = module.simple_server_sandbox.database_url
-}
-
-output "simple_server_sandbox_cache_redis_url" {
-  value = module.simple_server_sandbox.cache_redis_url
-}
-
-output "simple_server_sandbox_sidekiq_redis_url" {
-  value = module.simple_server_sandbox.sidekiq_redis_url
-}
-
-output "simple_server_sandbox_load_balancer_public_dns" {
-  value = module.simple_networking.load_balancer_public_dns
-}
 
 module "simple_server_security" {
   source                        = "../modules/simple_server"
@@ -254,6 +186,7 @@ module "simple_server_security" {
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
   host_urls                     = ["api-security.simple.org", "dashboard-security.simple.org"]
+  redis_version                 = "5.0.6"
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
@@ -304,6 +237,7 @@ module "simple_server_demo" {
   https_listener_arn            = module.simple_networking.https_listener_arn
   load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
   host_urls                     = ["api-demo.simple.org", "dashboard-demo.simple.org", "dashboard-demo.in.simple.org", "api-demo.in.simple.org"]
+  redis_version                 = "5.0.6"
   create_redis_cache_instance   = true
   create_redis_sidekiq_instance = true
   redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name

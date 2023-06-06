@@ -110,7 +110,7 @@ variable "aws_key_name" {
   type        = string
 }
 
-variable  "server_vpc_id" {
+variable "server_vpc_id" {
   description = "Server vpc-id"
   type        = string
 }
@@ -141,6 +141,12 @@ variable "create_redis_sidekiq_instance" {
   description = "Create a dedicated redis instance for sidekiq"
   type        = bool
   default     = false
+}
+
+variable "redis_version" {
+  description = "The redis version to be installed"
+  type        = string
+  default     = "5.0.3"
 }
 
 variable "redis_node_type" {
