@@ -193,6 +193,7 @@ module "simple_server_india_production" {
   redis_param_group_name                   = module.simple_redis_param_group.redis_param_group_name
   enable_cloudwatch_alerts                 = true
   cloudwatch_alerts_sns_arn                = module.notify_slack.this_slack_topic_arn
+  redis_version                            = "5.0.6"
 }
 
 output "simple_server_india_production_server_instance_ips" {
