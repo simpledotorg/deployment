@@ -1,20 +1,22 @@
 resource "aws_acm_certificate" "cert" {
-  private_key = var.private_key
-  certificate_body = var.certificate_body
+  count             = var.create_alb ? 1 : 0
+  private_key       = var.private_key
+  certificate_body  = var.certificate_body
   certificate_chain = var.certificate_chain
 }
 
 resource "aws_acm_certificate" "additional_certs" {
-  count             = length(var.additional_certificates)
+  count             = var.create_alb ? length(var.additional_certificates) : 0
   private_key       = file(var.additional_certificates[count.index]["private_key_file"])
   certificate_body  = file(var.additional_certificates[count.index]["body_file"])
   certificate_chain = file(var.additional_certificates[count.index]["chain_file"])
 }
 
 resource "aws_alb" "simple_env_proxy" {
-  name     = "simple-env-proxy"
-  internal = false
-  subnets  = aws_default_subnet.default.*.id
+  count        = var.create_alb ? 1 : 0
+  name         = "simple-env-proxy"
+  internal     = false
+  subnets      = aws_default_subnet.default.*.id
   idle_timeout = 600
   security_groups = [
     aws_security_group.allow_all_inbound.id,
@@ -27,7 +29,8 @@ resource "aws_alb" "simple_env_proxy" {
 }
 
 resource "aws_alb_listener" "simple_listener_http" {
-  load_balancer_arn = aws_alb.simple_env_proxy.arn
+  count             = var.create_alb ? 1 : 0
+  load_balancer_arn = aws_alb.simple_env_proxy[0].arn
   port              = "80"
   protocol          = "HTTP"
 
@@ -43,11 +46,12 @@ resource "aws_alb_listener" "simple_listener_http" {
 }
 
 resource "aws_alb_listener" "simple_listener_https" {
-  load_balancer_arn = aws_alb.simple_env_proxy.arn
+  count             = var.create_alb ? 1 : 0
+  load_balancer_arn = aws_alb.simple_env_proxy[0].arn
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn   = aws_acm_certificate.cert.arn
+  certificate_arn   = aws_acm_certificate.cert[0].arn
 
   lifecycle {
     // We've started using an amazon provided certificate in Bangladesh,
@@ -68,7 +72,7 @@ resource "aws_alb_listener" "simple_listener_https" {
 }
 
 resource "aws_lb_listener_certificate" "additional_listener_certificates" {
-  count           = length(aws_acm_certificate.additional_certs)
-  listener_arn    = aws_alb_listener.simple_listener_https.arn
+  count           = var.create_alb ? length(aws_acm_certificate.additional_certs) : 0
+  listener_arn    = aws_alb_listener.simple_listener_https[0].arn
   certificate_arn = aws_acm_certificate.additional_certs[count.index].arn
 }
