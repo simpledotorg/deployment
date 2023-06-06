@@ -5,7 +5,7 @@
 This repository contains one folder for each AWS account whose infrastructure is managed through terraform. Currently,
 it supports:
 * [`development`](/development) - The Simple AWS Dev account, managing Sandbox, QA, and Security environments
-* [`bangladesh`](/bangladesh) - The Simple Bangladesh account, managing Bangladesh Demo and Bangaldesh Production
+* [`india`](/india) - The Simple India account, managing India Demo and Bangaldesh Production
   environments
 * [`example`](/example) - A sample directory used as a template for creating new AWS accounts
 
@@ -64,23 +64,31 @@ For example:
 ```bash
 $ cd terraform
 
-$ ./decrypt ~/.vault_password bangladesh
+$ ./decrypt ~/.vault_password india
 
-Decrypting bangladesh/bd.simple.org.chain.pem.vault to bangladesh/bd.simple.org.chain.pem
-Decrypting bangladesh/bd.simple.org.pem.vault to bangladesh/bd.simple.org.pem
-Decrypting bangladesh/bd.simple.org.private_key.pem.vault to bangladesh/bd.simple.org.private_key.pem
-Decrypting bangladesh/terraform.tfvars.vault to bangladesh/terraform.tfvars
+Decrypting india/terraform.tfvars.vault to india/terraform.tfvars
+Decrypting india/certs/in.simple.org.chain.pem.vault to india/certs/in.simple.org.chain.pem
+Decrypting india/certs/in.simple.org.pem.vault to india/certs/in.simple.org.pem
+Decrypting india/certs/in.simple.org.private_key.pem.vault to india/certs/in.simple.org.private_key.pem
+Decrypting india/certs/simple.org.chain.pem.vault to india/certs/simple.org.chain.pem
+Decrypting india/certs/simple.org.pem.vault to india/certs/simple.org.pem
+Decrypting india/certs/simple.org.private_key.pem.vault to india/certs/simple.org.private_key.pem
 
 $ ./decrypt ~/.vault_password
 
-Decrypting bangladesh/bd.simple.org.chain.pem.vault to bangladesh/bd.simple.org.chain.pem
-Decrypting bangladesh/bd.simple.org.pem.vault to bangladesh/bd.simple.org.pem
-Decrypting bangladesh/bd.simple.org.private_key.pem.vault to bangladesh/bd.simple.org.private_key.pem
-Decrypting bangladesh/terraform.tfvars.vault to bangladesh/terraform.tfvars
+...
+Decrypting india/terraform.tfvars.vault to india/terraform.tfvars
+Decrypting india/certs/in.simple.org.chain.pem.vault to india/certs/in.simple.org.chain.pem
+Decrypting india/certs/in.simple.org.pem.vault to india/certs/in.simple.org.pem
+Decrypting india/certs/in.simple.org.private_key.pem.vault to india/certs/in.simple.org.private_key.pem
+Decrypting india/certs/simple.org.chain.pem.vault to india/certs/simple.org.chain.pem
+Decrypting india/certs/simple.org.pem.vault to india/certs/simple.org.pem
+Decrypting india/certs/simple.org.private_key.pem.vault to india/certs/simple.org.private_key.pem
 Decrypting development/simple.org.chain.pem.vault to development/simple.org.chain.pem
 Decrypting development/simple.org.pem.vault to development/simple.org.pem
 Decrypting development/simple.org.private_key.pem.vault to development/simple.org.private_key.pem
 Decrypting development/terraform.tfvars.vault to development/terraform.tfvars
+...
 ```
 
 Even if you've already decrypted these files, it's a good idea to do this again, as the contents of the encrypted files
@@ -97,7 +105,7 @@ documentation for more details on how to do this.
 Each AWS account has a separate subdirectory in the repository. Navigate to the one you wish to work on.
 
 ```bash
-$ cd bangladesh
+$ cd india
 ```
 
 ### 4. Add AWS credentials to your machine
@@ -106,11 +114,11 @@ Add the credentials for your AWS account to your `~/.aws/credentials` file. The 
 [on the AWS console](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html).
 
 Include the AWS credentials (access key ID and secret access key) in the profile whose name matches the profile declared
-in your terraform configuration's `main.tf` file. For example, for `bangladesh` your credentials file should look like
+in your terraform configuration's `main.tf` file. For example, for `india` your credentials file should look like
 this.
 
 ```
-[bangladesh]
+[india]
 aws_access_key_id=<YOUR_ACCESS_KEY_ID>
 aws_secret_access_key=<YOUR_ACCESS_KEY>
 ```
@@ -139,9 +147,9 @@ the `encrypt` script, which works like the `decrypt` script from Step 2.
 
 ```bash
 $ cd ..
-$ ./encrypt ~/.vault_password bangladesh
+$ ./encrypt ~/.vault_password india
 $ git add **/*.vault
-$ git commit -m 'Update Bangladesh terraform secrets'
+$ git commit -m 'Update India terraform secrets'
 ```
 
 Note that the `encrypt` script will update _all_ vault files, even if you didn't change anything inside. This is
@@ -163,7 +171,7 @@ follow these instructions. This setup needs to be run only once per AWS account.
 ### 1. Set up your AWS account
 
 - Create an AWS account.
-- Choose a profile name for the new AWS account. (eg. `ihci`, `bangladesh`)
+- Choose a profile name for the new AWS account. (eg. `ihci`, `india`)
 - Make sure your IAM User has `Administrator` permissions. Get the `Access key ID` and `Secret Access key` for your account and
   put it under `~/.aws/credentials` file on your developer environment. Create this file if doesn't already exist.
 ```
@@ -179,14 +187,14 @@ Refer to [using AWS credential files](https://docs.aws.amazon.com/cli/latest/use
 ### 2. Add the new environment to the repository
 
 Run the following script from the `terraform/` directory to create a directory for your new environment. If your new
-environment's name is `bangladesh`:
+environment's name is `india`:
 
 ```bash
 $ cd terraform
-$ ./create_aws_account bangladesh
+$ ./create_aws_account india
 ```
 
-This will create a `bangladesh/` directory with several files.
+This will create a `india/` directory with several files.
 
 * `main.tf`
 * `terraform.tfvars`
