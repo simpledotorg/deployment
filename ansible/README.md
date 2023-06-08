@@ -50,8 +50,6 @@ These are the environments managed by this Ansible repository. See the
 [Simple Server Handbook](https://docs.google.com/document/d/1VTVBr8HcLWK6Nrg4gQkuQKb3H8EtiqQA-zGWTu3ddHc/edit)
 for information on what each of these environments are for.
 
-- bangladesh-demo
-- bangladesh-production
 - sandbox
 - qa
 - staging

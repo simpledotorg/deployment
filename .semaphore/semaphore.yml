@@ -16,20 +16,12 @@ promotions:
     pipeline_file: update_india_demo_config.yml
     auto_promote:
       when: branch = 'master' AND result = 'passed'
-  - name: 05. Demo Bangladesh - Update config
-    pipeline_file: update_bangladesh_demo_config.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
   - name: 06. Demo Sri Lanka - Update config
     pipeline_file: update_sri_lanka_demo_config.yml
     auto_promote:
       when: branch = 'master' AND result = 'passed'
   - name: 07. Production India - Update config
     pipeline_file: update_india_production_config.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
-  - name: 08. Production Bangladesh - Update config
-    pipeline_file: update_bangladesh_production_config.yml
     auto_promote:
       when: branch = 'master' AND result = 'passed'
   - name: 09. Production Sri Lanka - Update config
