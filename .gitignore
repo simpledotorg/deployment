@@ -5,3 +5,8 @@
 # Ignore utility configuration files
 .idea/
 
+# Terraform build files
+terraform/development/builds/*
+terraform/bangladesh/builds/*
+terraform/india/builds/*
+terraform/sri-lanka/builds/*

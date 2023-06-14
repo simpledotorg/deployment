@@ -16,11 +16,11 @@ You just need a few things installed locally.
 ### Install Ansible with Homebrew
 
 ```
-brew install ansible
+brew install ansible@2.8
 ```
 
 If you do not use Homebrew on MacOS, you can find installation instructions for your environment in
-[Ansible's documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
+[Ansible's documentation](https://docs.ansible.com/ansible/2.8/installation_guide/intro_installation.html).
 
 ### Install third-party roles
 
