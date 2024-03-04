@@ -24,7 +24,3 @@ promotions:
     pipeline_file: update_india_production_config.yml
     auto_promote:
       when: branch = 'master' AND result = 'passed'
-  - name: 09. Production Sri Lanka - Update config
-    pipeline_file: update_sri_lanka_production_config.yml
-    auto_promote:
-      when: branch = 'master' AND result = 'passed'
