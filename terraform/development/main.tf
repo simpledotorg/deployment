@@ -179,7 +179,7 @@ module "simple_server_security" {
   database_username             = var.security_database_username
   database_password             = var.security_database_password
   database_instance_type        = "db.t3.medium"
-  database_postgres_version     = "14.2"
+  database_postgres_version     = "14.7"
   instance_security_groups      = module.simple_networking.instance_security_groups
   aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
   server_vpc_id                 = module.simple_networking.server_vpc_id
@@ -215,57 +215,6 @@ output "simple_server_security_sidekiq_redis_url" {
 }
 
 output "simple_server_security_load_balancer_public_dns" {
-  value = module.simple_networking.load_balancer_public_dns
-}
-
-
-module "simple_server_demo" {
-  source                        = "../modules/simple_server"
-  deployment_name               = "development-demo"
-  database_vpc_id               = module.simple_networking.database_vpc_id
-  database_subnet_group_name    = module.simple_networking.database_subnet_group_name
-  ec2_instance_type             = "t3.large"
-  ec2_ubuntu_version            = "20.04"
-  server_count                  = 1
-  database_username             = var.demo_database_username
-  database_password             = var.demo_database_password
-  database_instance_type        = "db.t3.medium"
-  database_postgres_version     = "14.6"
-  instance_security_groups      = module.simple_networking.instance_security_groups
-  aws_key_name                  = module.simple_aws_key_pair.simple_aws_key_name
-  server_vpc_id                 = module.simple_networking.server_vpc_id
-  https_listener_arn            = module.simple_networking.https_listener_arn
-  load_balancer_arn_suffix      = module.simple_networking.load_balancer_arn_suffix
-  host_urls                     = ["api-demo.simple.org", "dashboard-demo.simple.org", "dashboard-demo.in.simple.org", "api-demo.in.simple.org"]
-  redis_version                 = "5.0.6"
-  create_redis_cache_instance   = true
-  create_redis_sidekiq_instance = true
-  redis_param_group_name        = module.simple_redis_param_group.redis_param_group_name
-  enable_cloudwatch_alerts      = true
-  cloudwatch_alerts_sns_arn     = module.notify_slack.this_slack_topic_arn
-}
-
-output "simple_server_demo_server_instance_ips" {
-  value = module.simple_server_demo.server_instance_ips
-}
-
-output "simple_server_demo_sidekiq_instance_ips" {
-  value = module.simple_server_demo.sidekiq_instance_ips
-}
-
-output "simple_server_demo_database_url" {
-  value = module.simple_server_demo.database_url
-}
-
-output "simple_server_demo_cache_redis_url" {
-  value = module.simple_server_demo.cache_redis_url
-}
-
-output "simple_server_demo_sidekiq_redis_url" {
-  value = module.simple_server_demo.sidekiq_redis_url
-}
-
-output "simple_server_demo_load_balancer_public_dns" {
   value = module.simple_networking.load_balancer_public_dns
 }
 
