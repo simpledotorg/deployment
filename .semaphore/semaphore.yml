@@ -11,4 +11,3 @@ blocks:
         - name: Checkout
           commands:
             - checkout
-promotions:
